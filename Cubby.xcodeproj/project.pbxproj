@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		D1F3B2862FF656A3007BF617 /* SwiftUIJoystick in Frameworks */ = {isa = PBXBuildFile; productRef = D1F3B2852FF656A3007BF617 /* SwiftUIJoystick */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		D1F3B2762FF64284007BF617 /* Cubby.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cubby.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
@@ -23,6 +27,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D1F3B2862FF656A3007BF617 /* SwiftUIJoystick in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,6 +70,7 @@
 			);
 			name = Cubby;
 			packageProductDependencies = (
+				D1F3B2852FF656A3007BF617 /* SwiftUIJoystick */,
 			);
 			productName = Cubby;
 			productReference = D1F3B2762FF64284007BF617 /* Cubby.app */;
@@ -94,6 +100,9 @@
 			);
 			mainGroup = D1F3B26D2FF64284007BF617;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				D1F3B2842FF656A3007BF617 /* XCRemoteSwiftPackageReference "SwiftUIJoystick" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = D1F3B2772FF64284007BF617 /* Products */;
 			projectDirPath = "";
@@ -334,6 +343,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		D1F3B2842FF656A3007BF617 /* XCRemoteSwiftPackageReference "SwiftUIJoystick" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/michael94ellis/SwiftUIJoystick";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.5.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		D1F3B2852FF656A3007BF617 /* SwiftUIJoystick */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D1F3B2842FF656A3007BF617 /* XCRemoteSwiftPackageReference "SwiftUIJoystick" */;
+			productName = SwiftUIJoystick;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = D1F3B26E2FF64284007BF617 /* Project object */;
 }
