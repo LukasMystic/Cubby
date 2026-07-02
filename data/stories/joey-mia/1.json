@@ -1,0 +1,52 @@
+{
+  "file_name": "1.json",
+  "branch_id": "option_a_sit_down_anyway",
+  "branch_label": "Option A",
+  "branch_title": "Joey Sits Too Close Anyway",
+  "connects_from": "decision_001_initial_space_response",
+  "selected_option": {
+    "choice_id": "option_a",
+    "choice_text": "Sit down right next to Mia anyway",
+    "choice_quality": "poor"
+  },
+  "sequence": [
+    {
+      "node_id": "1_001_situation",
+      "type": "situation_narrator",
+      "text": "Joey was excited to play, so he sat close to Mia without thinking about it."
+    },
+    {
+      "node_id": "1_002_context_emotion",
+      "type": "context_emotion",
+      "target": "Mia",
+      "emotion": "Annoyed",
+      "text": "Mia doesn't look happy and feels uncomfortable.",
+      "dialogue": {
+        "speaker": "Mia",
+        "text": "...hmmmm, okay..."
+      }
+    },
+    {
+      "node_id": "1_003_situation",
+      "type": "situation_narrator",
+      "text": "Mia still wanted a little more space, but Joey was busy building and didn't notice."
+    },
+    {
+      "node_id": "1_004_situation",
+      "type": "situation_narrator",
+      "text": "Joey sees a perfect piece for his castle in Mia's blocks."
+    },
+    {
+      "node_id": "1_005_situation",
+      "type": "situation_narrator",
+      "text": "Mia was still quietly building, sitting a little farther away from Joey now."
+    },
+    {
+      "node_id": "decision_002_after_option_a",
+      "type": "decision_point",
+      "title": "Joey's Decision",
+      "decision_prompt": "Mia moved a little farther away. What should Joey do now?"
+    }
+  ],
+  "connects_to": "decision_002_after_option_a"
+}
