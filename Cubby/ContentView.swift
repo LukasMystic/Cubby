@@ -6,20 +6,31 @@
 //
 
 import SwiftUI
+import SpriteKit
 import SwiftUIJoystick
 
 struct ContentView: View {
 
     @StateObject private var joystickMonitor = JoystickMonitor()
-    private let joystickSize: CGFloat = 120
+
+    // Stable scene reference connected via onAppear
+    @State private var scene: GameScene = {
+        let s = GameScene()
+        s.scaleMode = .resizeFill
+        return s
+    }()
+
+    private let joystickSize: CGFloat = 150
 
     var body: some View {
-        
         ZStack {
-            Image("GPBackground")
-                .resizable()
-                .scaledToFill()
+
+            SpriteView(scene: scene)
                 .ignoresSafeArea()
+                .onAppear {
+                    scene.joystickMonitor = joystickMonitor
+                }
+
             VStack {
                 Spacer()
 
@@ -33,20 +44,39 @@ struct ContentView: View {
                                 .fill(.ultraThinMaterial)
                                 .overlay(
                                     Circle()
-                                        .stroke(Color.white.opacity(0.4), lineWidth: 2)
+                                        .stroke(Color.white.opacity(0.45), lineWidth: 2.5)
                                 )
                         },
                         foreground: {
                             Circle()
-                                .fill(Color.white.opacity(0.8))
-                                .shadow(color: .black.opacity(0.3), radius: 4, x: 0, y: 2)
+                                .fill(Color.white.opacity(0.75))
+                                .shadow(color: .black.opacity(0.35), radius: 5, x: 0, y: 3)
                         },
                         locksInPlace: false
                     )
                     .padding(.leading, 32)
-                    .padding(.bottom, 24)
+                    .padding(.bottom, 28)
 
                     Spacer()
+
+                    Button(action: {
+                    }) {
+                        ZStack {
+                            Circle()
+                                .fill(.ultraThinMaterial)
+                                .overlay(
+                                    Circle()
+                                        .stroke(Color.white.opacity(0.45), lineWidth: 2.5)
+                                )
+                                .frame(width: joystickSize, height: joystickSize)
+
+                            Image(systemName: "hand.raised.fill")
+                                .font(.system(size: 44, weight: .medium))
+                                .foregroundStyle(.white.opacity(0.85))
+                        }
+                    }
+                    .padding(.trailing, 32)
+                    .padding(.bottom, 28)
                 }
             }
         }
