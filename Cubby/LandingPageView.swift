@@ -7,10 +7,10 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct LandingPageView: View {
     var body: some View {
         ZStack() {
-            Image("LPimage")
+            Image("Primary-BG-LandingPage-Image")
             VStack(){
                 Text("Learn\nBoundaries!")
 
@@ -33,5 +33,5 @@ struct ContentView: View {
     
 
 #Preview {
-    ContentView()
+    LandingPageView()
     }
