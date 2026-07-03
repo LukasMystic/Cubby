@@ -9,7 +9,7 @@ import SwiftUI
 import SpriteKit
 import SwiftUIJoystick
 
-struct ContentView: View {
+struct GameView: View {
 
     @StateObject private var joystickMonitor = JoystickMonitor()
 
@@ -84,5 +84,5 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+   GameView()
 }
