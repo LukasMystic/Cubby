@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct CharacterSelectionView: View {
     var body: some View {
         ZStack() {
             Image("Primary-BG-CharacterSelection-Image")
@@ -53,5 +53,5 @@ struct ContentView: View {
     
 
 #Preview {
-    ContentView()
+    CharacterSelectionView()
     }
