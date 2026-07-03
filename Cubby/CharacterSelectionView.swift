@@ -29,6 +29,7 @@ struct CharacterSelectionView: View {
                 )
                 .offset(x: -50, y: -390)
                 .rotationEffect(.degrees(10))
+            
 
                 
 //            VStack(){
