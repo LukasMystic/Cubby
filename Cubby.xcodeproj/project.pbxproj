@@ -14,9 +14,27 @@
 		D1F3B2762FF64284007BF617 /* Cubby.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cubby.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		0BAC19282FF65D640018BE37 /* Exceptions for "Cubby" folder in "Cubby" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = D1F3B2752FF64284007BF617 /* Cubby */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		0BAC192A2FF65EAE0018BE37 /* Fonts */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 		D1F3B2782FF64284007BF617 /* Cubby */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				0BAC19282FF65D640018BE37 /* Exceptions for "Cubby" folder in "Cubby" target */,
+			);
 			path = Cubby;
 			sourceTree = "<group>";
 		};
@@ -37,6 +55,7 @@
 		D1F3B26D2FF64284007BF617 = {
 			isa = PBXGroup;
 			children = (
+				0BAC192A2FF65EAE0018BE37 /* Fonts */,
 				D1F3B2782FF64284007BF617 /* Cubby */,
 				D1F3B2772FF64284007BF617 /* Products */,
 			);
@@ -66,6 +85,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
+				0BAC192A2FF65EAE0018BE37 /* Fonts */,
 				D1F3B2782FF64284007BF617 /* Cubby */,
 			);
 			name = Cubby;
@@ -262,9 +282,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 5MRHN4782T;
+				DEVELOPMENT_TEAM = SCVF9P6M62;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Cubby/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.games";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -295,9 +316,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 5MRHN4782T;
+				DEVELOPMENT_TEAM = SCVF9P6M62;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Cubby/Info.plist;
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.games";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
