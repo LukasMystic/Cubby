@@ -8,10 +8,10 @@
 import SwiftUI
 
 @main
-struct CubbyApp: App {
+struct GameApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            GameView()
         }
     }
 }
