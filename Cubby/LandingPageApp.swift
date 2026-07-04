@@ -1,8 +1,8 @@
 //
-//  CubbyApp.swift
+//  LandingPageApp.swift
 //  Cubby
 //
-//  Created by Stanley Pratama Teguh on 02/07/26.
+//  Created by Vigo Alexander Sie on 03/07/26.
 //
 
 import SwiftUI
