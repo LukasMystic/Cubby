@@ -8,9 +8,11 @@
 import SwiftUI
 import SpriteKit
 import SwiftUIJoystick
-
+import TipKit
 
 struct GameView: View {
+    private let joystickTip = joystickTip()
+    private let interactTip = interactTip()
 
     @StateObject private var viewModel = GameViewModel()
 
@@ -60,6 +62,7 @@ struct GameView: View {
         )
         .padding(.leading, 32)
         .padding(.bottom, 28)
+        .popoverTip(joystickTip)
     }
 
     private var interactButton: some View {
@@ -77,6 +80,7 @@ struct GameView: View {
         }
         .padding(.trailing, 32)
         .padding(.bottom, 28)
+        .popoverTip(interactTip)
     }
 }
 
