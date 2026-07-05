@@ -1,0 +1,42 @@
+{
+  "file_name": "1A.json",
+  "branch_id": "option_a_followup_notice_mia_moved_away",
+  "branch_label": "Option A",
+  "branch_title": "Joey Notices Mia Moved Away",
+  "connects_from": "decision_002_after_option_a",
+  "selected_option": {
+    "choice_text": "Notice Mia moved away and ask",
+    "choice_quality": "repair"
+  },
+  "sequence": [
+    {
+      "node_id": "1A_001_dialogue",
+      "type": "dialogue",
+      "speaker": "Joey",
+      "text": "Hey, did I sit too close earlier? Sorry, I can scoot back."
+    },
+    {
+      "node_id": "1A_002_context_emotion",
+      "type": "context_emotion",
+      "target": "Mia",
+      "emotion": "Happy",
+      "text": "Mia smiles and is surprised.",
+      "dialogue": {
+        "speaker": "Mia",
+        "text": "Yeah, thank you for noticing! I feel much better now."
+      }
+    },
+    {
+      "node_id": "1A_003_situation",
+      "type": "situation_narrator",
+      "text": "Joey listened, said sorry, and gave Mia more space. They had fun building together again."
+    },
+    {
+      "node_id": "ending_1A_happy_repair",
+      "type": "ending",
+      "final_emotion_target": "Mia",
+      "final_emotion": "Happy"
+    }
+  ],
+  "ending_id": "ending_1A_happy_repair"
+}
