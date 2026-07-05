@@ -5,33 +5,39 @@
 //  Created by Stanley Pratama Teguh on 02/07/26.
 //
 
+// MARK: - LandingPageView
 import SwiftUI
 
 struct LandingPageView: View {
-    var body: some View {
-        ZStack() {
-            Image("Primary-BG-LandingPage-Image")
-            VStack(){
-                Text("Learn\nBoundaries!")
+    @StateObject private var viewModel = LandingPageViewModel()
 
-                    .font(.custom("FreckleFace-Regular", size: 128))
-                    .multilineTextAlignment(.center)
-                    .foregroundColor(.white)
-                
-                Button("Play") {
+    var body: some View {
+        NavigationStack {
+            ZStack {
+                Image("Primary-BG-LandingPage-Image")
+                VStack {
+                    Text("Learn\nBoundaries!")
+                        .font(.custom("FreckleFace-Regular", size: 128))
+                        .multilineTextAlignment(.center)
+                        .foregroundColor(.white)
+
+                    Button("Play") {
+                        viewModel.onPlayButtonTapped()
+                    }
+                    .font(.custom("Slackey-Regular", size: 48))
+                    .foregroundColor(Color(red: 255/255, green: 141/255, blue: 40/255))
+                    .padding(.horizontal, 120)
+                    .padding(.vertical, 24)
+                    .background(.white.opacity(0.65), in: Capsule())
                 }
-                .font(.custom("Slackey-Regular", size: 48))
-                .foregroundColor(Color(red: 255/255, green: 141/255, blue: 40/255))
-                .padding(.horizontal, 120)
-                .padding(.vertical, 24)
-                .background(.white.opacity(0.65), in: Capsule())
-                
+            }
+            .navigationDestination(isPresented: $viewModel.goToCharacterSelection) {
+//                CharacterSelectionPageView()
             }
         }
     }
 }
-    
 
 #Preview {
     LandingPageView()
-    }
+}
