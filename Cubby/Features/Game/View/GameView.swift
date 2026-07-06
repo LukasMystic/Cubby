@@ -11,8 +11,9 @@ import SwiftUIJoystick
 import TipKit
 
 struct GameView: View {
-    private let joystickTip = joystickTip()
-    private let interactTip = interactTip()
+    private let joystickTip = JoystickTip()
+    private let interactTip = InteractTip()
+    private let startTip = StartGameTip()
 
     @StateObject private var viewModel = GameViewModel()
 
@@ -22,16 +23,16 @@ struct GameView: View {
                 .ignoresSafeArea()
 
             hud
-            if viewModel.isShowingDialogue, let line = viewModel.currentLine {
-                DialogueOverlay(line: line) {
-                    viewModel.advanceDialogue()
-                }
-            }
+
+            TipView(startTip)
+                .padding(.horizontal, 40)
+        }
+        .fullScreenCover(isPresented: $viewModel.showDialogue) {
+            DialogueView()
         }
     }
 
-    // hud
-
+    // HUD: joystick bottom-left, interact button bottom-right
     private var hud: some View {
         VStack {
             Spacer()
@@ -81,36 +82,6 @@ struct GameView: View {
         .padding(.trailing, 32)
         .padding(.bottom, 28)
         .popoverTip(interactTip)
-    }
-}
-
-// Dialogue -> for later
-private struct DialogueOverlay: View {
-    let line: DialogueLine
-    let onTap: () -> Void
-
-    var body: some View {
-        VStack {
-            Spacer()
-            Button(action: onTap) {
-                VStack(alignment: .leading, spacing: 8) {
-                    Text(line.speaker)
-                        .font(.headline)
-                        .foregroundStyle(.white)
-                    Text(line.text)
-                        .font(.body)
-                        .foregroundStyle(.white.opacity(0.9))
-                        .multilineTextAlignment(.leading)
-                }
-                .padding(20)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .background(.ultraThinMaterial)
-                .clipShape(RoundedRectangle(cornerRadius: 16))
-                .overlay(RoundedRectangle(cornerRadius: 16).stroke(Color.white.opacity(0.3), lineWidth: 1))
-                .padding(.horizontal, 20)
-                .padding(.bottom, 220)
-            }
-        }
     }
 }
 

@@ -1,0 +1,36 @@
+{
+  "file_name": "3B.json",
+  "branch_id": "option_c_followup_lean_in_close",
+  "branch_label": "Option B",
+  "branch_title": "Joey Leans In Close",
+  "connects_from": "decision_004_after_option_c",
+  "selected_option": {
+    "choice_text": "Lean in close",
+    "choice_quality": "needs_repair"
+  },
+  "sequence": [
+    {
+      "node_id": "3B_001_context_emotion",
+      "type": "context_emotion",
+      "target": "Mia",
+      "emotion": "Confused",
+      "text": "Mia feels confused.",
+      "dialogue": {
+        "speaker": "Mia",
+        "text": "Uh... um, okay."
+      }
+    },
+    {
+      "node_id": "3B_002_situation",
+      "type": "situation_narrator",
+      "text": "Mia leans away."
+    },
+    {
+      "node_id": "decision_005_after_option_3B",
+      "type": "decision_point",
+      "title": "Joey's Decision",
+      "decision_prompt": "Mia leans away after Joey gets too close. What should Joey do?"
+    }
+  ],
+  "connects_to": "decision_005_after_option_3B"
+}

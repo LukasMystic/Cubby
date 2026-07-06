@@ -1,0 +1,36 @@
+{
+  "file_name": "3C.json",
+  "branch_id": "option_c_followup_take_piece_mia_was_using",
+  "branch_label": "Option C",
+  "branch_title": "Joey Takes the Piece Mia Was Using",
+  "connects_from": "decision_004_after_option_c",
+  "selected_option": {
+    "choice_text": "Reach over and took the piece Mia was using",
+    "choice_quality": "worst"
+  },
+  "sequence": [
+    {
+      "node_id": "3C_001_context_emotion",
+      "type": "context_emotion",
+      "target": "Mia",
+      "emotion": "Upset/Angry",
+      "text": "Mia was caught by surprise.",
+      "dialogue": {
+        "speaker": "Mia",
+        "text": "Joey, you're really close again. Can you give me a little more space, please?"
+      }
+    },
+    {
+      "node_id": "3C_002_situation",
+      "type": "situation_narrator",
+      "text": "Joey forgot to ask. Asking first helps friends feel safe."
+    },
+    {
+      "node_id": "ending_3C_upset_angry",
+      "type": "ending",
+      "final_emotion_target": "Mia",
+      "final_emotion": "Upset/Angry"
+    }
+  ],
+  "ending_id": "ending_3C_upset_angry"
+}
