@@ -9,6 +9,7 @@
 import Combine
 import SpriteKit
 import SwiftUIJoystick
+import TipKit
 
 // Both the ViewModel and GameScene need to know if the character is idle or walking
 enum CharacterAnim: Equatable { case idle, walking }
@@ -90,6 +91,8 @@ final class GameViewModel: ObservableObject {
             print("[Interact] No NPC in range — move closer.")
             return
         }
+        InteractTip().invalidate(reason: .actionPerformed)
+        Task { await InteractTip.useInteract.donate() }
         showDialogue = true
     }
 }

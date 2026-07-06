@@ -8,8 +8,12 @@
 import SwiftUI
 import SpriteKit
 import SwiftUIJoystick
+import TipKit
 
 struct GameView: View {
+    private let joystickTip = JoystickTip()
+    private let interactTip = InteractTip()
+    private let startTip = StartGameTip()
 
     @StateObject private var viewModel = GameViewModel()
 
@@ -19,6 +23,9 @@ struct GameView: View {
                 .ignoresSafeArea()
 
             hud
+
+            TipView(startTip)
+                .padding(.horizontal, 40)
         }
         .fullScreenCover(isPresented: $viewModel.showDialogue) {
             DialogueView()
@@ -56,6 +63,7 @@ struct GameView: View {
         )
         .padding(.leading, 32)
         .padding(.bottom, 28)
+        .popoverTip(joystickTip)
     }
 
     private var interactButton: some View {
@@ -73,6 +81,7 @@ struct GameView: View {
         }
         .padding(.trailing, 32)
         .padding(.bottom, 28)
+        .popoverTip(interactTip)
     }
 }
 
