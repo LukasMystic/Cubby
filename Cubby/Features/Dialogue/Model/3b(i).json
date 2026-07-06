@@ -1,0 +1,36 @@
+{
+  "file_name": "3b(i).json",
+  "branch_id": "option_3b_i_notice_and_move_away",
+  "branch_label": "Option A",
+  "branch_title": "Joey Notices and Moves Away",
+  "connects_from": "decision_005_after_option_3B",
+  "selected_option": {
+    "choice_text": "Notice and move away a little bit",
+    "choice_quality": "repair"
+  },
+  "sequence": [
+    {
+      "node_id": "3b_i_001_context_emotion",
+      "type": "context_emotion",
+      "target": "Mia",
+      "emotion": "Relieved",
+      "text": "Mia feels relieved.",
+      "dialogue": {
+        "speaker": "Mia",
+        "text": "Thank you for giving me a little more space."
+      }
+    },
+    {
+      "node_id": "3b_i_002_situation",
+      "type": "situation_narrator",
+      "text": "Joey noticed Mia leaning away. He gave her more space, and Mia felt happy and comfortable again."
+    },
+    {
+      "node_id": "ending_3b_i_relieved",
+      "type": "ending",
+      "final_emotion_target": "Mia",
+      "final_emotion": "Relieved"
+    }
+  ],
+  "ending_id": "ending_3b_i_relieved"
+}

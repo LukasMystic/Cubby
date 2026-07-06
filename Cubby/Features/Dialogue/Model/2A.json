@@ -1,0 +1,42 @@
+{
+  "file_name": "2A.json",
+  "branch_id": "option_b_followup_notice_tense_and_ask",
+  "branch_label": "Option A",
+  "branch_title": "Joey Notices Mia Seems Tense",
+  "connects_from": "decision_003_after_option_b",
+  "selected_option": {
+    "choice_text": "Notice Mia seems tense and ask",
+    "choice_quality": "repair"
+  },
+  "sequence": [
+    {
+      "node_id": "2A_001_dialogue",
+      "type": "dialogue",
+      "speaker": "Joey",
+      "text": "Hey, do you need a little more space? We can scoot over."
+    },
+    {
+      "node_id": "2A_002_context_emotion",
+      "type": "context_emotion",
+      "target": "Mia",
+      "emotion": "Relieved",
+      "text": "Mia feels relieved.",
+      "dialogue": {
+        "speaker": "Mia",
+        "text": "Yes, please. Thanks for asking!"
+      }
+    },
+    {
+      "node_id": "2A_003_situation",
+      "type": "situation_narrator",
+      "text": "Joey noticed Mia's feelings and checked in. Asking how a friend feels is a kind way to help."
+    },
+    {
+      "node_id": "ending_2A_relieved",
+      "type": "ending",
+      "final_emotion_target": "Mia",
+      "final_emotion": "Relieved"
+    }
+  ],
+  "ending_id": "ending_2A_relieved"
+}

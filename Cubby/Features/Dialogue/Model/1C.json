@@ -1,0 +1,36 @@
+{
+  "file_name": "1C.json",
+  "branch_id": "option_a_followup_take_piece_without_asking",
+  "branch_label": "Option C",
+  "branch_title": "Joey Takes a Piece Without Asking",
+  "connects_from": "decision_002_after_option_a",
+  "selected_option": {
+    "choice_text": "Reach over and take a piece from Mia's pile without asking",
+    "choice_quality": "worst"
+  },
+  "sequence": [
+    {
+      "node_id": "1C_001_context_emotion",
+      "type": "context_emotion",
+      "target": "Mia",
+      "emotion": "Cry",
+      "text": "Mia was caught by surprise.",
+      "dialogue": {
+        "speaker": "Mia",
+        "text": "Joey, you took my toy, huh. I still need a little more space. And those are the blocks I was using too."
+      }
+    },
+    {
+      "node_id": "1C_002_situation",
+      "type": "situation_narrator",
+      "text": "Joey didn't notice Mia needed more space. Mia cried, and playing wasn't as fun anymore."
+    },
+    {
+      "node_id": "ending_1C_cry",
+      "type": "ending",
+      "final_emotion_target": "Mia",
+      "final_emotion": "Cry"
+    }
+  ],
+  "ending_id": "ending_1C_cry"
+}

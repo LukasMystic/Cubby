@@ -12,21 +12,25 @@ class GameScene: SKScene {
     weak var viewModel: GameViewModel?
 
     private var seerNode: SKSpriteNode!
+    private var npcNode: SKSpriteNode!
     private var currentAnim: CharacterAnim = .idle
 
-    // Load the sprite frames only when we actually need them
+    // Load sprite frames only when first needed
     private lazy var idleFrames: [SKTexture] = (0...17).map {
         SKTexture(imageNamed: "0_Seer_Idle_\(String(format: "%03d", $0))")
     }
     private lazy var walkFrames: [SKTexture] = (0...23).map {
         SKTexture(imageNamed: "0_Seer_Walking_\(String(format: "%03d", $0))")
     }
+    private lazy var npcIdleFrames: [SKTexture] = (0...17).map {
+        SKTexture(imageNamed: "0_Goblin_Idle_\(String(format: "%03d", $0))")
+    }
 
-    // setup the char move
     override func didMove(to view: SKView) {
         backgroundColor = .black
         setupBackground()
         setupCharacter()
+        setupNPC()
     }
 
     private func setupBackground() {
@@ -47,8 +51,7 @@ class GameScene: SKScene {
         seerNode.zPosition = 0
         addChild(seerNode)
 
-        // Tell the ViewModel how big the screen and character are
-        // so it can handle movement without needing to know about SpriteKit -> I ask claude :v
+        // Let the ViewModel know the screen and character bounds for movement clamping
         viewModel?.sceneSize = size
         viewModel?.characterPosition = startPos
         viewModel?.charHalfW = seerNode.size.width * 0.35 / 2
@@ -57,8 +60,26 @@ class GameScene: SKScene {
         playAnim(.idle)
     }
 
-    
-    // rendering
+    private func setupNPC() {
+        npcNode = SKSpriteNode(texture: npcIdleFrames[0])
+        npcNode.setScale(0.35)
+        let npcPos = CGPoint(x: size.width * 0.72, y: size.height * 0.38)
+        npcNode.position = npcPos
+        npcNode.zPosition = 0
+        addChild(npcNode)
+
+        // Tell the ViewModel where the NPC is so interact() can do a proximity check
+        viewModel?.npcPosition = npcPos
+
+        npcNode.run(
+            SKAction.repeatForever(
+                SKAction.animate(with: npcIdleFrames, timePerFrame: 1.0 / 12)
+            ),
+            withKey: "npcIdle"
+        )
+    }
+
+    // Called every frame by SpriteKit
     override func update(_ currentTime: TimeInterval) {
         guard let vm = viewModel else { return }
         vm.tick(deltaTime: 1.0 / 60.0)
@@ -67,7 +88,7 @@ class GameScene: SKScene {
         playAnim(vm.characterAnim)
     }
 
-    // swap the animation when it actually changes, not every single frame
+    // Only swap the animation when it actually changes — avoids restarting the same clip
     private func playAnim(_ anim: CharacterAnim) {
         guard anim != currentAnim else { return }
         currentAnim = anim

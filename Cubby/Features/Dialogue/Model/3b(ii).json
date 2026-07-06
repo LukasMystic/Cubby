@@ -1,0 +1,36 @@
+{
+  "file_name": "3b(ii).json",
+  "branch_id": "option_3b_ii_ignore_it",
+  "branch_label": "Option B",
+  "branch_title": "Joey Ignores It",
+  "connects_from": "decision_005_after_option_3B",
+  "selected_option": {
+    "choice_text": "Ignore it",
+    "choice_quality": "poor"
+  },
+  "sequence": [
+    {
+      "node_id": "3b_ii_001_context_emotion",
+      "type": "context_emotion",
+      "target": "Mia",
+      "emotion": "Annoyed",
+      "text": "Mia feels annoyed.",
+      "dialogue": {
+        "speaker": "Mia",
+        "text": "Hey, move away a little bit, please!"
+      }
+    },
+    {
+      "node_id": "3b_ii_002_situation",
+      "type": "situation_narrator",
+      "text": "Joey did not notice Mia needed more space. Paying attention helps friends feel safe and happy."
+    },
+    {
+      "node_id": "ending_3b_ii_annoyed",
+      "type": "ending",
+      "final_emotion_target": "Mia",
+      "final_emotion": "Annoyed"
+    }
+  ],
+  "ending_id": "ending_3b_ii_annoyed"
+}

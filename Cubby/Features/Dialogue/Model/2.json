@@ -1,0 +1,58 @@
+{
+  "file_name": "2.json",
+  "branch_id": "option_b_insist_and_ask_again",
+  "branch_label": "Option B",
+  "branch_title": "Joey Insists and Asks Again",
+  "connects_from": "decision_001_initial_space_response",
+  "selected_option": {
+    "choice_id": "option_b",
+    "choice_text": "Insist and ask again",
+    "choice_quality": "poor"
+  },
+  "sequence": [
+    {
+      "node_id": "2_001_dialogue",
+      "type": "dialogue",
+      "speaker": "Joey",
+      "text": "Pleeeease? I really wanna sit right next to you!"
+    },
+    {
+      "node_id": "2_002_context_emotion",
+      "type": "context_emotion",
+      "target": "Mia",
+      "emotion": "Uncomfortable",
+      "text": "Mia felt uncomfortable but unsure how to say it again.",
+      "dialogue": {
+        "speaker": "Mia",
+        "text": "Um... okay, I guess."
+      }
+    },
+    {
+      "node_id": "2_003_situation",
+      "type": "situation_narrator",
+      "text": "Mia still felt a little squished, but she wasn't sure what to say."
+    },
+    {
+      "node_id": "2_004_situation",
+      "type": "situation_narrator",
+      "text": "Joey sees a perfect piece for his castle in Mia's pieces."
+    },
+    {
+      "node_id": "2_005_situation",
+      "type": "situation_narrator",
+      "text": "Mia kept building quietly, sitting a little farther away from Joey."
+    },
+    {
+      "node_id": "2_006_situation",
+      "type": "situation_narrator",
+      "text": "Joey grabbed the block, still sitting right next to Mia."
+    },
+    {
+      "node_id": "decision_003_after_option_b",
+      "type": "decision_point",
+      "title": "Joey's Decision",
+      "decision_prompt": "Mia still seems tense. What should Joey do now?"
+    }
+  ],
+  "connects_to": "decision_003_after_option_b"
+}

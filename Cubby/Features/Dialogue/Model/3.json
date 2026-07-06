@@ -1,0 +1,53 @@
+{
+  "file_name": "3.json",
+  "branch_id": "option_c_accept_and_ask",
+  "branch_label": "Option C",
+  "branch_title": "Joey Accepts Mia's Boundary",
+  "connects_from": "decision_001_initial_space_response",
+  "selected_option": {
+    "choice_id": "option_c",
+    "choice_text": "Accept it and ask",
+    "choice_quality": "best"
+  },
+  "sequence": [
+    {
+      "node_id": "3_001_dialogue",
+      "type": "dialogue",
+      "speaker": "Joey",
+      "text": "Oh, okay! How about I sit a little farther away? We can still build together?"
+    },
+    {
+      "node_id": "3_002_context_emotion",
+      "type": "context_emotion",
+      "target": "Mia",
+      "emotion": "Relaxed",
+      "text": "Mia relaxes.",
+      "dialogue": {
+        "speaker": "Mia",
+        "text": "Yeah! That's much better, thank you."
+      }
+    },
+    {
+      "node_id": "3_003_situation",
+      "type": "situation_narrator",
+      "text": "Joey listened the first time. That's what a good friend does."
+    },
+    {
+      "node_id": "3_004_situation",
+      "type": "situation_narrator",
+      "text": "Joey sees a perfect piece for his castle in Mia's pieces."
+    },
+    {
+      "node_id": "3_005_situation",
+      "type": "situation_narrator",
+      "text": "Joey got excited and started leaning in to grab the piece."
+    },
+    {
+      "node_id": "decision_004_after_option_c",
+      "type": "decision_point",
+      "title": "Joey's Decision",
+      "decision_prompt": "Joey sees a perfect piece in Mia's area. What should he do?"
+    }
+  ],
+  "connects_to": "decision_004_after_option_c"
+}
