@@ -13,9 +13,11 @@ class GameScene: SKScene {
 
     private var seerNode: SKSpriteNode!
     private var npcNode: SKSpriteNode!
+    private var rangeAura: SKShapeNode!
+    private var auraVisible = false
     private var currentAnim: CharacterAnim = .idle
 
-    // Load sprite frames only when first needed
+    // Load sprite frames ONLY when first needed
     private lazy var idleFrames: [SKTexture] = (0...17).map {
         SKTexture(imageNamed: "0_Seer_Idle_\(String(format: "%03d", $0))")
     }
@@ -31,6 +33,7 @@ class GameScene: SKScene {
         setupBackground()
         setupCharacter()
         setupNPC()
+        setupRangeAura()
     }
 
     private func setupBackground() {
@@ -51,7 +54,6 @@ class GameScene: SKScene {
         seerNode.zPosition = 0
         addChild(seerNode)
 
-        // Let the ViewModel know the screen and character bounds for movement clamping
         viewModel?.sceneSize = size
         viewModel?.characterPosition = startPos
         viewModel?.charHalfW = seerNode.size.width * 0.35 / 2
@@ -68,7 +70,6 @@ class GameScene: SKScene {
         npcNode.zPosition = 0
         addChild(npcNode)
 
-        // Tell the ViewModel where the NPC is so interact() can do a proximity check
         viewModel?.npcPosition = npcPos
 
         npcNode.run(
@@ -79,6 +80,20 @@ class GameScene: SKScene {
         )
     }
 
+    private func setupRangeAura() {
+        // Flat ellipse at the MC's feet — sits behind the sprite so it looks like a ground glow
+        let halfH = seerNode.size.height * 0.35 / 2
+        let ellipseRect = CGRect(x: -42, y: -(halfH + 8), width: 84, height: 26)
+        rangeAura = SKShapeNode(ellipseIn: ellipseRect)
+        rangeAura.fillColor  = UIColor(red: 0.45, green: 0.85, blue: 1.0, alpha: 0.55)
+        rangeAura.strokeColor = UIColor(red: 0.3, green: 0.75, blue: 1.0, alpha: 0.9)
+        rangeAura.lineWidth  = 2
+        rangeAura.zPosition  = -1   // drawn behind the character sprite
+        rangeAura.position   = seerNode.position
+        rangeAura.alpha      = 0    // hidden until in range
+        addChild(rangeAura)
+    }
+
     // Called every frame by SpriteKit
     override func update(_ currentTime: TimeInterval) {
         guard let vm = viewModel else { return }
@@ -86,9 +101,31 @@ class GameScene: SKScene {
         seerNode.position = vm.characterPosition
         seerNode.xScale = vm.isFacingRight ? abs(seerNode.xScale) : -abs(seerNode.xScale)
         playAnim(vm.characterAnim)
+        // Aura follows the MC every frame
+        rangeAura.position = vm.characterPosition
+        updateRangeAura(inRange: vm.isNPCInRange)
     }
 
-    // Only swap the animation when it actually changes — avoids restarting the same clip
+    // Fades the ground aura in/out when the MC crosses the interact threshold
+    private func updateRangeAura(inRange: Bool) {
+        guard inRange != auraVisible else { return }
+        auraVisible = inRange
+        rangeAura.removeAllActions()
+
+        if inRange {
+            rangeAura.run(SKAction.sequence([
+                SKAction.fadeIn(withDuration: 0.25),
+                SKAction.repeatForever(SKAction.sequence([
+                    SKAction.fadeAlpha(to: 0.3, duration: 0.5),
+                    SKAction.fadeAlpha(to: 1.0, duration: 0.5)
+                ]))
+            ]))
+        } else {
+            rangeAura.run(SKAction.fadeOut(withDuration: 0.25))
+        }
+    }
+
+    // Only swaps animation when it actually changes — avoids restarting the same clip
     private func playAnim(_ anim: CharacterAnim) {
         guard anim != currentAnim else { return }
         currentAnim = anim
