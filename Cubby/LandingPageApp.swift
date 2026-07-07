@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-@main
+// @main
 struct LandingPageApp: App {
     var body: some Scene {
         WindowGroup {
