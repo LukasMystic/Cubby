@@ -36,6 +36,14 @@ struct DialogueView: View {
             }
             .padding(24)
         }
+        .overlay {
+            if viewModel.isEnded {
+                ClosingView(
+                    onBackToPlayground: { dismiss() },
+                    onTryAgain: { viewModel.restart() }
+                )
+            }
+        }
     }
 
     private var characters: some View {

@@ -58,6 +58,12 @@ final class DialogueViewModel: ObservableObject {
         return result
     }
 
+    func restart() {
+        isEnded = false
+        nodeIndex = 0
+        loadStory()
+    }
+
     // MARK: - Navigation
 
     // Advance to the next story beat (tapping the dialogue panel or the next arrow)
