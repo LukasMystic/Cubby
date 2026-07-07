@@ -1,0 +1,31 @@
+{
+  "file_name": "2C.json",
+  "branch_id": "option_b_followup_lean_even_closer",
+  "branch_label": "Option C",
+  "branch_title": "Joey Leans Even Closer",
+  "connects_from": "decision_003_after_option_b",
+  "selected_option": {
+    "choice_text": "Lean in even closer to grab more blocks",
+    "choice_quality": "worst"
+  },
+  "sequence": [
+    {
+      "node_id": "2C_001_context_emotion",
+      "type": "context_emotion",
+      "target": "Mia",
+      "emotion": "Upset/Angry",
+      "text": "Mia becomes upset.",
+      "dialogue": {
+        "speaker": "Mia",
+        "text": "Stop please, you're really too close now."
+      }
+    },
+    {
+      "node_id": "ending_2C_upset_angry",
+      "type": "ending",
+      "final_emotion_target": "Mia",
+      "final_emotion": "Upset/Angry"
+    }
+  ],
+  "ending_id": "ending_2C_upset_angry"
+}
