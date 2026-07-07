@@ -13,7 +13,8 @@ struct GameApp: App {
     init() {
         try? Tips.configure([
                 .displayFrequency(.immediate),
-                .datastoreLocation(.applicationDefault)
+                // uncomment line below on production
+                // .datastoreLocation(.applicationDefault)
         ])
     }
 

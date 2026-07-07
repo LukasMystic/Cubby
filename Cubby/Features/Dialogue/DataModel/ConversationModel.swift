@@ -85,14 +85,20 @@ struct StoryDecision: Codable {
 struct StoryRouter: Codable {
     let entryPoint: EntryPoint
     let decisions: [StoryDecision]
+    let characterNames: CharacterNames?
 
     struct EntryPoint: Codable {
         let file: String
         enum CodingKeys: String, CodingKey { case file }
     }
 
+    struct CharacterNames: Codable {
+        let player: String
+    }
+
     enum CodingKeys: String, CodingKey {
         case entryPoint = "entry_point"
         case decisions
+        case characterNames = "character_names"
     }
 }

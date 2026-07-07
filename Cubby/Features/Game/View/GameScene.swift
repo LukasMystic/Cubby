@@ -103,7 +103,7 @@ class GameScene: SKScene {
         playAnim(vm.characterAnim)
         // Aura follows the MC every frame
         rangeAura.position = vm.characterPosition
-        updateRangeAura(inRange: vm.isNPCInRange)
+        // updateRangeAura(inRange: vm.isNPCInRange)
     }
 
     // Fades the ground aura in/out when the MC crosses the interact threshold

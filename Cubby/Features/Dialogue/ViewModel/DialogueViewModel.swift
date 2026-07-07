@@ -20,6 +20,7 @@ final class DialogueViewModel: ObservableObject {
 
     @Published private(set) var currentBeat: DialogueBeat = .narrative(text: "")
     @Published private(set) var isEnded = false
+    @Published private(set) var playerName = "Joey"
 
     private var router: StoryRouter?
     private var currentScene: StoryScene?
@@ -33,6 +34,7 @@ final class DialogueViewModel: ObservableObject {
 
     private func loadStory() {
         router = loadJSON("main")
+        if let name = router?.characterNames?.player { playerName = name }
         let entryFile = router?.entryPoint.file ?? "opening.json"
         let sceneName = entryFile.replacingOccurrences(of: ".json", with: "")
         loadScene(named: sceneName)
