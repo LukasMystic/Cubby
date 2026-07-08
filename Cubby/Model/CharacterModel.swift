@@ -14,17 +14,17 @@ struct Character {
 
 extension Character {
     static let all: [String: Character] = [
-        "Primary-Joey-CharacterSelectionPage-Image": Character(
-            id: "Primary-Joey-CharacterSelectionPage-Image",
+        "Primary-Joey-CharacterSelection-Image": Character(
+            id: "Primary-Joey-CharacterSelection-Image",
             name: "Joey",
-            bioText: "Joey's bio",
-            imageName: "Primary-Joey-CharacterSelectionPage-Image"
+            bioText: "Aku sangat suka kenal orang baru dan mencoba hal-hal baru juga. Aku suka berpelukan, saling tos, dan senyum sapa.",
+            imageName: "Primary-Joey-CharacterSelection-Image"
         ),
-        "Primary-Mia-CharacterSelectionPage-Image": Character(
-            id: "Primary-Mia-CharacterSelectionPage-Image",
+        "Primary-Mia-CharacterSelection-Image": Character(
+            id: "Primary-Mia-CharacterSelection-Image",
             name: "Mia",
-            bioText: "Mia's bio",
-            imageName: "Primary-Mia-CharacterSelectionPage-Image"
+            bioText: "Aku anak yang pemalu, aku tidak suka berpelukan, cukup melambai saja sudah membuat aku senang!",
+            imageName: "Primary-Mia-CharacterSelection-Image"
         )
     ]
 }

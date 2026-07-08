@@ -5,11 +5,11 @@
 //  Created by Vigo Alexander Sie on 05/07/26.
 //
 
-import Combine
+import Observation
 
-class CharacterBioViewModel: ObservableObject {
+@Observable class CharacterBioViewModel {
     let character: Character
-    @Published var navigateToGame = false
+    var navigateToGame = false
     
     init(selectedCharacter: String) {
         self.character = Character.all[selectedCharacter]!
