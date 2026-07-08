@@ -9,12 +9,11 @@ import SwiftUI
 
 struct DialogueView: View {
 
-    @StateObject private var viewModel = DialogueViewModel()
+    @State private var viewModel = DialogueViewModel()
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
         ZStack {
-            // Reuse the game background
             Image("GPBackground")
                 .resizable()
                 .scaledToFill()
@@ -37,7 +36,7 @@ struct DialogueView: View {
         }
     }
 
-    // Two character sprites — player on the left, NPC on the right
+    // player on the left, NPC on the right
     private var characters: some View {
         HStack(alignment: .bottom, spacing: 0) {
             Image("0_Seer_Idle_000")
@@ -54,7 +53,7 @@ struct DialogueView: View {
         .padding(.horizontal, 16)
     }
 
-    // Switches between linear dialogue and multiple-choice depending on the beat
+    // linear dialogue and multiple-choice
     @ViewBuilder
     private var bottomPanel: some View {
         switch viewModel.currentBeat {
@@ -74,7 +73,7 @@ struct DialogueView: View {
         }
     }
 
-    // Narrator text — no speaker name
+    // Narrator
     private func narrativePanel(text: String) -> some View {
         HStack {
             Text(text)
@@ -94,7 +93,7 @@ struct DialogueView: View {
         .padding(.bottom, 36)
     }
 
-    // Character dialogue — speaker name badge above the text
+    // Character dialogue
     private func speechPanel(speaker: String, text: String) -> some View {
         VStack(alignment: .leading, spacing: 10) {
             Text(speaker)
@@ -124,7 +123,7 @@ struct DialogueView: View {
         .padding(.bottom, 36)
     }
 
-    // Multiple choice — horizontal row of action buttons (matching reference image)
+    // Multiple choice
     private func choicePanel(options: [DecisionRoute]) -> some View {
         HStack(alignment: .top, spacing: 10) {
             ForEach(options) { route in
@@ -147,7 +146,7 @@ struct DialogueView: View {
         .padding(.bottom, 36)
     }
 
-    // Story has ended — show final emotion and a Done button
+    // when story ends
     private func endingPanel(emotion: String) -> some View {
         VStack(spacing: 14) {
             Text("— The End —")

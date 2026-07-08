@@ -5,10 +5,10 @@
 //  Created by Stanley Pratama Teguh on 02/07/26.
 //
 
-import Combine
 import Foundation
+import Observation
 
-// What the dialogue screen renders at any given moment
+// dialogue screen renders
 enum DialogueBeat {
     case narrative(text: String)
     case speech(speaker: String, text: String)
@@ -16,21 +16,22 @@ enum DialogueBeat {
     case ending(emotion: String)
 }
 
-final class DialogueViewModel: ObservableObject {
+@Observable
+final class DialogueViewModel {
 
-    @Published private(set) var currentBeat: DialogueBeat = .narrative(text: "")
-    @Published private(set) var isEnded = false
+    private(set) var currentBeat: DialogueBeat = .narrative(text: "")
+    private(set) var isEnded = false
 
     private var router: StoryRouter?
     private var currentScene: StoryScene?
     private var nodeIndex = 0
+    private var currentDecisionId: String?
 
     init() {
         loadStory()
     }
 
-    // MARK: - Story Loading
-
+    // load story
     private func loadStory() {
         router = loadJSON("main")
         let entryFile = router?.entryPoint.file ?? "opening.json"
@@ -44,37 +45,39 @@ final class DialogueViewModel: ObservableObject {
         nodeIndex = 0
     }
 
+    // generic json loader
     private func loadJSON<T: Codable>(_ fileName: String) -> T? {
         guard
             let url = Bundle.main.url(forResource: fileName, withExtension: "json"),
             let data = try? Data(contentsOf: url),
             let result = try? JSONDecoder().decode(T.self, from: data)
         else {
-            print("[Story] Could not load \(fileName).json")
+            print("couldn't load \(fileName).json")
             return nil
         }
         return result
     }
 
-    // MARK: - Navigation
+    // Navigation
 
-    // Advance to the next story beat (tapping the dialogue panel or the next arrow)
     func advance() {
-        // If we're showing choices, wait for the player to pick — tapping does nothing
+        // if it's a choice panel, do nothing 
         guard case .choice = currentBeat else {
             showNextBeat()
             return
         }
     }
 
-    // Player picked a decision route — load the branch file and continue
     func choose(_ route: DecisionRoute) {
+        if let decisionId = currentDecisionId {
+            saveProgress(decisionId: decisionId, chosenOption: route.option)
+            currentDecisionId = nil
+        }
         let fileName = route.targetFile.replacingOccurrences(of: ".json", with: "")
         loadScene(named: fileName)
         showNextBeat()
     }
 
-    // Walk through the sequence until we land on something to display
     private func showNextBeat() {
         guard let scene = currentScene else { return }
 
@@ -86,11 +89,31 @@ final class DialogueViewModel: ObservableObject {
                 currentBeat = beat
                 return
             }
-            // nil means silently skip (e.g. player_identity metadata nodes)
+            // some nodes (like player_identity) are skipped
         }
     }
 
-    // Map a story node to what the UI should show (nil = skip)
+    // save or load progress to documents folder
+
+    private var progressFileURL: URL {
+        FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+            .appendingPathComponent("userProgress.json")
+    }
+
+    private func loadProgress() -> UserProgress {
+        guard let data = try? Data(contentsOf: progressFileURL),
+              let progress = try? JSONDecoder().decode(UserProgress.self, from: data)
+        else { return UserProgress() }
+        return progress
+    }
+
+    private func saveProgress(decisionId: String, chosenOption: String) {
+        var progress = loadProgress()
+        progress.decisions[decisionId] = chosenOption
+        guard let data = try? JSONEncoder().encode(progress) else { return }
+        try? data.write(to: progressFileURL, options: .atomic)
+    }
+
     private func beat(for node: StoryNode) -> DialogueBeat? {
         switch node.type {
         case .playerIdentity:
@@ -109,6 +132,7 @@ final class DialogueViewModel: ObservableObject {
             return .narrative(text: node.text ?? "")
 
         case .decisionPoint:
+            currentDecisionId = node.nodeId
             let choices = router?.decisions
                 .first(where: { $0.decisionId == node.nodeId })?
                 .routes ?? []

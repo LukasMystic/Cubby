@@ -7,7 +7,7 @@
 
 import Foundation
 
-// Every possible node type that can appear in a scene's sequence
+// possible node that can appear in a scene
 enum StoryNodeType: String, Codable {
     case dialogue
     case situationNarrator = "situation_narrator"
@@ -18,29 +18,29 @@ enum StoryNodeType: String, Codable {
     case ending
 }
 
-// Dialogue line nested inside a context_emotion node
+// Dialogue line
 struct InlineDialogue: Codable {
     let speaker: String
     let text: String
 }
 
-// One beat in the story
+// one story
 struct StoryNode: Codable {
     let nodeId: String
     let type: StoryNodeType
 
-    // present on dialogue / context_emotion nodes
+    // dialogue nodes
     let speaker: String?
     let text: String?
 
-    // present on decision_point nodes
+    //  decision_point nodes
     let decisionPrompt: String?
 
-    // present on context_emotion nodes
+    // context_emotion nodes
     let emotion: String?
     let dialogue: InlineDialogue?
 
-    // present on ending nodes
+    // ending nodes
     let finalEmotion: String?
 
     enum CodingKeys: String, CodingKey {
@@ -56,7 +56,7 @@ struct StoryScene: Codable {
     let sequence: [StoryNode]
 }
 
-// One option the player can pick at a decision point
+// option the player can pick at a decision point
 struct DecisionRoute: Codable, Identifiable {
     var id: String { option }
     let option: String
@@ -70,7 +70,7 @@ struct DecisionRoute: Codable, Identifiable {
     }
 }
 
-// One decision block inside main.json
+// decision block
 struct StoryDecision: Codable {
     let decisionId: String
     let routes: [DecisionRoute]
@@ -81,7 +81,7 @@ struct StoryDecision: Codable {
     }
 }
 
-// main.json — router/index for the whole story
+// index for the whole story
 struct StoryRouter: Codable {
     let entryPoint: EntryPoint
     let decisions: [StoryDecision]
