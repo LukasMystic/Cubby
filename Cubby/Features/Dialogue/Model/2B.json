@@ -1,0 +1,25 @@
+{
+  "file_name": "2B.json",
+  "branch_id": "option_b_followup_keep_sitting_close",
+  "branch_label": "Option B",
+  "branch_title": "Joey Keeps Sitting Close",
+  "connects_from": "decision_003_after_option_b",
+  "selected_option": {
+    "choice_text": "Joey kept sitting close",
+    "choice_quality": "poor"
+  },
+  "sequence": [
+    {
+      "node_id": "2B_001_situation",
+      "type": "situation_narrator",
+      "text": "Mia stayed quiet. Joey kept building, not knowing Mia still needed a little more space."
+    },
+    {
+      "node_id": "ending_2B_annoyed",
+      "type": "ending",
+      "final_emotion_target": "Mia",
+      "final_emotion": "Annoyed"
+    }
+  ],
+  "ending_id": "ending_2B_annoyed"
+}

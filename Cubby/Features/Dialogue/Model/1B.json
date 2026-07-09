@@ -1,0 +1,31 @@
+{
+  "file_name": "1B.json",
+  "branch_id": "option_a_followup_move_closer",
+  "branch_label": "Option B",
+  "branch_title": "Joey Moves Closer to See the Tower",
+  "connects_from": "decision_002_after_option_a",
+  "selected_option": {
+    "choice_text": "Move closer to see the tower",
+    "choice_quality": "poor"
+  },
+  "sequence": [
+    {
+      "node_id": "1B_001_dialogue",
+      "type": "dialogue",
+      "speaker": "Joey",
+      "text": "Yay, I am so happy I can build the castle with you!"
+    },
+    {
+      "node_id": "1B_002_situation",
+      "type": "situation_narrator",
+      "text": "Joey didn't notice Mia still needed more space. They kept playing, but Mia wished Joey had checked in."
+    },
+    {
+      "node_id": "ending_1B_uncomfortable",
+      "type": "ending",
+      "final_emotion_target": "Mia",
+      "final_emotion": "Uncomfortable"
+    }
+  ],
+  "ending_id": "ending_1B_uncomfortable"
+}

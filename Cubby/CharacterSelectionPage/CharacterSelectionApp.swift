@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-@main
+// @main
 struct CharacterSelectionApp: App {
     var body: some Scene {
         WindowGroup {
