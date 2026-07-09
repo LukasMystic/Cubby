@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import UIKit
 
 struct DialogueView: View {
 
@@ -14,7 +15,7 @@ struct DialogueView: View {
 
     var body: some View {
         ZStack {
-            Image("GPBackground")
+            Image("Cubby_Gameplay_Page_01_BG 1")
                 .resizable()
                 .scaledToFill()
                 .ignoresSafeArea()
@@ -123,11 +124,21 @@ struct DialogueView: View {
         .padding(.bottom, 36)
     }
 
+    // capture the screen right now and hand it to the viewmodel to save
+    private func captureScreen(for route: DecisionRoute) {
+        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+              let window = windowScene.windows.first(where: { $0.isKeyWindow }) else { return }
+        let renderer = UIGraphicsImageRenderer(size: window.bounds.size)
+        let img = renderer.image { _ in window.drawHierarchy(in: window.bounds, afterScreenUpdates: false) }
+        viewModel.saveDecisionScreenshot(img, targetFile: route.targetFile)
+    }
+
     // Multiple choice
     private func choicePanel(options: [DecisionRoute]) -> some View {
         HStack(alignment: .top, spacing: 10) {
             ForEach(options) { route in
                 Button {
+                    captureScreen(for: route)
                     viewModel.choose(route)
                 } label: {
                     Text(route.choiceText)

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 import Observation
 
 // dialogue screen renders
@@ -28,6 +29,7 @@ final class DialogueViewModel {
     private var currentDecisionId: String?
 
     init() {
+        print("📁 save folder:", progressFileURL.deletingLastPathComponent().path)
         loadStory()
     }
 
@@ -93,7 +95,7 @@ final class DialogueViewModel {
         }
     }
 
-    // save or load progress to documents folder
+    // save or load progress
 
     private var progressFileURL: URL {
         FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
@@ -112,6 +114,15 @@ final class DialogueViewModel {
         progress.decisions[decisionId] = chosenOption
         guard let data = try? JSONEncoder().encode(progress) else { return }
         try? data.write(to: progressFileURL, options: .atomic)
+    }
+
+    // called from the view right before choose() while the decision screen is still visible
+    // targetFile is route.targetFile e.g. "1A.json" → saved as "1A.png"
+    func saveDecisionScreenshot(_ image: UIImage, targetFile: String) {
+        guard let data = image.pngData() else { return }
+        let filename = targetFile.replacingOccurrences(of: ".json", with: "") + ".png"
+        let url = progressFileURL.deletingLastPathComponent().appendingPathComponent(filename)
+        try? data.write(to: url, options: .atomic)
     }
 
     private func beat(for node: StoryNode) -> DialogueBeat? {

@@ -46,7 +46,7 @@ class GameScene: SKScene {
 
     private func setupBackground() {
         worldSize = CGSize(width: size.width * worldMultiplier, height: size.height * worldMultiplier)
-        let bg = SKSpriteNode(imageNamed: "GPBackground")
+        let bg = SKSpriteNode(imageNamed: "Cubby_Gameplay_Page_01_BG 1")
         if bg.size.width > 0 {
             // scale to cover the full world, not just the screen
             let fillScale = max(worldSize.width / bg.size.width, worldSize.height / bg.size.height)
