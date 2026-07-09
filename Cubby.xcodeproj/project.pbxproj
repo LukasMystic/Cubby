@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0BAC1A822FFDEC920018BE37 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 0BAC1A812FFDEC920018BE37 /* Lottie */; };
 		D1F3B2862FF656A3007BF617 /* SwiftUIJoystick in Frameworks */ = {isa = PBXBuildFile; productRef = D1F3B2852FF656A3007BF617 /* SwiftUIJoystick */; };
 /* End PBXBuildFile section */
 
@@ -30,6 +31,11 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
+		0BAC1A8D2FFE232E0018BE37 /* Lottie Usage Tutorial */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "Lottie Usage Tutorial";
+			sourceTree = "<group>";
+		};
 		D1F3B2782FF64284007BF617 /* Cubby */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			exceptions = (
@@ -45,6 +51,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0BAC1A822FFDEC920018BE37 /* Lottie in Frameworks */,
 				D1F3B2862FF656A3007BF617 /* SwiftUIJoystick in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -55,6 +62,7 @@
 		D1F3B26D2FF64284007BF617 = {
 			isa = PBXGroup;
 			children = (
+				0BAC1A8D2FFE232E0018BE37 /* Lottie Usage Tutorial */,
 				0BAC192A2FF65EAE0018BE37 /* Fonts */,
 				D1F3B2782FF64284007BF617 /* Cubby */,
 				D1F3B2772FF64284007BF617 /* Products */,
@@ -86,10 +94,12 @@
 			);
 			fileSystemSynchronizedGroups = (
 				0BAC192A2FF65EAE0018BE37 /* Fonts */,
+				0BAC1A8D2FFE232E0018BE37 /* Lottie Usage Tutorial */,
 				D1F3B2782FF64284007BF617 /* Cubby */,
 			);
 			name = Cubby;
 			packageProductDependencies = (
+				0BAC1A812FFDEC920018BE37 /* Lottie */,
 				D1F3B2852FF656A3007BF617 /* SwiftUIJoystick */,
 			);
 			productName = Cubby;
@@ -121,6 +131,7 @@
 			mainGroup = D1F3B26D2FF64284007BF617;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
+				0BAC1A802FFDEC920018BE37 /* XCRemoteSwiftPackageReference "lottie-spm" */,
 				D1F3B2842FF656A3007BF617 /* XCRemoteSwiftPackageReference "SwiftUIJoystick" */,
 			);
 			preferredProjectObjectVersion = 77;
@@ -367,6 +378,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		0BAC1A802FFDEC920018BE37 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-spm.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.6.1;
+			};
+		};
 		D1F3B2842FF656A3007BF617 /* XCRemoteSwiftPackageReference "SwiftUIJoystick" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/michael94ellis/SwiftUIJoystick";
@@ -378,6 +397,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		0BAC1A812FFDEC920018BE37 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0BAC1A802FFDEC920018BE37 /* XCRemoteSwiftPackageReference "lottie-spm" */;
+			productName = Lottie;
+		};
 		D1F3B2852FF656A3007BF617 /* SwiftUIJoystick */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = D1F3B2842FF656A3007BF617 /* XCRemoteSwiftPackageReference "SwiftUIJoystick" */;
