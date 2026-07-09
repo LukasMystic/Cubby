@@ -7,11 +7,10 @@
 
 //on tap, navigate to Selection Page
 
-// MARK: - LandingPageViewModel
-import Combine
+import Observation
 
-final class LandingPageViewModel: ObservableObject {
-    @Published var goToCharacterSelection = false
+@Observable final class LandingPageViewModel{
+    var goToCharacterSelection = false
 
     func onPlayButtonTapped() {
         goToCharacterSelection = true
