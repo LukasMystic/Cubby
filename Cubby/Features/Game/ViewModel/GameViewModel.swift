@@ -44,6 +44,9 @@ final class GameViewModel: ObservableObject {
     // Triggers the DialogueView to appear
     @Published var showDialogue = false
 
+    // tick() runs at 60fps, so the joystick event must only be donated once
+    private var hasDonatedJoystick = false
+
     init() {
         joystickMonitor = JoystickMonitor()
         let s = GameScene()
@@ -63,6 +66,12 @@ final class GameViewModel: ObservableObject {
         guard sqrt(dx * dx + dy * dy) > deadzone else {
             characterAnim = .idle
             return
+        }
+
+        if !hasDonatedJoystick {
+            hasDonatedJoystick = true
+            JoystickTip().invalidate(reason: .actionPerformed)
+            Task { await InteractTip.useJoystick.donate() }
         }
 
         // Scale the raw joystick output to a –1 … 1 range

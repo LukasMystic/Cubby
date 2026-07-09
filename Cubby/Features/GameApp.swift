@@ -11,11 +11,12 @@ import TipKit
 @main
 struct GameApp: App {
     init() {
-        try? Tips.configure([
-                .displayFrequency(.immediate),
-                // uncomment line below on production
-                // .datastoreLocation(.applicationDefault)
-        ])
+        #if DEBUG
+        // must run before configure, or tips stay marked as already-shown
+        try? Tips.resetDatastore()
+        #endif
+
+        try? Tips.configure([.displayFrequency(.immediate)])
     }
 
     var body: some Scene {
