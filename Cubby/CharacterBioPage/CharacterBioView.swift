@@ -16,69 +16,70 @@ struct CharacterBioView: View {
     }
     
     var body: some View {
-        ZStack {
-            Image("Secondary-BG-CharacterSelection-Image")
-                .scaleEffect(1.5)
-            HStack(){
-                Image(viewModel.character.imageName)
-                    .resizable()
-                    .scaledToFit()
-                    .scaleEffect(0.65)
-                    .offset(x: -20)
-                Image("Primary-PlaceHolder-CharacterBio-Image")
-                    .offset(x: -100)
-            }
-            
-            Text(viewModel.character.bioText)
-                .font(.custom("PlaypenSans-Regular",size: 32))
-                .lineSpacing(10)
-                .offset(x: 330)
-                .frame(width: 300)
-            
-            Rectangle()
-                .frame(width: 800, height: 150)
-                .offset(y: -350)
-                .rotationEffect(.degrees(2.64))
+        GeometryReader { geo in
+            ZStack {
+                Image("Secondary-BG-CharacterSelection-Image")
+                    .scaleEffect(1.5)
+                
+                HStack {
+                    Image(viewModel.character.imageName)
+                        .resizable()
+                        .scaledToFit()
+                        .scaleEffect(0.65)
+                        .offset(x: -geo.size.width * 0.015)
+                    Image("Primary-PlaceHolder-CharacterBio-Image")
+                        .offset(x: -geo.size.width * 0.073)
+                }
+                
+                Text(viewModel.character.bioText)
+                    .font(.custom("PlaypenSans-Regular", size: geo.size.width * 0.023))
+                    .lineSpacing(10)
+                    .offset(x: geo.size.width * 0.242)
+                    .frame(width: geo.size.width * 0.22)
+                
+                Rectangle()
+                    .frame(width: geo.size.width * 0.586, height: geo.size.height * 0.146)
+                    .offset(y: -geo.size.height * 0.342)
+                    .rotationEffect(.degrees(2.64))
+                    .foregroundColor(Color(red: 2/255, green: 64/255, blue: 35/255))
+                
+                Text("Halo Aku, \(viewModel.character.name)!")
+                    .font(.custom("FredokaOne-Regular", size: geo.size.width * 0.047))
+                    .foregroundColor(.white)
+                    .offset(y: -geo.size.height * 0.342)
+                    .rotationEffect(.degrees(2.64))
+                
+                Button("Play") {
+                    viewModel.playTapped()
+                }
                 .foregroundColor(Color(red: 2/255, green: 64/255, blue: 35/255))
-            Text("Halo Aku, \(viewModel.character.name)!")
-                .font(.custom("FredokaOne-Regular", size: 64))
-                .foregroundColor(.white)
-                .offset(y: -350)
-                .rotationEffect(.degrees(2.64))
-            Button("Play") {
-                viewModel.playTapped()
-            }
-            .foregroundColor(Color(red: 2/255, green: 64/255, blue: 35/255))
-            .font(.custom("FredokaOne-Regular", size: 48))
-            .padding(.horizontal, 120)
-            .padding(.vertical, 24)
-            .contentShape(Capsule())
-            .background(.white.opacity(0.90), in: Capsule())
-            .offset(x: 400, y: 350)
-            .rotationEffect(.degrees(-3))
-            .accessibilityLabel("Play Button")
+                .font(.custom("FredokaOne-Regular", size: geo.size.width * 0.035))
+                .padding(.horizontal, geo.size.width * 0.088)
+                .padding(.vertical, geo.size.height * 0.023)
+                .background(.white.opacity(0.90), in: Capsule())
+                .contentShape(Capsule())
+                .buttonStyle(.plain)
+                .offset(x: geo.size.width * 0.293, y: geo.size.height * 0.342)
+                .rotationEffect(.degrees(-3))
+                .accessibilityLabel("Play Button")
                 
-            Button("<") {
-                dismiss()
+                Button("<") {
+                    dismiss()
+                }
+                .foregroundColor(.black)
+                .font(.custom("FredokaOne-Regular", size: geo.size.width * 0.035))
+                .padding(geo.size.width * 0.026)
+                .background(Color(red: 242/255, green: 176/255, blue: 85/255), in: Circle())
+                .contentShape(Circle())
+                .buttonStyle(.plain)
+                .offset(x: -geo.size.width * 0.366, y: -geo.size.height * 0.391)
+                .accessibilityLabel("Back Button")
             }
-            .foregroundColor(Color(.black))
-            .font(.custom("FredokaOne-Regular", size: 48))
-            .padding(36)
-            .contentShape(Circle())
-            .background(Color(red: 242/255, green: 176/255, blue: 85/255), in: Circle())
-            .offset(x: -500, y: -400)
-            .accessibilityLabel("Back Button")
-            
-                
         }
         .navigationBarBackButtonHidden(true)
-        
-//        .navigationDestination(isPresented: $viewModel.navigateToGame) {
-//            GameView(selectedCharacter: viewModel.character.id)
-//        }
     }
 }
 
 #Preview {
     CharacterSelectionView()
-    }
+}
