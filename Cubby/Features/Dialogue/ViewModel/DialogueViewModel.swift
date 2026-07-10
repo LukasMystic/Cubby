@@ -30,7 +30,7 @@ final class DialogueViewModel {
     private var currentDecisionId: String?
 
     init() {
-        print("📁 save folder:", progressFileURL.deletingLastPathComponent().path)
+        print("save folder:", progressFileURL.deletingLastPathComponent().path)
         loadStory()
     }
 

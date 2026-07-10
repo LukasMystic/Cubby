@@ -31,6 +31,9 @@ final class GameViewModel {
     var sceneSize: CGSize = .zero
     var charHalfW: CGFloat = 40
     var charHalfH: CGFloat = 60
+    var groundY: CGFloat = 0
+    var groundMin: CGFloat = 0     // lowest Y the player can reach (foreground edge)
+    var groundMax: CGFloat = 0     // highest Y the player can reach (back of playground)
 
     var npcPosition: CGPoint = .zero
     var isNPCInRange: Bool = false
@@ -80,9 +83,9 @@ final class GameViewModel {
         let normX = dx / joystickSize
         let normY = dy / joystickSize
 
-        // clamp so player doesn't walk off screen
+        // X scrolls freely; Y moves at 40% speed to feel like depth, clamped to playground bounds
         let newX = min(max(characterPosition.x + normX * moveSpeed * dt, charHalfW), sceneSize.width - charHalfW)
-        let newY = min(max(characterPosition.y - normY * moveSpeed * dt, charHalfH), sceneSize.height - charHalfH)
+        let newY = min(max(characterPosition.y - normY * moveSpeed * dt * 0.4, groundMin), groundMax)
         characterPosition = CGPoint(x: newX, y: newY)
 
         if normX < -0.1 { isFacingRight = false }
