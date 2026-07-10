@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 
 struct UserProgress: Codable {
     // decisions maps decision node ID → chosen option key, e.g.:
@@ -27,45 +28,45 @@ struct UserProgress: Codable {
 
 // copy this whole struct into your feature — no other dependencies needed
 //
-// struct UserProgressLoader {
-//
-//     // the app's Documents folder — same place the game writes to
-//     private static var docsDir: URL {
-//         FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-//     }
-//
-//     // load the decision log
-//     // returns nil if the player hasn't made any choices yet
-//     static func loadProgress() -> UserProgress? {
-//         let url = docsDir.appendingPathComponent("userProgress.json")
-//         guard let data = try? Data(contentsOf: url) else { return nil }
-//         return try? JSONDecoder().decode(UserProgress.self, from: data)
-//     }
-//
-//     // load the screenshot for a specific branch, e.g. branchName = "1A"
-//     // returns nil if that decision hasn't been made yet
-//     static func loadScreenshot(branchName: String) -> UIImage? {
-//         let url = docsDir.appendingPathComponent("\(branchName).png")
-//         guard let data = try? Data(contentsOf: url) else { return nil }
-//         return UIImage(data: data)
-//     }
-//
-//     // load every saved screenshot at once
-//     // returns array of (branchName, image) e.g. [("1A", <UIImage>), ("2B", <UIImage>)]
-//     static func loadAllScreenshots() -> [(branch: String, image: UIImage)] {
-//         let urls = (try? FileManager.default.contentsOfDirectory(
-//             at: docsDir,
-//             includingPropertiesForKeys: nil
-//         ).filter { $0.pathExtension == "png" }) ?? []
-//
-//         return urls.compactMap { url in
-//             guard let data = try? Data(contentsOf: url),
-//                   let image = UIImage(data: data) else { return nil }
-//             let branch = url.deletingPathExtension().lastPathComponent
-//             return (branch, image)
-//         }
-//     }
-// }
+ struct UserProgressLoader {
+
+     // the app's Documents folder — same place the game writes to
+     private static var docsDir: URL {
+         FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+     }
+
+     // load the decision log
+     // returns nil if the player hasn't made any choices yet
+     static func loadProgress() -> UserProgress? {
+         let url = docsDir.appendingPathComponent("userProgress.json")
+         guard let data = try? Data(contentsOf: url) else { return nil }
+         return try? JSONDecoder().decode(UserProgress.self, from: data)
+     }
+
+     // load the screenshot for a specific branch, e.g. branchName = "1A"
+     // returns nil if that decision hasn't been made yet
+     static func loadScreenshot(branchName: String) -> UIImage? {
+         let url = docsDir.appendingPathComponent("\(branchName).png")
+         guard let data = try? Data(contentsOf: url) else { return nil }
+         return UIImage(data: data)
+     }
+
+     // load every saved screenshot at once
+     // returns array of (branchName, image) e.g. [("1A", <UIImage>), ("2B", <UIImage>)]
+     static func loadAllScreenshots() -> [(branch: String, image: UIImage)] {
+         let urls = (try? FileManager.default.contentsOfDirectory(
+             at: docsDir,
+             includingPropertiesForKeys: nil
+         ).filter { $0.pathExtension == "png" }) ?? []
+
+         return urls.compactMap { url in
+             guard let data = try? Data(contentsOf: url),
+                   let image = UIImage(data: data) else { return nil }
+             let branch = url.deletingPathExtension().lastPathComponent
+             return (branch, image)
+         }
+     }
+ }
 //
 // ── USAGE EXAMPLE ────────────────────────────────────────────────────────────
 //
