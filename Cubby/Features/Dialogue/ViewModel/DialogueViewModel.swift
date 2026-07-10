@@ -21,6 +21,7 @@ enum DialogueBeat {
 final class DialogueViewModel {
 
     private(set) var currentBeat: DialogueBeat = .narrative(text: "")
+    private(set) var miaEmotion: String = ""   // updated by context_emotion nodes; empty = default neutral
     private(set) var isEnded = false
 
     private var router: StoryRouter?
@@ -137,6 +138,7 @@ final class DialogueViewModel {
             return .speech(speaker: node.speaker ?? "", text: node.text ?? "")
 
         case .contextEmotion:
+            miaEmotion = node.emotion ?? ""
             if let inline = node.dialogue {
                 return .speech(speaker: inline.speaker, text: inline.text)
             }
