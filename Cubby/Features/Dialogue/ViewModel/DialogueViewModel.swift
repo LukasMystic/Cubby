@@ -22,6 +22,7 @@ final class DialogueViewModel {
 
     private(set) var currentBeat: DialogueBeat = .narrative(text: "")
     private(set) var isEnded = false
+    private(set) var playerName = "Joey"
 
     private var router: StoryRouter?
     private var currentScene: StoryScene?
@@ -36,6 +37,7 @@ final class DialogueViewModel {
     // load story
     private func loadStory() {
         router = loadJSON("main")
+        if let name = router?.characterNames?.player { playerName = name }
         let entryFile = router?.entryPoint.file ?? "opening.json"
         let sceneName = entryFile.replacingOccurrences(of: ".json", with: "")
         loadScene(named: sceneName)
@@ -61,6 +63,13 @@ final class DialogueViewModel {
     }
 
     // Navigation
+    func restart() {
+        isEnded = false
+        nodeIndex = 0
+        loadStory()
+    }
+
+    // MARK: - Navigation
 
     func advance() {
         // if it's a choice panel, do nothing 
@@ -131,12 +140,15 @@ final class DialogueViewModel {
             return nil
 
         case .backgroundSetting, .situationNarrator:
+            SpeechService.shared.play(nodeId: node.nodeId)
             return .narrative(text: node.text ?? "")
 
         case .dialogue:
+            SpeechService.shared.play(nodeId: node.nodeId)
             return .speech(speaker: node.speaker ?? "", text: node.text ?? "")
 
         case .contextEmotion:
+            SpeechService.shared.play(nodeId: node.nodeId)
             if let inline = node.dialogue {
                 return .speech(speaker: inline.speaker, text: inline.text)
             }
@@ -144,12 +156,14 @@ final class DialogueViewModel {
 
         case .decisionPoint:
             currentDecisionId = node.nodeId
+            SpeechService.shared.stop()
             let choices = router?.decisions
                 .first(where: { $0.decisionId == node.nodeId })?
                 .routes ?? []
             return .choice(options: choices)
 
         case .ending:
+            SpeechService.shared.stop()
             isEnded = true
             return .ending(emotion: node.finalEmotion ?? "")
         }

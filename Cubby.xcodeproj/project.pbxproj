@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0BAC1A822FFDEC920018BE37 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 0BAC1A812FFDEC920018BE37 /* Lottie */; };
 		D1F3B2862FF656A3007BF617 /* SwiftUIJoystick in Frameworks */ = {isa = PBXBuildFile; productRef = D1F3B2852FF656A3007BF617 /* SwiftUIJoystick */; };
 /* End PBXBuildFile section */
 
@@ -14,9 +15,32 @@
 		D1F3B2762FF64284007BF617 /* Cubby.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cubby.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		0BAC19282FF65D640018BE37 /* Exceptions for "Cubby" folder in "Cubby" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = D1F3B2752FF64284007BF617 /* Cubby */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		0BAC192A2FF65EAE0018BE37 /* Fonts */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		0BAC1A8D2FFE232E0018BE37 /* Lottie Usage Tutorial */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "Lottie Usage Tutorial";
+			sourceTree = "<group>";
+		};
 		D1F3B2782FF64284007BF617 /* Cubby */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				0BAC19282FF65D640018BE37 /* Exceptions for "Cubby" folder in "Cubby" target */,
+			);
 			path = Cubby;
 			sourceTree = "<group>";
 		};
@@ -27,6 +51,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0BAC1A822FFDEC920018BE37 /* Lottie in Frameworks */,
 				D1F3B2862FF656A3007BF617 /* SwiftUIJoystick in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -37,6 +62,8 @@
 		D1F3B26D2FF64284007BF617 = {
 			isa = PBXGroup;
 			children = (
+				0BAC1A8D2FFE232E0018BE37 /* Lottie Usage Tutorial */,
+				0BAC192A2FF65EAE0018BE37 /* Fonts */,
 				D1F3B2782FF64284007BF617 /* Cubby */,
 				D1F3B2772FF64284007BF617 /* Products */,
 			);
@@ -66,10 +93,13 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
+				0BAC192A2FF65EAE0018BE37 /* Fonts */,
+				0BAC1A8D2FFE232E0018BE37 /* Lottie Usage Tutorial */,
 				D1F3B2782FF64284007BF617 /* Cubby */,
 			);
 			name = Cubby;
 			packageProductDependencies = (
+				0BAC1A812FFDEC920018BE37 /* Lottie */,
 				D1F3B2852FF656A3007BF617 /* SwiftUIJoystick */,
 			);
 			productName = Cubby;
@@ -101,6 +131,7 @@
 			mainGroup = D1F3B26D2FF64284007BF617;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
+				0BAC1A802FFDEC920018BE37 /* XCRemoteSwiftPackageReference "lottie-spm" */,
 				D1F3B2842FF656A3007BF617 /* XCRemoteSwiftPackageReference "SwiftUIJoystick" */,
 			);
 			preferredProjectObjectVersion = 77;
@@ -193,6 +224,7 @@
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
@@ -250,6 +282,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -262,10 +295,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 5MRHN4782T;
+				DEVELOPMENT_TEAM = SCVF9P6M62;
 				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = Info.plist;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Cubby/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.games";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -297,10 +330,10 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 5MRHN4782T;
+				DEVELOPMENT_TEAM = SCVF9P6M62;
 				ENABLE_PREVIEWS = YES;
-				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = Info.plist;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Cubby/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.games";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -349,6 +382,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		0BAC1A802FFDEC920018BE37 /* XCRemoteSwiftPackageReference "lottie-spm" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-spm.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.6.1;
+			};
+		};
 		D1F3B2842FF656A3007BF617 /* XCRemoteSwiftPackageReference "SwiftUIJoystick" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/michael94ellis/SwiftUIJoystick";
@@ -360,6 +401,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		0BAC1A812FFDEC920018BE37 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0BAC1A802FFDEC920018BE37 /* XCRemoteSwiftPackageReference "lottie-spm" */;
+			productName = Lottie;
+		};
 		D1F3B2852FF656A3007BF617 /* SwiftUIJoystick */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = D1F3B2842FF656A3007BF617 /* XCRemoteSwiftPackageReference "SwiftUIJoystick" */;

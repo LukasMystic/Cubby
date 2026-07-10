@@ -1,24 +1,34 @@
 {
   "file_name": "2C.json",
   "branch_id": "option_b_followup_lean_even_closer",
-  "branch_label": "Option C",
-  "branch_title": "Joey Leans Even Closer",
+  "branch_label": "Opsi C",
+  "branch_title": "Lebih Mendekat untuk Mengambil Potongan Lego",
   "connects_from": "decision_003_after_option_b",
   "selected_option": {
-    "choice_text": "Lean in even closer to grab more blocks",
+    "choice_text": "Lebih mendekat untuk mengambil potongan lego lebih banyak.",
     "choice_quality": "worst"
   },
   "sequence": [
     {
-      "node_id": "2C_001_context_emotion",
+      "node_id": "2C_001_situation",
+      "type": "situation_narrator",
+      "text": "Mia menepis tangan kamu, mencegah kamu untuk mengambil potongan lego tersebut."
+    },
+    {
+      "node_id": "2C_002_context_emotion",
       "type": "context_emotion",
       "target": "Mia",
       "emotion": "Upset/Angry",
-      "text": "Mia becomes upset.",
+      "text": "Mia marah dan kesal.",
       "dialogue": {
         "speaker": "Mia",
-        "text": "Stop please, you're really too close now."
+        "text": "Tolong, kamu sekarang jadi deket banget dan itu lego punya aku."
       }
+    },
+    {
+      "node_id": "2C_003_situation",
+      "type": "situation_narrator",
+      "text": "Kamu terus mendekat. Mia menjadi marah karena kamu terlalu dekat dan mencoba mengambil potongan lego yang sedang dia pakai."
     },
     {
       "node_id": "ending_2C_upset_angry",
@@ -27,5 +37,34 @@
       "final_emotion": "Upset/Angry"
     }
   ],
-  "ending_id": "ending_2C_upset_angry"
+  "ending_id": "ending_2C_upset_angry",
+  "storybook_page": {
+    "page_id": "storybook_2C",
+    "player_chose": "2C",
+    "source_file": "2C.json",
+    "page_type": "ending_recap",
+    "title": "Kamu Memilih 2C",
+    "sections": [
+      {
+        "heading": "Bagaimana situasinya?",
+        "body": "Kamu mengambil potongan lego di area bermain Mia. Kamu tetap duduk sangat dekat dengan Mia."
+      },
+      {
+        "heading": "Apa yang kamu lakukan?",
+        "body": "Lebih mendekat untuk mengambil potongan lego lebih banyak."
+      },
+      {
+        "heading": "Apa yang terjadi?",
+        "body": "Mia marah dan kesal. Dia menepis tangan kamu. Dia berhenti bermain setelah itu."
+      },
+      {
+        "heading": "Yuk, kita ngobrol",
+        "questions": [
+          "Kenapa Mia marah?",
+          "Bagaimana cara mengatakan jika teman kamu posisinya terlalu dekat dengan kamu?",
+          "Apa yang bisa kamu lakukan jika teman membutuhkan sedikit ruang?"
+        ]
+      }
+    ]
+  }
 }

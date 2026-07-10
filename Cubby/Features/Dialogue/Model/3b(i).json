@@ -1,11 +1,11 @@
 {
   "file_name": "3b(i).json",
   "branch_id": "option_3b_i_notice_and_move_away",
-  "branch_label": "Option A",
-  "branch_title": "Joey Notices and Moves Away",
+  "branch_label": "Opsi A",
+  "branch_title": "Menyadari dan Menjauh Sedikit",
   "connects_from": "decision_005_after_option_3B",
   "selected_option": {
-    "choice_text": "Notice and move away a little bit",
+    "choice_text": "Menyadari dan menjauh sedikit.",
     "choice_quality": "repair"
   },
   "sequence": [
@@ -14,16 +14,16 @@
       "type": "context_emotion",
       "target": "Mia",
       "emotion": "Relieved",
-      "text": "Mia feels relieved.",
+      "text": "Mia merasa lega.",
       "dialogue": {
         "speaker": "Mia",
-        "text": "Thank you for giving me a little more space."
+        "text": "Terima kasih sudah agak menjauh."
       }
     },
     {
       "node_id": "3b_i_002_situation",
       "type": "situation_narrator",
-      "text": "Joey noticed Mia leaning away. He gave her more space, and Mia felt happy and comfortable again."
+      "text": "Kamu melihat Mia menjauh lalu memberi ruang. Sekarang Mia merasa lebih nyaman."
     },
     {
       "node_id": "ending_3b_i_relieved",
@@ -32,5 +32,34 @@
       "final_emotion": "Relieved"
     }
   ],
-  "ending_id": "ending_3b_i_relieved"
+  "ending_id": "ending_3b_i_relieved",
+  "storybook_page": {
+    "page_id": "storybook_3b_i",
+    "player_chose": "3B(i)",
+    "source_file": "3b(i).json",
+    "page_type": "ending_recap",
+    "title": "Kamu Memilih 3B(i)",
+    "sections": [
+      {
+        "heading": "Bagaimana situasinya?",
+        "body": "Mia diam-diam menjauh setelah kamu mendekat tanpa meminta izin."
+      },
+      {
+        "heading": "Apa yang kamu lakukan?",
+        "body": "Menyadari dan menjauh sedikit."
+      },
+      {
+        "heading": "Apa yang terjadi?",
+        "body": "Mia merasa lega dan kalian kembali bermain bersama."
+      },
+      {
+        "heading": "Yuk, kita ngobrol",
+        "questions": [
+          "Kenapa kamu membuat situasi membaik?",
+          "Kenapa cepat sadar dan memperbaiki kesalahan membantu keadaan jadi lebih baik?",
+          "Bagaimana kamu membuat keadaan jadi lebih baik setelah melakukan kesalahan?"
+        ]
+      }
+    ]
+  }
 }
