@@ -11,12 +11,11 @@ final class SpeechService {
     static let shared = SpeechService()
 
     private var player: AVAudioPlayer?
-    private let language = "id"
 
     func play(nodeId: String) {
         stop()
-        guard let url = Bundle.main.url(forResource: nodeId, withExtension: "mp3", subdirectory: "audio/\(language)") else {
-            print("[Speech] Missing audio: audio/\(language)/\(nodeId).mp3")
+            guard let url = Bundle.main.url(forResource: nodeId, withExtension: "mp3") else {
+            print("[Speech] Missing audio: \(nodeId).mp3")
             return
         }
         try? AVAudioSession.sharedInstance().setCategory(.playback)
