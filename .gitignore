@@ -64,3 +64,5 @@ fastlane/test_output
 .xcworkspace
 .xcodeproj
 .DS_Store
+gen_audio.py
+audio_checklist.md
