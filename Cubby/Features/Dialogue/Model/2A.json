@@ -1,11 +1,11 @@
 {
   "file_name": "2A.json",
   "branch_id": "option_b_followup_notice_tense_and_ask",
-  "branch_label": "Option A",
-  "branch_title": "Joey Notices Mia Seems Tense",
+  "branch_label": "Opsi A",
+  "branch_title": "Menyadari Mia Tidak Nyaman dan Bertanya",
   "connects_from": "decision_003_after_option_b",
   "selected_option": {
-    "choice_text": "Notice Mia seems tense and ask",
+    "choice_text": "Menyadari Mia tidak nyaman dan bertanya.",
     "choice_quality": "repair"
   },
   "sequence": [
@@ -13,23 +13,23 @@
       "node_id": "2A_001_dialogue",
       "type": "dialogue",
       "speaker": "Joey",
-      "text": "Hey, do you need a little more space? We can scoot over."
+      "text": "Apakah kamu baik-baik saja? Apakah aku duduk terlalu dekat?"
     },
     {
       "node_id": "2A_002_context_emotion",
       "type": "context_emotion",
       "target": "Mia",
       "emotion": "Relieved",
-      "text": "Mia feels relieved.",
+      "text": "Mia merasa lega.",
       "dialogue": {
         "speaker": "Mia",
-        "text": "Yes, please. Thanks for asking!"
+        "text": "Iya, sedikit. Makasih sudah menyadarinya ya."
       }
     },
     {
       "node_id": "2A_003_situation",
       "type": "situation_narrator",
-      "text": "Joey noticed Mia's feelings and checked in. Asking how a friend feels is a kind way to help."
+      "text": "Kamu sadar Mia sedang sedih dan menanyakan perasaannya. Mia merasa menjadi diperhatikan."
     },
     {
       "node_id": "ending_2A_relieved",
@@ -38,5 +38,34 @@
       "final_emotion": "Relieved"
     }
   ],
-  "ending_id": "ending_2A_relieved"
+  "ending_id": "ending_2A_relieved",
+  "storybook_page": {
+    "page_id": "storybook_2A",
+    "player_chose": "2A",
+    "source_file": "2A.json",
+    "page_type": "ending_recap",
+    "title": "Kamu Memilih 2A",
+    "sections": [
+      {
+        "heading": "Bagaimana situasinya?",
+        "body": "Kamu mengambil potongan lego di area bermain Mia. Kamu tetap duduk sangat dekat dengan Mia."
+      },
+      {
+        "heading": "Apa yang kamu lakukan?",
+        "body": "Menyadari Mia tidak nyaman dan bertanya."
+      },
+      {
+        "heading": "Apa yang terjadi?",
+        "body": "Mia merasa lega karena kamu bertanya perasaan dia. Kalian kembali bermain bersama."
+      },
+      {
+        "heading": "Yuk, kita ngobrol",
+        "questions": [
+          "Kenapa kamu bertanya ke Mia kalau dia baik-baik saja?",
+          "Apakah kamu pernah bilang “okay” meskipun kamu merasa tidak baik-baik saja?",
+          "Kenapa mengecek perasaan teman adalah hal yang baik?"
+        ]
+      }
+    ]
+  }
 }
