@@ -1,14 +1,14 @@
 {
   "file_name": "main.json",
   "project_id": "joey_mia_personal_space_story",
-  "project_title": "Joey & Mia: Personal Space Interactive Story",
-  "version": "2.0.0-final",
+  "project_title": "Joey & Mia: Cerita Interaktif tentang Ruang Teman",
+  "version": "2.2.0-storybook-page-update",
   "main_type": "router_index",
-  "main_description": "main.json is the master map. It is not a scene. It shows which file opens after each player choice.",
+  "main_description": "main.json adalah peta utama. File ini bukan scene cerita. Isinya menunjukkan file mana yang dibuka setelah pemain memilih.",
   "character_names": {
     "player": "Joey",
     "friend": "Mia",
-    "normalization_note": "Use Mia consistently. Replace any old Lily reference with Mia."
+    "normalization_note": "Gunakan nama Mia secara konsisten. Jika ada referensi lama Lily, ganti menjadi Mia."
   },
   "file_order": [
     "main.json",
@@ -36,21 +36,21 @@
     {
       "decision_id": "decision_001_initial_space_response",
       "source_file": "opening.json",
-      "prompt": "What should Joey do after Mia says she feels squished?",
+      "prompt": "Mia bilang dia merasa terhimpit. Kamu mau apa?",
       "routes": [
         {
           "option": "A",
-          "choice_text": "Sit down right next to Mia anyway",
+          "choice_text": "Tetap duduk tepat di samping Mia.",
           "target_file": "1.json"
         },
         {
           "option": "B",
-          "choice_text": "Insist and ask again",
+          "choice_text": "Meminta sekali lagi.",
           "target_file": "2.json"
         },
         {
           "option": "C",
-          "choice_text": "Accept it and ask",
+          "choice_text": "Menerima jawaban Mia lalu bertanya dengan sopan.",
           "target_file": "3.json"
         }
       ]
@@ -58,21 +58,21 @@
     {
       "decision_id": "decision_002_after_option_a",
       "source_file": "1.json",
-      "prompt": "Mia moved a little farther away. What should Joey do now?",
+      "prompt": "Mia menjauh secara diam-diam. Kamu mau apa?",
       "routes": [
         {
           "option": "A",
-          "choice_text": "Notice Mia moved away and ask",
+          "choice_text": "Menyadari Mia menjauh dan bertanya.",
           "target_file": "1A.json"
         },
         {
           "option": "B",
-          "choice_text": "Move closer to see the tower",
+          "choice_text": "Mendekat untuk melihat potongan lego tersebut.",
           "target_file": "1B.json"
         },
         {
           "option": "C",
-          "choice_text": "Reach over and take a piece from Mia's pile without asking",
+          "choice_text": "Langsung mengambil potongan lego tersebut tanpa izin.",
           "target_file": "1C.json"
         }
       ]
@@ -80,21 +80,21 @@
     {
       "decision_id": "decision_003_after_option_b",
       "source_file": "2.json",
-      "prompt": "Mia still seems tense. What should Joey do now?",
+      "prompt": "Mia masih terlihat tidak nyaman. Kamu mau apa?",
       "routes": [
         {
           "option": "A",
-          "choice_text": "Notice Mia seems tense and ask",
+          "choice_text": "Menyadari Mia tidak nyaman dan bertanya.",
           "target_file": "2A.json"
         },
         {
           "option": "B",
-          "choice_text": "Joey kept sitting close",
+          "choice_text": "Tetap duduk di samping Mia.",
           "target_file": "2B.json"
         },
         {
           "option": "C",
-          "choice_text": "Lean in even closer to grab more blocks",
+          "choice_text": "Lebih mendekat untuk mengambil potongan lego lebih banyak.",
           "target_file": "2C.json"
         }
       ]
@@ -102,21 +102,21 @@
     {
       "decision_id": "decision_004_after_option_c",
       "source_file": "3.json",
-      "prompt": "Joey sees a perfect piece in Mia's area. What should he do?",
+      "prompt": "Kamu melihat potongan lego yang cocok di dekat Mia. Kamu mau apa?",
       "routes": [
         {
           "option": "A",
-          "choice_text": "Pause and ask first",
+          "choice_text": "Berhenti sebentar lalu bertanya.",
           "target_file": "3A.json"
         },
         {
           "option": "B",
-          "choice_text": "Lean in close",
+          "choice_text": "Lebih mendekat.",
           "target_file": "3B.json"
         },
         {
           "option": "C",
-          "choice_text": "Reach over and took the piece Mia was using",
+          "choice_text": "Mengambil potongan lego yang digunakan Mia.",
           "target_file": "3C.json"
         }
       ]
@@ -124,16 +124,16 @@
     {
       "decision_id": "decision_005_after_option_3B",
       "source_file": "3B.json",
-      "prompt": "Mia leans away after Joey gets too close. What should Joey do?",
+      "prompt": "Mia mulai menjauh. Kamu mau apa?",
       "routes": [
         {
           "option": "i",
-          "choice_text": "Notice and move away a little bit",
+          "choice_text": "Menyadari dan menjauh sedikit.",
           "target_file": "3b(i).json"
         },
         {
           "option": "ii",
-          "choice_text": "Ignore it",
+          "choice_text": "Membiarkan saja.",
           "target_file": "3b(ii).json"
         }
       ]
@@ -188,16 +188,36 @@
     {
       "file": "3C.json",
       "ending_id": "ending_3C_upset_angry",
-      "mia_final_emotion": "Upset/Angry"
+      "mia_final_emotion": "Angry/Upset"
     }
   ],
   "continuity_rules": [
-    "Joey is always the player.",
-    "Mia is always the friend character.",
-    "opening.json always starts the story.",
-    "3B.json is not an ending file; it continues to 3b(i).json or 3b(ii).json.",
-    "Each branch file must have connects_from.",
-    "Each non-ending branch file must have connects_to.",
-    "Each ending branch file must have ending_id."
-  ]
+    "Joey selalu menjadi karakter pemain.",
+    "Mia selalu menjadi karakter teman.",
+    "opening.json selalu menjadi awal cerita.",
+    "3B.json bukan file ending; alurnya lanjut ke 3b(i).json atau 3b(ii).json.",
+    "Setiap file cabang harus punya connects_from.",
+    "Setiap file cabang yang belum ending harus punya connects_to.",
+    "Setiap file cabang ending harus punya ending_id."
+  ],
+  "storybook_config": {
+    "field_name": "storybook_page",
+    "rendering_rule": "Tampilkan halaman storybook dari setiap file cabang yang dipilih pemain. Contoh: path 1B menampilkan 1.json + 1B.json. Path 3B(i) menampilkan 3.json + 3B.json + 3b(i).json.",
+    "files_with_storybook_page": [
+      "1.json",
+      "1A.json",
+      "1B.json",
+      "1C.json",
+      "2.json",
+      "2A.json",
+      "2B.json",
+      "2C.json",
+      "3.json",
+      "3A.json",
+      "3B.json",
+      "3b(i).json",
+      "3b(ii).json",
+      "3C.json"
+    ]
+  }
 }
