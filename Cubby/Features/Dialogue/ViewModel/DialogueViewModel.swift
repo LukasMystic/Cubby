@@ -22,9 +22,7 @@ final class DialogueViewModel {
 
     private(set) var currentBeat: DialogueBeat = .narrative(text: "")
     private(set) var isEnded = false
-    @Published private(set) var currentBeat: DialogueBeat = .narrative(text: "")
-    @Published private(set) var isEnded = false
-    @Published private(set) var playerName = "Joey"
+    private(set) var playerName = "Joey"
 
     private var router: StoryRouter?
     private var currentScene: StoryScene?
