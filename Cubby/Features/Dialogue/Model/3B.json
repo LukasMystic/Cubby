@@ -1,11 +1,11 @@
 {
   "file_name": "3B.json",
   "branch_id": "option_c_followup_lean_in_close",
-  "branch_label": "Option B",
-  "branch_title": "Joey Leans In Close",
+  "branch_label": "Opsi B",
+  "branch_title": "Lebih Mendekat",
   "connects_from": "decision_004_after_option_c",
   "selected_option": {
-    "choice_text": "Lean in close",
+    "choice_text": "Lebih mendekat.",
     "choice_quality": "needs_repair"
   },
   "sequence": [
@@ -14,23 +14,52 @@
       "type": "context_emotion",
       "target": "Mia",
       "emotion": "Confused",
-      "text": "Mia feels confused.",
+      "text": "Mia merasa tidak yakin dan bingung.",
       "dialogue": {
         "speaker": "Mia",
-        "text": "Uh... um, okay."
+        "text": "Oh.. um... oke..."
       }
     },
     {
       "node_id": "3B_002_situation",
       "type": "situation_narrator",
-      "text": "Mia leans away."
+      "text": "Mia mulai menjauh."
     },
     {
       "node_id": "decision_005_after_option_3B",
       "type": "decision_point",
-      "title": "Joey's Decision",
-      "decision_prompt": "Mia leans away after Joey gets too close. What should Joey do?"
+      "title": "Pilihanmu",
+      "decision_prompt": "Mia mulai menjauh. Kamu mau apa?"
     }
   ],
-  "connects_to": "decision_005_after_option_3B"
+  "connects_to": "decision_005_after_option_3B",
+  "storybook_page": {
+    "page_id": "storybook_3B",
+    "player_chose": "3B",
+    "source_file": "3B.json",
+    "page_type": "choice_recap",
+    "title": "Kamu Memilih 3B",
+    "sections": [
+      {
+        "heading": "Bagaimana situasinya?",
+        "body": "Kamu melihat potongan lego di area bermain Mia. Potongan lego tersebut sangat cocok dengan menara kamu."
+      },
+      {
+        "heading": "Apa yang kamu lakukan?",
+        "body": "Lebih mendekat."
+      },
+      {
+        "heading": "Apa yang terjadi?",
+        "body": "Mia merasa tidak yakin dan bingung, lalu menjauh secara diam-diam."
+      },
+      {
+        "heading": "Yuk, kita ngobrol",
+        "questions": [
+          "Kenapa kamu lupa untuk bertanya kali ini?",
+          "Apa yang bisa kamu lakukan setelah melakukan kesalahan?",
+          "Bagaimana kamu bisa membantu Mia untuk nyaman kembali?"
+        ]
+      }
+    ]
+  }
 }

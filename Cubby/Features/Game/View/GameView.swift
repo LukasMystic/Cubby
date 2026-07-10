@@ -8,8 +8,12 @@
 import SwiftUI
 import SpriteKit
 import SwiftUIJoystick
+import TipKit
 
 struct GameView: View {
+    private let joystickTip = JoystickTip()
+    private let interactTip = InteractTip()
+    private let startTip = StartGameTip()
 
     @State private var viewModel = GameViewModel()
     @State private var showSavedBadge = false
@@ -24,6 +28,8 @@ struct GameView: View {
             if viewModel.isPaused {
                 pauseOverlay
             }
+            TipView(startTip)
+                .padding(.horizontal, 40)
         }
         .fullScreenCover(isPresented: Bindable(viewModel).showDialogue) {
             DialogueView()
@@ -156,6 +162,7 @@ struct GameView: View {
         )
         .padding(.leading, 32)
         .padding(.bottom, 28)
+        .popoverTip(joystickTip)
     }
 
     private var interactButton: some View {
@@ -173,6 +180,7 @@ struct GameView: View {
         }
         .padding(.trailing, 32)
         .padding(.bottom, 28)
+        .popoverTip(interactTip)
     }
 }
 

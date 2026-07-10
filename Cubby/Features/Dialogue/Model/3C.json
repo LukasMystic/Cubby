@@ -1,11 +1,11 @@
 {
   "file_name": "3C.json",
   "branch_id": "option_c_followup_take_piece_mia_was_using",
-  "branch_label": "Option C",
-  "branch_title": "Joey Takes the Piece Mia Was Using",
+  "branch_label": "Opsi C",
+  "branch_title": "Mengambil Potongan Lego yang Digunakan Mia",
   "connects_from": "decision_004_after_option_c",
   "selected_option": {
-    "choice_text": "Reach over and took the piece Mia was using",
+    "choice_text": "Mengambil potongan lego yang digunakan Mia.",
     "choice_quality": "worst"
   },
   "sequence": [
@@ -13,24 +13,53 @@
       "node_id": "3C_001_context_emotion",
       "type": "context_emotion",
       "target": "Mia",
-      "emotion": "Upset/Angry",
-      "text": "Mia was caught by surprise.",
+      "emotion": "Angry/Upset",
+      "text": "Mia merasa kaget karena kamu mengambil potongan lego yang sedang dia pakai.",
       "dialogue": {
         "speaker": "Mia",
-        "text": "Joey, you're really close again. Can you give me a little more space, please?"
+        "text": "Jika kamu mau lebih mendekat, kamu harusnya meminta izin dulu."
       }
     },
     {
       "node_id": "3C_002_situation",
       "type": "situation_narrator",
-      "text": "Joey forgot to ask. Asking first helps friends feel safe."
+      "text": "Kamu lupa untuk izin padahal Mia masih pakai lego itu."
     },
     {
       "node_id": "ending_3C_upset_angry",
       "type": "ending",
       "final_emotion_target": "Mia",
-      "final_emotion": "Upset/Angry"
+      "final_emotion": "Angry/Upset"
     }
   ],
-  "ending_id": "ending_3C_upset_angry"
+  "ending_id": "ending_3C_upset_angry",
+  "storybook_page": {
+    "page_id": "storybook_3C",
+    "player_chose": "3C",
+    "source_file": "3C.json",
+    "page_type": "ending_recap",
+    "title": "Kamu Memilih 3C",
+    "sections": [
+      {
+        "heading": "Bagaimana situasinya?",
+        "body": "Kamu melihat potongan lego di area bermain Mia. Potongan lego tersebut sangat cocok dengan menara kamu."
+      },
+      {
+        "heading": "Apa yang kamu lakukan?",
+        "body": "Mengambil potongan lego yang digunakan Mia."
+      },
+      {
+        "heading": "Apa yang terjadi?",
+        "body": "Mia merasa kaget dan kecewa. Sekarang dia tidak mau bermain lagi."
+      },
+      {
+        "heading": "Yuk, kita ngobrol",
+        "questions": [
+          "Kenapa Mia merasa kaget?",
+          "Kenapa kita selalu harus meminta izin sebelum mengambil punya orang?",
+          "Bagaimana perasaan Mia ketika kamu mengambil potongan lego dia tanpa meminta izin?"
+        ]
+      }
+    ]
+  }
 }

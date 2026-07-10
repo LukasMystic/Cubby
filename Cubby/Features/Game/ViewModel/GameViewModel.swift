@@ -9,6 +9,7 @@
 import SpriteKit
 import SwiftUIJoystick
 import Observation
+import TipKit
 
 // idle or walking - GameScene needs this too
 enum CharacterAnim: Equatable { case idle, walking }
@@ -43,6 +44,9 @@ final class GameViewModel {
         didSet { gameScene.isPaused = isPaused }
     }
 
+    // tick() runs at 60fps, so the joystick event must only be donated once
+    private var hasDonatedJoystick = false
+
     init() {
         joystickMonitor = JoystickMonitor()
         let s = GameScene()
@@ -66,6 +70,13 @@ final class GameViewModel {
             return
         }
 
+        if !hasDonatedJoystick {
+            hasDonatedJoystick = true
+            JoystickTip().invalidate(reason: .actionPerformed)
+            Task { await InteractTip.useJoystick.donate() }
+        }
+
+        // Scale the raw joystick output to a –1 … 1 range
         let normX = dx / joystickSize
         let normY = dy / joystickSize
 
@@ -85,6 +96,8 @@ final class GameViewModel {
             print("not close enough to NPC")
             return
         }
+        InteractTip().invalidate(reason: .actionPerformed)
+        Task { await InteractTip.useInteract.donate() }
         showDialogue = true
     }
 }
