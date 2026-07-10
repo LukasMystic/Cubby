@@ -105,24 +105,29 @@ final class DialogueViewModel: ObservableObject {
             return nil
 
         case .backgroundSetting, .situationNarrator:
+            SpeechService.shared.play(nodeId: node.nodeId)
             return .narrative(text: node.text ?? "")
 
         case .dialogue:
+            SpeechService.shared.play(nodeId: node.nodeId)
             return .speech(speaker: node.speaker ?? "", text: node.text ?? "")
 
         case .contextEmotion:
+            SpeechService.shared.play(nodeId: node.nodeId)
             if let inline = node.dialogue {
                 return .speech(speaker: inline.speaker, text: inline.text)
             }
             return .narrative(text: node.text ?? "")
 
         case .decisionPoint:
+            SpeechService.shared.stop()
             let choices = router?.decisions
                 .first(where: { $0.decisionId == node.nodeId })?
                 .routes ?? []
             return .choice(options: choices)
 
         case .ending:
+            SpeechService.shared.stop()
             isEnded = true
             return .ending(emotion: node.finalEmotion ?? "")
         }
