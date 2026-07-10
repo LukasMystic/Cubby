@@ -6,15 +6,16 @@
 //
 
 import SwiftUI
+import UIKit
 
 struct DialogueView: View {
 
-    @StateObject private var viewModel = DialogueViewModel()
+    @State private var viewModel = DialogueViewModel()
     @Environment(\.dismiss) private var dismiss
 
     var body: some View {
         ZStack {
-            Image("GPBackground")
+            Image("Cubby_Gameplay_Page_01_BG 1")
                 .resizable()
                 .scaledToFill()
                 .ignoresSafeArea()
@@ -46,6 +47,7 @@ struct DialogueView: View {
         }
     }
 
+    // player on the left, NPC on the right
     private var characters: some View {
         HStack(alignment: .bottom, spacing: 0) {
             Image("0_Seer_Idle_000")
@@ -62,6 +64,7 @@ struct DialogueView: View {
         .padding(.horizontal, 16)
     }
 
+    // linear dialogue and multiple-choice
     private var panelAlignment: Alignment {
         if case .narrative = viewModel.currentBeat { return .top }
         return .bottom
@@ -86,6 +89,7 @@ struct DialogueView: View {
         }
     }
 
+    // Narrator
     // box narration
     private func narrativePanel(text: String) -> some View {
         dialogueText(text, size: 34)
@@ -101,6 +105,7 @@ struct DialogueView: View {
             }
     }
 
+    // Character dialogue
     private func speechPanel(speaker: String, text: String) -> some View {
         dialogueText(text, size: 30)
             .padding(.horizontal, 56)
@@ -115,10 +120,21 @@ struct DialogueView: View {
             }
     }
 
+    // capture the screen right now and hand it to the viewmodel to save
+    private func captureScreen(for route: DecisionRoute) {
+        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+              let window = windowScene.windows.first(where: { $0.isKeyWindow }) else { return }
+        let renderer = UIGraphicsImageRenderer(size: window.bounds.size)
+        let img = renderer.image { _ in window.drawHierarchy(in: window.bounds, afterScreenUpdates: false) }
+        viewModel.saveDecisionScreenshot(img, targetFile: route.targetFile)
+    }
+
+    // Multiple choice
     private func choicePanel(options: [DecisionRoute]) -> some View {
         HStack(spacing: 24) {
             ForEach(options) { route in
                 Button {
+                    captureScreen(for: route)
                     viewModel.choose(route)
                 } label: {
                     Text(route.choiceText)
@@ -154,6 +170,7 @@ struct DialogueView: View {
             .offset(x: 32, y: -36)
     }
 
+    // when story ends
     private func endingPanel(emotion: String) -> some View {
         VStack(spacing: 14) {
             Text("— The End —")
