@@ -1,0 +1,152 @@
+{
+  "file_name": "1.json",
+  "branch_id": "option_a_sit_down_anyway",
+  "branch_label": "Option A",
+  "branch_title": "Joey Sits Too Close Anyway",
+  "connects_from": "decision_001_initial_space_response",
+  "selected_option": {
+    "choice_id": "option_a",
+    "choice_text": "Sit down right next to Mia anyway",
+    "choice_quality": "poor"
+  },
+  "sequence": [
+    {
+      "node_id": "1_001_situation",
+      "type": "situation_narrator",
+      "text": "You were excited to play, so you sat close to Mia without thinking about it.",
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Unaware",
+          "speech_state": "Idle",
+          "asset_file": "EX_Joey_003_Unaware.png"
+        },
+        "mia": {
+          "expression_key": "Uncomfortable",
+          "speech_state": "Idle",
+          "asset_file": "EX_Mia_004_Uncomfortable.png"
+        }
+      }
+    },
+    {
+      "node_id": "1_002_context_emotion",
+      "type": "context_emotion",
+      "target": "Mia",
+      "emotion": "Annoyed",
+      "text": "Mia looked unhappy and felt uncomfortable.",
+      "dialogue": {
+        "speaker": "Mia",
+        "text": "Um... okay..."
+      },
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Unaware",
+          "speech_state": "Idle",
+          "asset_file": "EX_Joey_003_Unaware.png"
+        },
+        "mia": {
+          "expression_key": "SilentDiscomfort",
+          "speech_state": "Talking",
+          "asset_file": "EX_Mia_005_SilentDiscomfort.png"
+        }
+      }
+    },
+    {
+      "node_id": "1_003_situation",
+      "type": "situation_narrator",
+      "text": "Mia still wanted a little more space, but you were busy building and didn't notice.",
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Unaware",
+          "speech_state": "Idle",
+          "asset_file": "EX_Joey_003_Unaware.png"
+        },
+        "mia": {
+          "expression_key": "SilentDiscomfort",
+          "speech_state": "Idle",
+          "asset_file": "EX_Mia_005_SilentDiscomfort.png"
+        }
+      }
+    },
+    {
+      "node_id": "1_004_situation",
+      "type": "situation_narrator",
+      "text": "Then you noticed a perfect piece for your tower among Mia's blocks.",
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Excited",
+          "speech_state": "Idle",
+          "asset_file": "EX_Joey_002_Excited.png"
+        },
+        "mia": {
+          "expression_key": "SilentDiscomfort",
+          "speech_state": "Idle",
+          "asset_file": "EX_Mia_005_SilentDiscomfort.png"
+        }
+      }
+    },
+    {
+      "node_id": "1_005_situation",
+      "type": "situation_narrator",
+      "text": "Mia quietly moved a little farther away. She looked sad but kept playing.",
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Unaware",
+          "speech_state": "Idle",
+          "asset_file": "EX_Joey_003_Unaware.png"
+        },
+        "mia": {
+          "expression_key": "SilentDiscomfort",
+          "speech_state": "Idle",
+          "asset_file": "EX_Mia_005_SilentDiscomfort.png"
+        }
+      }
+    },
+    {
+      "node_id": "decision_002_after_option_a",
+      "type": "decision_point",
+      "title": "Joey's Decision",
+      "decision_prompt": "Mia moved a little farther away. What should Joey do now?",
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Unaware",
+          "speech_state": "Idle",
+          "asset_file": "EX_Joey_003_Unaware.png"
+        },
+        "mia": {
+          "expression_key": "SilentDiscomfort",
+          "speech_state": "Idle",
+          "asset_file": "EX_Mia_005_SilentDiscomfort.png"
+        }
+      }
+    }
+  ],
+  "connects_to": "decision_002_after_option_a",
+  "storybook_page": {
+    "page_id": "storybook_option_1",
+    "player_chose": "Option 1",
+    "source_file": "1.json",
+    "page_type": "choice_recap",
+    "title": "Player Chose Option 1",
+    "sections": [
+      {
+        "heading": "Situation",
+        "body": "Mia was building a tower with blocks. You ran over and wanted to sit right next to her. Mia said, \"Hmm, I feel a little bit squished if you sit here too.\""
+      },
+      {
+        "heading": "What Did You Pick?",
+        "body": "Sat Down Right Next to Mia"
+      },
+      {
+        "heading": "What Happened After?",
+        "body": "Mia looked a little sad, but she kept playing quietly."
+      },
+      {
+        "heading": "Let's Talk",
+        "questions": [
+          "Has a friend ever looked sad without saying anything? What did you do?",
+          "How can you check if your friend is okay?"
+        ]
+      }
+    ]
+  }
+}
