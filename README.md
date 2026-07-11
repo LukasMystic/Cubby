@@ -1,39 +1,46 @@
-# Cubby
+# Joey & Mia Story Data
 
-## Requirements
+Folder ini berisi data JSON untuk cerita interaktif bercabang **Joey & Mia** versi Bahasa Indonesia.
 
-- Xcode 15+
-- iOS 17+ / macOS 14+
+Data ini adalah konten cerita, bukan kode aplikasi. Struktur file dan ID teknis tetap mengikuti versi sebelumnya supaya aman untuk backend game.
 
-## Getting started
+## Lokasi
 
-Open `Cubby.xcodeproj` in Xcode and run (⌘R).
-
-## Contributing
-
-### Commit convention
-
-Follow [Conventional Commits](https://www.conventionalcommits.org/):
-
-```
-<type>(<scope>): <what changed>
+```text
+data/stories/joey-mia/
 ```
 
-The header is mandatory; the scope is optional.
+## Struktur Alur
 
-**Types:** `build`, `ci`, `feat`, `fix`, `refactor`, `docs`, `test`, `chore`, `perf`, `style`
-
-**Examples:**
-
+```text
+opening.json
+└── Pilihanmu
+    ├── 1.json
+    │   ├── 1A.json
+    │   ├── 1B.json
+    │   └── 1C.json
+    │
+    ├── 2.json
+    │   ├── 2A.json
+    │   ├── 2B.json
+    │   └── 2C.json
+    │
+    └── 3.json
+        ├── 3A.json
+        ├── 3B.json
+        │   ├── 3b(i).json
+        │   └── 3b(ii).json
+        └── 3C.json
 ```
-feat(game): add game screen
-fix: add navigation to game page
-docs: update setup instructions
-```
 
-### Branching
+## Catatan
 
-- Branch off `main` for every change.
-- Name branches `<type>/<page-or-feature>`, using the same types as commits (e.g. `feat/storybook-page`, `fix/game-page`).
-- Never force push; never skip hooks.
-- Open a PR — don't commit directly to `main`.
+- `main.json` adalah peta/router alur cerita.
+- `opening.json` adalah awal cerita.
+- Setiap file cabang punya `storybook_page` untuk layar storybook di akhir pilihan.
+- Untuk path `3B(i)`, game menampilkan 3 halaman storybook: `3.json`, `3B.json`, lalu `3b(i).json`.
+- Untuk path `3B(ii)`, game menampilkan 3 halaman storybook: `3.json`, `3B.json`, lalu `3b(ii).json`.
+
+## Jangan Diubah
+
+ID teknis seperti `branch_id`, `node_id`, `ending_id`, `connects_from`, `connects_to`, `target_file`, dan `choice_quality` tidak diterjemahkan agar backend tetap aman.

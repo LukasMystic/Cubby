@@ -1,0 +1,154 @@
+{
+  "file_name": "3.json",
+  "branch_id": "option_c_accept_and_ask",
+  "branch_label": "Opsi C",
+  "branch_title": "Menerima Jawaban Mia Lalu Bertanya",
+  "connects_from": "decision_001_initial_space_response",
+  "selected_option": {
+    "choice_id": "option_c",
+    "choice_text": "Menerima jawaban Mia lalu bertanya dengan sopan.",
+    "choice_quality": "best"
+  },
+  "sequence": [
+    {
+      "node_id": "3_001_dialogue",
+      "type": "dialogue",
+      "speaker": "Joey",
+      "text": "Oh, oke. Kalau aku duduk sedikit lebih jauh, kita tetap bisa membangun bersama, kan?",
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Neutral",
+          "speech_state": "Talking",
+          "asset_file": "EX_Joey_008_NeutralTalk.png"
+        },
+        "mia": {
+          "expression_key": "Uncomfortable",
+          "speech_state": "Idle",
+          "asset_file": "EX_Mia_004_Uncomfortable.png"
+        }
+      }
+    },
+    {
+      "node_id": "3_002_context_emotion",
+      "type": "context_emotion",
+      "target": "Mia",
+      "emotion": "Relaxed",
+      "text": "Mia merasa lebih nyaman.",
+      "dialogue": {
+        "speaker": "Mia",
+        "text": "Iya, begini lebih nyaman. Makasih ya."
+      },
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Neutral",
+          "speech_state": "Idle",
+          "asset_file": "EX_Joey_001_Neutral.png"
+        },
+        "mia": {
+          "expression_key": "Relieved",
+          "speech_state": "Talking",
+          "asset_file": "EX_Mia_002_Relieved.png"
+        }
+      }
+    },
+    {
+      "node_id": "3_003_situation",
+      "type": "situation_narrator",
+      "text": "Kamu mendengarkan saat Mia bilang butuh lebih banyak ruang. Mia senang karena kamu mengerti.",
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Happy",
+          "speech_state": "Idle",
+          "asset_file": "EX_Joey_005_Happy.png"
+        },
+        "mia": {
+          "expression_key": "Happy",
+          "speech_state": "Idle",
+          "asset_file": "EX_Mia_003_Happy.png"
+        }
+      }
+    },
+    {
+      "node_id": "3_004_situation",
+      "type": "situation_narrator",
+      "text": "Setelahnya, kamu melihat potongan lego yang cocok di menara kamu di kumpulan lego Mia.",
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Excited",
+          "speech_state": "Idle",
+          "asset_file": "EX_Joey_002_Excited.png"
+        },
+        "mia": {
+          "expression_key": "Happy",
+          "speech_state": "Idle",
+          "asset_file": "EX_Mia_003_Happy.png"
+        }
+      }
+    },
+    {
+      "node_id": "3_005_situation",
+      "type": "situation_narrator",
+      "text": "Kamu mulai bersemangat dan ingin mengambil potongan lego tersebut.",
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Excited",
+          "speech_state": "Idle",
+          "asset_file": "EX_Joey_002_Excited.png"
+        },
+        "mia": {
+          "expression_key": "Happy",
+          "speech_state": "Idle",
+          "asset_file": "EX_Mia_003_Happy.png"
+        }
+      }
+    },
+    {
+      "node_id": "decision_004_after_option_c",
+      "type": "decision_point",
+      "title": "Pilihanmu",
+      "decision_prompt": "Kamu melihat potongan lego yang cocok di dekat Mia. Kamu mau apa?",
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Excited",
+          "speech_state": "Idle",
+          "asset_file": "EX_Joey_002_Excited.png"
+        },
+        "mia": {
+          "expression_key": "Happy",
+          "speech_state": "Idle",
+          "asset_file": "EX_Mia_003_Happy.png"
+        }
+      }
+    }
+  ],
+  "connects_to": "decision_004_after_option_c",
+  "storybook_page": {
+    "page_id": "storybook_option_3",
+    "player_chose": "Opsi 3",
+    "source_file": "3.json",
+    "page_type": "choice_recap",
+    "title": "Kamu Memilih Opsi 3",
+    "sections": [
+      {
+        "heading": "Bagaimana situasinya?",
+        "body": "Mia sedang membangun menara lego, kamu menghampirinya dan mau duduk di dekat dia. Tetapi, Mia bilang dia merasa terhimpit jika kamu duduk di dekat dia."
+      },
+      {
+        "heading": "Apa yang kamu lakukan?",
+        "body": "Menerima jawaban Mia lalu bertanya dengan sopan."
+      },
+      {
+        "heading": "Apa yang terjadi?",
+        "body": "Kamu mendengarkan saat Mia bilang butuh lebih banyak ruang. Mia senang karena kamu mengerti."
+      },
+      {
+        "heading": "Yuk, kita ngobrol",
+        "questions": [
+          "Kenapa Mia merasa senang?",
+          "Kenapa kamu membantu Mia merasa nyaman?",
+          "Kenapa kita perlu mendengarkan saat teman bilang butuh ruang?"
+        ]
+      }
+    ]
+  }
+}

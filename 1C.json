@@ -1,0 +1,101 @@
+{
+  "file_name": "1C.json",
+  "branch_id": "option_a_followup_take_piece_without_asking",
+  "branch_label": "Opsi C",
+  "branch_title": "Mengambil Potongan Lego Tanpa Izin",
+  "connects_from": "decision_002_after_option_a",
+  "selected_option": {
+    "choice_text": "Langsung mengambil potongan lego tersebut tanpa izin.",
+    "choice_quality": "worst"
+  },
+  "sequence": [
+    {
+      "node_id": "1C_001_context_emotion",
+      "type": "context_emotion",
+      "target": "Mia",
+      "emotion": "Cry",
+      "text": "Mia sedih karena kamu terlalu dekat dan mengambil potongan lego tanpa izin.",
+      "dialogue": {
+        "speaker": "Mia",
+        "text": "Joey, kan aku sudah bilang, aku masih butuh sedikit ruang, aku juga lagi pakai potongan itu."
+      },
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Shocked",
+          "speech_state": "Idle",
+          "asset_file": "EX_Joey_007_Shocked.png"
+        },
+        "mia": {
+          "expression_key": "Annoyed",
+          "speech_state": "Talking",
+          "asset_file": "EX_Mia_006_Annoyed.png"
+        }
+      }
+    },
+    {
+      "node_id": "1C_002_situation",
+      "type": "situation_narrator",
+      "text": "Kamu tidak sadar Mia masih butuh ruang. Mia jadi sedih dan berhenti bermain.",
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Regretful",
+          "speech_state": "Idle",
+          "asset_file": "EX_Joey_006_Regretful.png"
+        },
+        "mia": {
+          "expression_key": "Crying",
+          "speech_state": "Idle",
+          "asset_file": "EX_Mia_008_Crying.png"
+        }
+      }
+    },
+    {
+      "node_id": "ending_1C_cry",
+      "type": "ending",
+      "final_emotion_target": "Mia",
+      "final_emotion": "Cry",
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Regretful",
+          "speech_state": "Idle",
+          "asset_file": "EX_Joey_006_Regretful.png"
+        },
+        "mia": {
+          "expression_key": "Crying",
+          "speech_state": "Idle",
+          "asset_file": "EX_Mia_008_Crying.png"
+        }
+      }
+    }
+  ],
+  "ending_id": "ending_1C_cry",
+  "storybook_page": {
+    "page_id": "storybook_1C",
+    "player_chose": "1C",
+    "source_file": "1C.json",
+    "page_type": "ending_recap",
+    "title": "Kamu Memilih 1C",
+    "sections": [
+      {
+        "heading": "Bagaimana situasinya?",
+        "body": "Mia menjauh secara diam-diam. Dia terlihat sedih tetapi tetap lanjut bermain. Setelahnya, kamu melihat potongan lego yang cocok di menara kamu di kumpulan lego Mia."
+      },
+      {
+        "heading": "Apa yang kamu lakukan?",
+        "body": "Langsung mengambil potongan lego tersebut tanpa izin."
+      },
+      {
+        "heading": "Apa yang terjadi?",
+        "body": "Mia menangis dan berhenti bermain."
+      },
+      {
+        "heading": "Yuk, kita ngobrol",
+        "questions": [
+          "Kenapa Mia menangis?",
+          "Apa yang seharusnya kamu lakukan?",
+          "Apa yang kamu bisa bilang jika menyakiti perasaan teman?"
+        ]
+      }
+    ]
+  }
+}

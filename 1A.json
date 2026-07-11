@@ -1,0 +1,119 @@
+{
+  "file_name": "1A.json",
+  "branch_id": "option_a_followup_notice_mia_moved_away",
+  "branch_label": "Opsi A",
+  "branch_title": "Menyadari Mia Menjauh dan Bertanya",
+  "connects_from": "decision_002_after_option_a",
+  "selected_option": {
+    "choice_text": "Menyadari Mia menjauh dan bertanya.",
+    "choice_quality": "repair"
+  },
+  "sequence": [
+    {
+      "node_id": "1A_001_dialogue",
+      "type": "dialogue",
+      "speaker": "Joey",
+      "text": "Hai, apakah aku tadi duduknya terlalu dekat sama kamu? Maaf, aku bisa sedikit menjauh.",
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Concerned",
+          "speech_state": "Talking",
+          "asset_file": "EX_Joey_004_Concerned.png"
+        },
+        "mia": {
+          "expression_key": "SilentDiscomfort",
+          "speech_state": "Idle",
+          "asset_file": "EX_Mia_005_SilentDiscomfort.png"
+        }
+      }
+    },
+    {
+      "node_id": "1A_002_context_emotion",
+      "type": "context_emotion",
+      "target": "Mia",
+      "emotion": "Happy",
+      "text": "Mia merasa lebih nyaman.",
+      "dialogue": {
+        "speaker": "Mia",
+        "text": "Iya, makasih ya udah sadar. Sekarang aku jadi lebih nyaman."
+      },
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Concerned",
+          "speech_state": "Idle",
+          "asset_file": "EX_Joey_004_Concerned.png"
+        },
+        "mia": {
+          "expression_key": "Relieved",
+          "speech_state": "Talking",
+          "asset_file": "EX_Mia_002_Relieved.png"
+        }
+      }
+    },
+    {
+      "node_id": "1A_003_situation",
+      "type": "situation_narrator",
+      "text": "Kamu minta maaf dan menjauh sedikit. Kalian kembali bermain bersama.",
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Happy",
+          "speech_state": "Idle",
+          "asset_file": "EX_Joey_005_Happy.png"
+        },
+        "mia": {
+          "expression_key": "Happy",
+          "speech_state": "Idle",
+          "asset_file": "EX_Mia_003_Happy.png"
+        }
+      }
+    },
+    {
+      "node_id": "ending_1A_happy_repair",
+      "type": "ending",
+      "final_emotion_target": "Mia",
+      "final_emotion": "Happy",
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Happy",
+          "speech_state": "Idle",
+          "asset_file": "EX_Joey_005_Happy.png"
+        },
+        "mia": {
+          "expression_key": "Happy",
+          "speech_state": "Idle",
+          "asset_file": "EX_Mia_003_Happy.png"
+        }
+      }
+    }
+  ],
+  "ending_id": "ending_1A_happy_repair",
+  "storybook_page": {
+    "page_id": "storybook_1A",
+    "player_chose": "1A",
+    "source_file": "1A.json",
+    "page_type": "ending_recap",
+    "title": "Kamu Memilih 1A",
+    "sections": [
+      {
+        "heading": "Bagaimana situasinya?",
+        "body": "Mia menjauh secara diam-diam. Dia terlihat sedih tetapi tetap lanjut bermain. Setelahnya, kamu melihat potongan lego yang cocok di menara kamu di kumpulan lego Mia."
+      },
+      {
+        "heading": "Apa yang kamu lakukan?",
+        "body": "Menyadari Mia menjauh dan bertanya."
+      },
+      {
+        "heading": "Apa yang terjadi?",
+        "body": "Mia tersenyum dan berterima kasih. Kalian kembali bermain bersama."
+      },
+      {
+        "heading": "Yuk, kita ngobrol",
+        "questions": [
+          "Bagaimana kamu membuat Mia tersenyum kembali?",
+          "Kenapa menyadari perasaan teman adalah hal yang baik?",
+          "Apakah kamu pernah meminta maaf ke teman kamu? Apa yang terjadi selanjutnya?"
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,101 @@
+{
+  "file_name": "3b(ii).json",
+  "branch_id": "option_3b_ii_ignore_it",
+  "branch_label": "Opsi B",
+  "branch_title": "Membiarkan Saja",
+  "connects_from": "decision_005_after_option_3B",
+  "selected_option": {
+    "choice_text": "Membiarkan saja.",
+    "choice_quality": "poor"
+  },
+  "sequence": [
+    {
+      "node_id": "3b_ii_001_context_emotion",
+      "type": "context_emotion",
+      "target": "Mia",
+      "emotion": "Annoyed",
+      "text": "Mia merasa kesal.",
+      "dialogue": {
+        "speaker": "Mia",
+        "text": "Hei, tolong berikan aku sedikit ruang lagi."
+      },
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Shocked",
+          "speech_state": "Idle",
+          "asset_file": "EX_Joey_007_Shocked.png"
+        },
+        "mia": {
+          "expression_key": "Annoyed",
+          "speech_state": "Talking",
+          "asset_file": "EX_Mia_006_Annoyed.png"
+        }
+      }
+    },
+    {
+      "node_id": "3b_ii_002_situation",
+      "type": "situation_narrator",
+      "text": "Kamu tidak sadar Mia masih butuh ruang dan sekarang dia kesal ke kamu.",
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Regretful",
+          "speech_state": "Idle",
+          "asset_file": "EX_Joey_006_Regretful.png"
+        },
+        "mia": {
+          "expression_key": "Annoyed",
+          "speech_state": "Idle",
+          "asset_file": "EX_Mia_006_Annoyed.png"
+        }
+      }
+    },
+    {
+      "node_id": "ending_3b_ii_annoyed",
+      "type": "ending",
+      "final_emotion_target": "Mia",
+      "final_emotion": "Annoyed",
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Regretful",
+          "speech_state": "Idle",
+          "asset_file": "EX_Joey_006_Regretful.png"
+        },
+        "mia": {
+          "expression_key": "Annoyed",
+          "speech_state": "Idle",
+          "asset_file": "EX_Mia_006_Annoyed.png"
+        }
+      }
+    }
+  ],
+  "ending_id": "ending_3b_ii_annoyed",
+  "storybook_page": {
+    "page_id": "storybook_3b_ii",
+    "player_chose": "3B(ii)",
+    "source_file": "3b(ii).json",
+    "page_type": "ending_recap",
+    "title": "Kamu Memilih 3B(ii)",
+    "sections": [
+      {
+        "heading": "Bagaimana situasinya?",
+        "body": "Mia diam-diam menjauh setelah kamu mendekat tanpa meminta izin."
+      },
+      {
+        "heading": "Apa yang kamu lakukan?",
+        "body": "Membiarkan saja."
+      },
+      {
+        "heading": "Apa yang terjadi?",
+        "body": "Mia merasa kesal ke kamu."
+      },
+      {
+        "heading": "Yuk, kita ngobrol",
+        "questions": [
+          "Kenapa Mia membutuhkan ruang lebih?",
+          "Apa yang bisa kamu lakukan saat bermain supaya tahu perasaan teman?",
+          "Bagaimana perasaan Mia menurut kamu ketika Mia bertanya lagi?"
+        ]
+      }
+    ]
+  }
+}
