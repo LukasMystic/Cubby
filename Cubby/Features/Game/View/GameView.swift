@@ -11,6 +11,9 @@ import SwiftUIJoystick
 import TipKit
 
 struct GameView: View {
+    private let joystickTip = JoystickTip()
+    private let interactTip = InteractTip()
+    private let startTip = StartGameTip()
 
     @State private var viewModel = GameViewModel()
 

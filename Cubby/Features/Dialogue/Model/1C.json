@@ -1,11 +1,11 @@
 {
   "file_name": "1C.json",
   "branch_id": "option_a_followup_take_piece_without_asking",
-  "branch_label": "Option C",
-  "branch_title": "Joey Takes a Piece Without Asking",
+  "branch_label": "Opsi C",
+  "branch_title": "Mengambil Potongan Lego Tanpa Izin",
   "connects_from": "decision_002_after_option_a",
   "selected_option": {
-    "choice_text": "Reach over and take a piece from Mia's pile without asking",
+    "choice_text": "Langsung mengambil potongan lego tersebut tanpa izin.",
     "choice_quality": "worst"
   },
   "sequence": [
@@ -14,16 +14,16 @@
       "type": "context_emotion",
       "target": "Mia",
       "emotion": "Cry",
-      "text": "Mia was caught by surprise.",
+      "text": "Mia sedih karena kamu terlalu dekat dan mengambil potongan lego tanpa izin.",
       "dialogue": {
         "speaker": "Mia",
-        "text": "Joey, you took my toy, huh. I still need a little more space. And those are the blocks I was using too."
+        "text": "Joey, kan aku sudah bilang, aku masih butuh sedikit ruang, aku juga lagi pakai potongan itu."
       }
     },
     {
       "node_id": "1C_002_situation",
       "type": "situation_narrator",
-      "text": "Joey didn't notice Mia needed more space. Mia cried, and playing wasn't as fun anymore."
+      "text": "Kamu tidak sadar Mia masih butuh ruang. Mia jadi sedih dan berhenti bermain."
     },
     {
       "node_id": "ending_1C_cry",
@@ -32,5 +32,34 @@
       "final_emotion": "Cry"
     }
   ],
-  "ending_id": "ending_1C_cry"
+  "ending_id": "ending_1C_cry",
+  "storybook_page": {
+    "page_id": "storybook_1C",
+    "player_chose": "1C",
+    "source_file": "1C.json",
+    "page_type": "ending_recap",
+    "title": "Kamu Memilih 1C",
+    "sections": [
+      {
+        "heading": "Bagaimana situasinya?",
+        "body": "Mia menjauh secara diam-diam. Dia terlihat sedih tetapi tetap lanjut bermain. Setelahnya, kamu melihat potongan lego yang cocok di menara kamu di kumpulan lego Mia."
+      },
+      {
+        "heading": "Apa yang kamu lakukan?",
+        "body": "Langsung mengambil potongan lego tersebut tanpa izin."
+      },
+      {
+        "heading": "Apa yang terjadi?",
+        "body": "Mia menangis dan berhenti bermain."
+      },
+      {
+        "heading": "Yuk, kita ngobrol",
+        "questions": [
+          "Kenapa Mia menangis?",
+          "Apa yang seharusnya kamu lakukan?",
+          "Apa yang kamu bisa bilang jika menyakiti perasaan teman?"
+        ]
+      }
+    ]
+  }
 }

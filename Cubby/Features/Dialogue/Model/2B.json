@@ -1,18 +1,18 @@
 {
   "file_name": "2B.json",
   "branch_id": "option_b_followup_keep_sitting_close",
-  "branch_label": "Option B",
-  "branch_title": "Joey Keeps Sitting Close",
+  "branch_label": "Opsi B",
+  "branch_title": "Tetap Duduk di Samping Mia",
   "connects_from": "decision_003_after_option_b",
   "selected_option": {
-    "choice_text": "Joey kept sitting close",
+    "choice_text": "Tetap duduk di samping Mia.",
     "choice_quality": "poor"
   },
   "sequence": [
     {
       "node_id": "2B_001_situation",
       "type": "situation_narrator",
-      "text": "Mia stayed quiet. Joey kept building, not knowing Mia still needed a little more space."
+      "text": "Mia diam tetapi kesal. Kamu melanjutkan bangun menaramu dan tidak sadar Mia butuh ruang."
     },
     {
       "node_id": "ending_2B_annoyed",
@@ -21,5 +21,34 @@
       "final_emotion": "Annoyed"
     }
   ],
-  "ending_id": "ending_2B_annoyed"
+  "ending_id": "ending_2B_annoyed",
+  "storybook_page": {
+    "page_id": "storybook_2B",
+    "player_chose": "2B",
+    "source_file": "2B.json",
+    "page_type": "ending_recap",
+    "title": "Kamu Memilih 2B",
+    "sections": [
+      {
+        "heading": "Bagaimana situasinya?",
+        "body": "Kamu mengambil potongan lego di area bermain Mia. Kamu tetap duduk sangat dekat dengan Mia."
+      },
+      {
+        "heading": "Apa yang kamu lakukan?",
+        "body": "Tetap duduk di samping Mia."
+      },
+      {
+        "heading": "Apa yang terjadi?",
+        "body": "Mia jadi kesal dan tidak ingin bermain lagi."
+      },
+      {
+        "heading": "Yuk, kita ngobrol",
+        "questions": [
+          "Kenapa Mia tetap diam?",
+          "Bagaimana cara kamu mengetahui jika teman membutuhkan sesuatu?",
+          "Apakah ada petunjuk kalau Mia tidak merasa baik-baik saja?"
+        ]
+      }
+    ]
+  }
 }

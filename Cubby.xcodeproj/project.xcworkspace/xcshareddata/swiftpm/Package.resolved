@@ -1,6 +1,15 @@
 {
-  "originHash" : "0c2b07bd02731650383ed39e41433281bed19b2ed6cc7103e7daec7fb1d05e44",
+  "originHash" : "6b3386dc9ff1f3a74f1534de9c41d47137eae0901cfe819ed442f1b241549359",
   "pins" : [
+    {
+      "identity" : "lottie-spm",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/airbnb/lottie-spm.git",
+      "state" : {
+        "revision" : "0aff16288f8dc1e3dab35cbf5cf45979673fd3df",
+        "version" : "4.6.1"
+      }
+    },
     {
       "identity" : "swiftuijoystick",
       "kind" : "remoteSourceControl",

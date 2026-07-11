@@ -1,11 +1,11 @@
 {
   "file_name": "3A.json",
   "branch_id": "option_c_followup_pause_and_ask_first",
-  "branch_label": "Option A",
-  "branch_title": "Joey Pauses and Asks First",
+  "branch_label": "Opsi A",
+  "branch_title": "Berhenti Sebentar Lalu Bertanya",
   "connects_from": "decision_004_after_option_c",
   "selected_option": {
-    "choice_text": "Pause and ask first",
+    "choice_text": "Berhenti sebentar lalu bertanya.",
     "choice_quality": "best"
   },
   "sequence": [
@@ -13,23 +13,23 @@
       "node_id": "3A_001_dialogue",
       "type": "dialogue",
       "speaker": "Joey",
-      "text": "Can I reach for the block, or can you pass it to me?"
+      "text": "Bisakah aku mengambil potongan itu atau bisakah kamu memberikannya ke aku?"
     },
     {
       "node_id": "3A_002_context_emotion",
       "type": "context_emotion",
       "target": "Mia",
       "emotion": "Happy",
-      "text": "Mia feels happy.",
+      "text": "Mia merasa nyaman.",
       "dialogue": {
         "speaker": "Mia",
-        "text": "Yep! Go ahead. Thanks for asking."
+        "text": "Iya, silakan. Terima kasih sudah bertanya."
       }
     },
     {
       "node_id": "3A_003_situation",
       "type": "situation_narrator",
-      "text": "Joey asked before getting closer. Mia felt safe, and they kept having fun together."
+      "text": "Kamu izin dulu sebelum mendekat, jadinya Mia merasa nyaman dalam bermain."
     },
     {
       "node_id": "ending_3A_happy",
@@ -38,5 +38,34 @@
       "final_emotion": "Happy"
     }
   ],
-  "ending_id": "ending_3A_happy"
+  "ending_id": "ending_3A_happy",
+  "storybook_page": {
+    "page_id": "storybook_3A",
+    "player_chose": "3A",
+    "source_file": "3A.json",
+    "page_type": "ending_recap",
+    "title": "Kamu Memilih 3A",
+    "sections": [
+      {
+        "heading": "Bagaimana situasinya?",
+        "body": "Kamu melihat potongan lego di area bermain Mia. Potongan lego tersebut sangat cocok dengan menara kamu."
+      },
+      {
+        "heading": "Apa yang kamu lakukan?",
+        "body": "Berhenti sebentar lalu bertanya."
+      },
+      {
+        "heading": "Apa yang terjadi?",
+        "body": "Kamu izin dulu sebelum mendekat, jadinya Mia merasa nyaman dalam bermain."
+      },
+      {
+        "heading": "Yuk, kita ngobrol",
+        "questions": [
+          "Kenapa kamu meminta izin sebelum mengambil potongan lego Mia?",
+          "Bagaimana perasaan Mia ketika kamu meminta izin dulu?",
+          "Kenapa meminta izin adalah hal yang baik?"
+        ]
+      }
+    ]
+  }
 }
