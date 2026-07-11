@@ -31,22 +31,6 @@ struct DialogueView: View {
         speaker.lowercased().contains("mia")
     }
 
-    private func miaImageName(for emotion: String) -> String {
-        switch emotion.lowercased() {
-        case "annoyed":                  return "EX_Mia_006_Annoyed"
-        case "uncomfortable":            return "EX_Mia_004_Uncomfortable"
-        case "happy":                    return "EX_Mia_003_Happy"
-        case "relieved":                 return "EX_Mia_002_Relieved"
-        case "relaxed":                  return "EX_Mia_002_Relieved"
-        case "cry", "crying":            return "EX_Mia_008_Crying"
-        case "upset/angry", "angry", "upset": return "EX_Mia_007_Angry"
-        case "confused":                 return "EX_Mia_001_Neutral"
-        case "silentdiscomfort", "silent discomfort": return "EX_Mia_005_SilentDiscomfort"
-        case "sobbing":                  return "EX_Mia_009_Sobbing"
-        default:                         return "mia_1 2"
-        }
-    }
-
     private var activeSpeaker: String? {
         switch viewModel.currentBeat {
         case .speech(let speaker, _): return speaker
@@ -173,7 +157,7 @@ struct DialogueView: View {
         let joeyLift    = miaFootPad - joeyFootPad
 
         return HStack(alignment: .bottom, spacing: 0) {
-            Image(miaImageName(for: viewModel.miaEmotion))
+            Image(viewModel.miaImageAssetName)
                 .resizable()
                 .scaledToFit()
                 .scaleEffect(x: -1, y: 1)

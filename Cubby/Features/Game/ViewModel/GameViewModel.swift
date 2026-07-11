@@ -4,7 +4,6 @@
 //
 //  Created by Stanley Pratama Teguh on 02/07/26.
 //
-// YES I USE AI FOR MOST OF THIS
 
 import SpriteKit
 import SwiftUIJoystick

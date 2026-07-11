@@ -8,52 +8,23 @@
 import SwiftUI
 import SpriteKit
 import SwiftUIJoystick
-
-// MARK: - Iris-wipe transition
-
-/// A circle that grows from 0 to fully covering the screen, driven by `progress`.
-private struct IrisWipeShape: Shape {
-    var progress: CGFloat
-
-    var animatableData: CGFloat {
-        get { progress }
-        set { progress = newValue }
-    }
-
-    func path(in rect: CGRect) -> Path {
-        let center = CGPoint(x: rect.midX, y: rect.midY)
-        // Radius large enough to always cover the full rect at progress == 1.
-        let maxRadius = hypot(rect.width, rect.height) / 2 * 1.05
-        let r = maxRadius * progress
-        var p = Path()
-        p.addEllipse(in: CGRect(x: center.x - r, y: center.y - r,
-                                width: r * 2, height: r * 2))
-        return p
-    }
-}
-
-private struct IrisRevealModifier: ViewModifier {
-    let progress: CGFloat
-    func body(content: Content) -> some View {
-        content.clipShape(IrisWipeShape(progress: progress))
-    }
-}
-
-extension AnyTransition {
-    /// Circle expands from centre on insertion, contracts to centre on removal.
-    static var irisReveal: AnyTransition {
-        .modifier(
-            active:   IrisRevealModifier(progress: 0),
-            identity: IrisRevealModifier(progress: 1)
-        )
-    }
-}
-
-// MARK: - GameView
+import TipKit
 
 struct GameView: View {
 
     @State private var viewModel = GameViewModel()
+
+    // Separate from viewModel.showDialogue so we can coordinate the white-flash timing.
+    @State private var dialoguePresented = false
+    @State private var screenFlash: Double = 0
+
+    // TipKit — each tip is shown exactly once, ever.
+    private let joystickTip  = JoystickTip()
+    private let interactTip  = InteractTip()
+    private let startGameTip = StartGameTip()
+
+    // Prevent re-donating the joystick event on every walk frame.
+    @State private var joystickEventDonated = false
 
     var body: some View {
         ZStack {
@@ -62,17 +33,59 @@ struct GameView: View {
 
             hud
 
-            if viewModel.showDialogue {
-                DialogueView(onDismiss: {
-                    withAnimation(.easeInOut(duration: 0.55)) {
-                        viewModel.showDialogue = false
-                    }
-                })
-                .transition(.irisReveal)
-                .zIndex(1)
+            // StartGameTip shown as a banner near the top once both events are donated.
+            VStack {
+                TipView(startGameTip, arrowEdge: .top)
+                    .padding(.horizontal, 40)
+                    .padding(.top, 60)
+                Spacer()
             }
+            .allowsHitTesting(false) // tips themselves handle their own taps
+
+            if dialoguePresented {
+                DialogueView(onDismiss: { closeDialogue() })
+                    .zIndex(1)
+            }
+
+            // White overlay sits on top of everything — animated separately from the view swap.
+            Color.white
+                .opacity(screenFlash)
+                .ignoresSafeArea()
+                .allowsHitTesting(false)
+                .zIndex(2)
         }
-        .animation(.easeInOut(duration: 0.55), value: viewModel.showDialogue)
+        // When the game requests dialogue, run the flash-through-white transition.
+        .onChange(of: viewModel.showDialogue) { _, newValue in
+            guard newValue else { return }
+            openDialogue()
+        }
+        // Donate the joystick event the first time the character starts walking.
+        .onChange(of: viewModel.characterAnim) { _, anim in
+            guard anim == .walking, !joystickEventDonated else { return }
+            joystickEventDonated = true
+            Task { await InteractTip.useJoystick.donate() }
+        }
+    }
+
+    // MARK: - Transition helpers
+
+    private func openDialogue() {
+        Task {
+            withAnimation(.easeIn(duration: 0.18)) { screenFlash = 1 }
+            try? await Task.sleep(nanoseconds: 200_000_000)
+            dialoguePresented = true
+            withAnimation(.easeOut(duration: 0.30)) { screenFlash = 0 }
+        }
+    }
+
+    private func closeDialogue() {
+        Task {
+            withAnimation(.easeIn(duration: 0.18)) { screenFlash = 1 }
+            try? await Task.sleep(nanoseconds: 200_000_000)
+            dialoguePresented = false
+            viewModel.showDialogue = false
+            withAnimation(.easeOut(duration: 0.30)) { screenFlash = 0 }
+        }
     }
 
     // MARK: - HUD
@@ -114,12 +127,17 @@ struct GameView: View {
         )
         .padding(.leading, 32)
         .padding(.bottom, 28)
+        .popoverTip(joystickTip, arrowEdge: .bottom)
     }
 
     // MARK: - Interact button
 
     private var interactButton: some View {
-        Button { viewModel.interact() } label: {
+        Button {
+            // Donate interact event for TipKit sequencing, then attempt interaction.
+            Task { await InteractTip.useInteract.donate() }
+            viewModel.interact()
+        } label: {
             ZStack {
                 Image("interact_button_base")
                     .resizable()
@@ -134,6 +152,7 @@ struct GameView: View {
         }
         .padding(.trailing, 32)
         .padding(.bottom, 28)
+        .popoverTip(interactTip, arrowEdge: .bottom)
     }
 }
 
