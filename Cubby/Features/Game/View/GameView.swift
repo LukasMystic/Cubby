@@ -16,7 +16,18 @@ struct GameView: View {
     private let startTip = StartGameTip()
 
     @State private var viewModel = GameViewModel()
-    @State private var showSavedBadge = false
+
+    // Separate from viewModel.showDialogue so we can coordinate the white-flash timing.
+    @State private var dialoguePresented = false
+    @State private var screenFlash: Double = 0
+
+    // TipKit — each tip is shown exactly once, ever.
+    private let joystickTip  = JoystickTip()
+    private let interactTip  = InteractTip()
+    private let startGameTip = StartGameTip()
+
+    // Prevent re-donating the joystick event on every walk frame.
+    @State private var joystickEventDonated = false
 
     var body: some View {
         ZStack {
@@ -25,27 +36,65 @@ struct GameView: View {
 
             hud
 
-            if viewModel.isPaused {
-                pauseOverlay
+            // StartGameTip shown as a banner near the top once both events are donated.
+            VStack {
+                TipView(startGameTip, arrowEdge: .top)
+                    .padding(.horizontal, 40)
+                    .padding(.top, 60)
+                Spacer()
             }
-            TipView(startTip)
-                .padding(.horizontal, 40)
+            .allowsHitTesting(false) // tips themselves handle their own taps
+
+            if dialoguePresented {
+                DialogueView(onDismiss: { closeDialogue() })
+                    .zIndex(1)
+            }
+
+            // White overlay sits on top of everything — animated separately from the view swap.
+            Color.white
+                .opacity(screenFlash)
+                .ignoresSafeArea()
+                .allowsHitTesting(false)
+                .zIndex(2)
         }
-        .fullScreenCover(isPresented: Bindable(viewModel).showDialogue) {
-            DialogueView()
+        // When the game requests dialogue, run the flash-through-white transition.
+        .onChange(of: viewModel.showDialogue) { _, newValue in
+            guard newValue else { return }
+            openDialogue()
+        }
+        // Donate the joystick event the first time the character starts walking.
+        .onChange(of: viewModel.characterAnim) { _, anim in
+            guard anim == .walking, !joystickEventDonated else { return }
+            joystickEventDonated = true
+            Task { await InteractTip.useJoystick.donate() }
         }
     }
 
-    // hud
+    // MARK: - Transition helpers
+
+    private func openDialogue() {
+        Task {
+            withAnimation(.easeIn(duration: 0.18)) { screenFlash = 1 }
+            try? await Task.sleep(nanoseconds: 200_000_000)
+            dialoguePresented = true
+            withAnimation(.easeOut(duration: 0.30)) { screenFlash = 0 }
+        }
+    }
+
+    private func closeDialogue() {
+        Task {
+            withAnimation(.easeIn(duration: 0.18)) { screenFlash = 1 }
+            try? await Task.sleep(nanoseconds: 200_000_000)
+            dialoguePresented = false
+            viewModel.showDialogue = false
+            withAnimation(.easeOut(duration: 0.30)) { screenFlash = 0 }
+        }
+    }
+
+    // MARK: - HUD
+
     private var hud: some View {
         VStack {
-            HStack {
-                Spacer()
-                pauseButton
-            }
-            .padding(.top, 16)
-            .padding(.trailing, 20)
-
             Spacer()
 
             HStack(alignment: .bottom) {
@@ -56,92 +105,7 @@ struct GameView: View {
         }
     }
 
-    private var pauseButton: some View {
-        Button { viewModel.isPaused = true } label: {
-            Image(systemName: "pause.fill")
-                .font(.system(size: 22, weight: .semibold))
-                .foregroundStyle(.white.opacity(0.85))
-                .padding(14)
-                .background(.ultraThinMaterial, in: Circle())
-                .overlay(Circle().stroke(Color.white.opacity(0.35), lineWidth: 1.5))
-        }
-    }
-
-    private var pauseOverlay: some View {
-        ZStack {
-            Color.black.opacity(0.6).ignoresSafeArea()
-
-            VStack(spacing: 24) {
-
-                // Title
-                VStack(spacing: 6) {
-                    Text("PAUSED")
-                        .font(.system(size: 34, weight: .black, design: .rounded))
-                        .foregroundStyle(.white)
-                    Rectangle()
-                        .frame(height: 2)
-                        .foregroundStyle(.white.opacity(0.25))
-                }
-
-                // Menu buttons
-                VStack(spacing: 12) {
-                    pauseMenuButton(icon: "play.fill", label: "Resume", tint: .green) {
-                        viewModel.isPaused = false
-                    }
-
-                    pauseMenuButton(
-                        icon: showSavedBadge ? "checkmark.circle.fill" : "square.and.arrow.down.fill",
-                        label: showSavedBadge ? "Saved!" : "Save",
-                        tint: showSavedBadge ? .green : .blue
-                    ) {
-                        // auto-saved on decisions, this just shows the feedback badge
-                        showSavedBadge = true
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                            showSavedBadge = false
-                        }
-                    }
-
-                    Divider().overlay(.white.opacity(0.15))
-
-                    pauseMenuButton(icon: "house.fill", label: "Main Menu", tint: .orange) {
-                        // TODO: Replace with navigation to MainMenuView
-                        // e.g. path.removeLast() if using NavigationStack,
-                        // or set a @State var showMainMenu = true and present it.
-                        viewModel.isPaused = false
-                    }
-                }
-            }
-            .padding(28)
-            .frame(width: 340)
-            .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 28, style: .continuous))
-            .shadow(color: .black.opacity(0.4), radius: 30, x: 0, y: 10)
-        }
-    }
-
-    private func pauseMenuButton(icon: String, label: String, tint: Color, action: @escaping () -> Void) -> some View {
-        Button(action: action) {
-            HStack(spacing: 14) {
-                Image(systemName: icon)
-                    .font(.system(size: 18, weight: .semibold))
-                    .foregroundStyle(tint)
-                    .frame(width: 28)
-
-                Text(label)
-                    .font(.headline)
-                    .foregroundStyle(.primary)
-
-                Spacer()
-
-                Image(systemName: "chevron.right")
-                    .font(.system(size: 13, weight: .semibold))
-                    .foregroundStyle(.secondary)
-            }
-            .padding(.horizontal, 16)
-            .padding(.vertical, 13)
-            .background(.white.opacity(0.08), in: RoundedRectangle(cornerRadius: 14))
-        }
-        .animation(.easeInOut(duration: 0.2), value: showSavedBadge)
-    }
+    // MARK: - Joystick
 
     private var joystick: some View {
         JoystickBuilder(
@@ -149,38 +113,49 @@ struct GameView: View {
             width: viewModel.joystickSize,
             shape: .circle,
             background: {
-                Circle()
-                    .fill(.ultraThinMaterial)
-                    .overlay(Circle().stroke(Color.white.opacity(0.45), lineWidth: 2.5))
+                Image("joystick_button_base")
+                    .resizable()
+                    .scaledToFit()
             },
             foreground: {
-                Circle()
-                    .fill(Color.white.opacity(0.75))
-                    .shadow(color: .black.opacity(0.35), radius: 5, x: 0, y: 3)
+                // JoystickBuilder constrains the thumb to width/4 for layout,
+                // but a fixed frame overflows that without clipping, making it visually larger.
+                Image("joystick_button_point")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: viewModel.joystickSize * 0.42,
+                           height: viewModel.joystickSize * 0.42)
             },
             locksInPlace: false
         )
         .padding(.leading, 32)
         .padding(.bottom, 28)
-        .popoverTip(joystickTip)
+        .popoverTip(joystickTip, arrowEdge: .bottom)
     }
 
-    private var interactButton: some View {
-        Button { viewModel.interact() } label: {
-            ZStack {
-                Circle()
-                    .fill(.ultraThinMaterial)
-                    .overlay(Circle().stroke(Color.white.opacity(0.45), lineWidth: 2.5))
-                    .frame(width: viewModel.joystickSize, height: viewModel.joystickSize)
+    // MARK: - Interact button
 
-                Image(systemName: "hand.raised.fill")
-                    .font(.system(size: 44, weight: .medium))
-                    .foregroundStyle(.white.opacity(0.85))
+    private var interactButton: some View {
+        Button {
+            // Donate interact event for TipKit sequencing, then attempt interaction.
+            Task { await InteractTip.useInteract.donate() }
+            viewModel.interact()
+        } label: {
+            ZStack {
+                Image("interact_button_base")
+                    .resizable()
+                    .scaledToFit()
+                Image("interact_button_hand")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: viewModel.joystickSize * 0.52,
+                           height: viewModel.joystickSize * 0.52)
             }
+            .frame(width: viewModel.joystickSize, height: viewModel.joystickSize)
         }
         .padding(.trailing, 32)
         .padding(.bottom, 28)
-        .popoverTip(interactTip)
+        .popoverTip(interactTip, arrowEdge: .bottom)
     }
 }
 

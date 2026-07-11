@@ -12,7 +12,6 @@ class GameScene: SKScene {
     weak var viewModel: GameViewModel?
 
     private var seerNode: SKSpriteNode!
-    private var npcNode: SKSpriteNode!
     private var miaNode: SKSpriteNode!
     private var exclamationMark: SKSpriteNode!
     private var exclamVisible = false
@@ -100,10 +99,62 @@ class GameScene: SKScene {
         }
     }
 
+    // MARK: - Cross-fade shader helpers
+
+    /// Creates a per-node shader that blends u_texture → u_next_texture via u_blend (0…1).
+    /// Each node must get its own instance so uniforms are independent.
+    private func makeCrossFadeShader() -> SKShader {
+        let src = """
+        uniform sampler2D u_next_texture;
+        uniform float u_blend;
+        void main() {
+            vec4 current = texture2D(u_texture, v_tex_coord);
+            vec4 next    = texture2D(u_next_texture, v_tex_coord);
+            gl_FragColor = mix(current, next, u_blend) * v_color_mix;
+        }
+        """
+        let shader = SKShader(source: src)
+        shader.addUniform(SKUniform(name: "u_blend", float: 0))
+        shader.addUniform(SKUniform(name: "u_next_texture", texture: SKTexture()))
+        return shader
+    }
+
+    /// Runs a pixel-level cross-dissolve ping-pong between two textures forever.
+    /// Replaces SKAction.animate for any 2-frame NPC sprite.
+    private func runCrossFade(on node: SKSpriteNode,
+                               tex0: SKTexture, tex1: SKTexture,
+                               holdDuration: TimeInterval,
+                               blendDuration: TimeInterval) {
+        node.shader = makeCrossFadeShader()
+
+        // One half-cycle: set current/next, hold, then smoothly blend across.
+        func makeStep(current: SKTexture, next: SKTexture) -> SKAction {
+            SKAction.sequence([
+                SKAction.run {
+                    node.texture = current
+                    node.shader?.uniformNamed("u_next_texture")?.textureValue = next
+                    node.shader?.uniformNamed("u_blend")?.floatValue = 0
+                },
+                SKAction.wait(forDuration: holdDuration),
+                SKAction.customAction(withDuration: blendDuration) { n, elapsed in
+                    let p = min(Float(elapsed) / Float(blendDuration), 1.0)
+                    (n as? SKSpriteNode)?.shader?.uniformNamed("u_blend")?.floatValue = p
+                }
+            ])
+        }
+
+        node.run(
+            SKAction.repeatForever(SKAction.sequence([
+                makeStep(current: tex0, next: tex1),
+                makeStep(current: tex1, next: tex0)
+            ])),
+            withKey: "crossfade"
+        )
+    }
+
+    // MARK: - NPC setup
+
     private func setupPlaygroundCharacters() {
-        // NPC sprites are cropped (not full-canvas).
-        // Scale = target character height in canvas / sprite texture height.
-        // charHeightInCanvas ≈ 420px at 2752×2064 — estimated from the design reference.
         let charH: CGFloat = 420
 
         func makeNPC(_ names: [String], height: CGFloat = charH) -> (SKSpriteNode, [SKTexture]) {
@@ -114,16 +165,15 @@ class GameScene: SKScene {
             return (node, textures)
         }
 
-        // ── Jennie on swing — static (swing background doesn't animate) ──────────
+        // ── Jennie on swing ───────────────────────────────────────────────────
         let (jennie, jennieTextures) = makeNPC(["NPC_Jennie_001", "NPC_Jennie_002"])
         jennie.position  = cw(720, 870)
         jennie.zPosition = -3.9
         addChild(jennie)
-        jennie.run(SKAction.repeatForever(SKAction.animate(with: jennieTextures, timePerFrame: 0.4)))
+        runCrossFade(on: jennie, tex0: jennieTextures[0], tex1: jennieTextures[1],
+                     holdDuration: 0.30, blendDuration: 0.40)
 
-        // ── Melanie on slide ───────────────────────────────────────────────────
-        // The slide goes from the TOP-RIGHT of the climbing frame DOWN-LEFT to the ground.
-        // Canvas measured: top ≈ (2050, 830), bottom ≈ (1760, 1220).
+        // ── Melanie on slide ──────────────────────────────────────────────────
         let (melanie, melanieTextures) = makeNPC(["NPC_Melanie_001", "NPC_Melanie_002"])
         let slideTop    = cw(2050, 680)
         let slideBottom = cw(1430, 1020)
@@ -133,21 +183,24 @@ class GameScene: SKScene {
         let slideDown = SKAction.move(to: slideBottom, duration: 1.8)
         slideDown.timingMode = .easeIn
         melanie.run(slideDown)
-        melanie.run(SKAction.repeatForever(SKAction.animate(with: melanieTextures, timePerFrame: 0.6)))
+        runCrossFade(on: melanie, tex0: melanieTextures[0], tex1: melanieTextures[1],
+                     holdDuration: 0.25, blendDuration: 0.35)
 
-        // ── Ihsan playing ball (canvas ≈ 2200, 1340) ──────────────────────────
-        let (ihsan, ihsanTextures) = makeNPC(["NPC_Ihsan_001", "NPC_Ihsan_002"], height: 600)
+        // ── Ihsan playing ball ────────────────────────────────────────────────
+        let (ihsan, ihsanTextures) = makeNPC(["NPC_Ihsan_001", "NPC_Ihsan_002"], height: 450)
         ihsan.position  = cw(2200, 1340)
         ihsan.zPosition = -0.5
         addChild(ihsan)
-        ihsan.run(SKAction.repeatForever(SKAction.animate(with: ihsanTextures, timePerFrame: 0.5)))
+        runCrossFade(on: ihsan, tex0: ihsanTextures[0], tex1: ihsanTextures[1],
+                     holdDuration: 0.28, blendDuration: 0.30)
 
-        // ── Mia in sandbox (canvas ≈ 1020, 1380) ──────────────────────────────
+        // ── Mia in sandbox ────────────────────────────────────────────────────
         let (mia, miaTextures) = makeNPC(["NPC_Mia_001", "NPC_Mia_002"])
         mia.position  = cw(1180, 1220)
         mia.zPosition = -0.9
         addChild(mia)
-        mia.run(SKAction.repeatForever(SKAction.animate(with: miaTextures, timePerFrame: 0.8)))
+        runCrossFade(on: mia, tex0: miaTextures[0], tex1: miaTextures[1],
+                     holdDuration: 0.55, blendDuration: 0.55)
         miaNode = mia
     }
 
@@ -186,27 +239,33 @@ class GameScene: SKScene {
     }
 
     private func setupNPC() {
-        npcNode = miaNode
         viewModel?.npcPosition = miaNode.position
     }
 
     private func setupRangeAura() {
         exclamationMark = SKSpriteNode(imageNamed: "Exclamation_mark")
-        exclamationMark.zPosition = 10
+        exclamationMark.zPosition = -0.1  // behind Joey (z=0), in front of Mia (z=-0.9)
         exclamationMark.alpha = 0
-        // setScale to ~70 pts tall (sprite is 317 pts at 1x)
         exclamationMark.setScale(0.22)
-        // position above Mia's head (anchor is center; half-height gets to top edge)
         exclamationMark.position = CGPoint(
             x: miaNode.position.x,
-            y: miaNode.position.y + miaNode.size.height * miaNode.yScale * 0.5 + 50
+            y: miaNode.position.y + miaNode.size.height * miaNode.yScale * 0.5 + 120
         )
         addChild(exclamationMark)
+
+        // Pulse scale
         let big  = SKAction.scale(to: 0.26, duration: 0.35)
         let norm = SKAction.scale(to: 0.20, duration: 0.35)
         big.timingMode  = .easeInEaseOut
         norm.timingMode = .easeInEaseOut
         exclamationMark.run(SKAction.repeatForever(SKAction.sequence([big, norm])), withKey: "pulse")
+
+        // Upward float
+        let floatUp   = SKAction.moveBy(x: 0, y: 18, duration: 0.65)
+        let floatDown = SKAction.moveBy(x: 0, y: -18, duration: 0.65)
+        floatUp.timingMode   = .easeInEaseOut
+        floatDown.timingMode = .easeInEaseOut
+        exclamationMark.run(SKAction.repeatForever(SKAction.sequence([floatUp, floatDown])), withKey: "float")
     }
 
     private func setupCamera() {

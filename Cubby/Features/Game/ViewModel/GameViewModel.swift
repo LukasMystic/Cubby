@@ -4,7 +4,6 @@
 //
 //  Created by Stanley Pratama Teguh on 02/07/26.
 //
-// YES I USE AI FOR MOST OF THIS
 
 import SpriteKit
 import SwiftUIJoystick
@@ -42,13 +41,6 @@ final class GameViewModel {
     private let deadzone: CGFloat = 10 // ignore tiny joystick movements
 
     var showDialogue = false
-
-    var isPaused = false {
-        didSet { gameScene.isPaused = isPaused }
-    }
-
-    // tick() runs at 60fps, so the joystick event must only be donated once
-    private var hasDonatedJoystick = false
 
     init() {
         joystickMonitor = JoystickMonitor()

@@ -10,13 +10,15 @@ import TipKit
 
 @main
 struct GameApp: App {
-    init() {
-        #if DEBUG
-        // must run before configure, or tips stay marked as already-shown
-        try? Tips.resetDatastore()
-        #endif
 
-        try? Tips.configure([.displayFrequency(.immediate)])
+    init() {
+        // Configure TipKit once at launch.
+        // .immediate means tips are not throttled — they appear as soon as rules are met,
+        // making the tutorial flow sequentially within the first session.
+        try? Tips.configure([
+            .datastoreLocation(.applicationDefault),
+            .displayFrequency(.immediate)
+        ])
     }
 
     var body: some Scene {

@@ -21,8 +21,25 @@ enum DialogueBeat {
 final class DialogueViewModel {
 
     private(set) var currentBeat: DialogueBeat = .narrative(text: "")
+    private(set) var miaEmotion: String = ""   // updated by context_emotion nodes; empty = default neutral
     private(set) var isEnded = false
-    private(set) var playerName = "Joey"
+    private(set) var beatCounter: Int = 0      // increments on every new beat; drives typewriter + transition
+
+    /// The asset name for Mia's character image based on the current emotion.
+    var miaImageAssetName: String {
+        switch miaEmotion.lowercased() {
+        case "annoyed":                               return "EX_Mia_006_Annoyed"
+        case "uncomfortable":                         return "EX_Mia_004_Uncomfortable"
+        case "happy":                                 return "EX_Mia_003_Happy"
+        case "relieved", "relaxed":                   return "EX_Mia_002_Relieved"
+        case "cry", "crying":                         return "EX_Mia_008_Crying"
+        case "upset/angry", "angry", "upset":         return "EX_Mia_007_Angry"
+        case "confused":                              return "EX_Mia_001_Neutral"
+        case "silentdiscomfort", "silent discomfort": return "EX_Mia_005_SilentDiscomfort"
+        case "sobbing":                               return "EX_Mia_009_Sobbing"
+        default:                                      return "mia_1 2"
+        }
+    }
 
     private var router: StoryRouter?
     private var currentScene: StoryScene?
@@ -30,7 +47,6 @@ final class DialogueViewModel {
     private var currentDecisionId: String?
 
     init() {
-        print("save folder:", progressFileURL.deletingLastPathComponent().path)
         loadStory()
     }
 
@@ -72,11 +88,8 @@ final class DialogueViewModel {
     // MARK: - Navigation
 
     func advance() {
-        // if it's a choice panel, do nothing 
-        guard case .choice = currentBeat else {
-            showNextBeat()
-            return
-        }
+        if case .choice = currentBeat { return } // choices are handled by choose(_:), not advance
+        showNextBeat()
     }
 
     func choose(_ route: DecisionRoute) {
@@ -98,6 +111,7 @@ final class DialogueViewModel {
 
             if let beat = beat(for: node) {
                 currentBeat = beat
+                beatCounter += 1
                 return
             }
             // some nodes (like player_identity) are skipped
@@ -148,7 +162,7 @@ final class DialogueViewModel {
             return .speech(speaker: node.speaker ?? "", text: node.text ?? "")
 
         case .contextEmotion:
-            SpeechService.shared.play(nodeId: node.nodeId)
+            miaEmotion = node.emotion ?? ""
             if let inline = node.dialogue {
                 return .speech(speaker: inline.speaker, text: inline.text)
             }
