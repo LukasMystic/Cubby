@@ -243,6 +243,7 @@ struct DialogueView: View {
         let img = renderer.image { _ in window.drawHierarchy(in: window.bounds, afterScreenUpdates: false) }
         viewModel.saveDecisionScreenshot(img, targetFile: route.targetFile)
     }
+
 }
 
 #Preview {

@@ -166,6 +166,7 @@ final class DialogueViewModel {
             SpeechService.shared.stop()
             isEnded = true
             return .ending(emotion: node.finalEmotion ?? "")
+            
         }
     }
 }

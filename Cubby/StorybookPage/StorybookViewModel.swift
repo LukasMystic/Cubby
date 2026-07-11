@@ -1,11 +1,7 @@
-//
-//  StorybookViewModel.swift
-//  Cubby
-//
-
 // Storybook/StorybookViewModel.swift
 
 import Foundation
+import UIKit
 
 @Observable
 class StorybookViewModel {
@@ -21,20 +17,39 @@ class StorybookViewModel {
             return StorybookViewModel(pages: [])
         }
 
-        let orderedBranches = progress.decisions
-            .sorted { $0.key < $1.key }
-            .map { $0.value }
+        let router: StoryRouter? = loadJSON("main")
 
-        let pages: [StorybookPage] = orderedBranches.compactMap { branchName in
-            guard let url = Bundle.main.url(forResource: branchName, withExtension: "json"),
-                  let data = try? Data(contentsOf: url),
-                  let branch = try? JSONDecoder().decode(BranchFile.self, from: data) else {
-                return nil
+        let orderedBranchNames = progress.decisions
+            .sorted { $0.key < $1.key }
+            .compactMap { (decisionId, option) -> String? in
+                router?.decisions
+                    .first(where: { $0.decisionId == decisionId })?
+                    .routes
+                    .first(where: { $0.option == option })?
+                    .targetFile
+                    .replacingOccurrences(of: ".json", with: "")
             }
-            return branch.storybookPage
+
+        let pages: [StorybookPage] = orderedBranchNames.compactMap { branchName in
+            let branch: BranchFile? = loadJSON(branchName)
+            return branch?.storybookPage
         }
 
         return StorybookViewModel(pages: pages)
+    }
+
+    private static func loadJSON<T: Decodable>(_ fileName: String) -> T? {
+        guard
+            let url = Bundle.main.url(forResource: fileName, withExtension: "json"),
+            let data = try? Data(contentsOf: url),
+            let result = try? JSONDecoder().decode(T.self, from: data)
+        else { return nil }
+        return result
+    }
+
+    func screenshot(for page: StorybookPage) -> UIImage? {
+        let branchName = page.sourceFile.replacingOccurrences(of: ".json", with: "")
+        return UserProgressLoader.loadScreenshot(branchName: branchName)
     }
 
     var currentPage: StorybookPage? {

@@ -7,11 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0B91FEEF30022FB40037D40F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0B91FEEE30022FB40037D40F /* Assets.xcassets */; };
 		0BAC1A822FFDEC920018BE37 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 0BAC1A812FFDEC920018BE37 /* Lottie */; };
 		D1F3B2862FF656A3007BF617 /* SwiftUIJoystick in Frameworks */ = {isa = PBXBuildFile; productRef = D1F3B2852FF656A3007BF617 /* SwiftUIJoystick */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0B91FEEE30022FB40037D40F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D1F3B2762FF64284007BF617 /* Cubby.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Cubby.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -66,6 +68,7 @@
 				0BAC192A2FF65EAE0018BE37 /* Fonts */,
 				D1F3B2782FF64284007BF617 /* Cubby */,
 				D1F3B2772FF64284007BF617 /* Products */,
+				0B91FEEE30022FB40037D40F /* Assets.xcassets */,
 			);
 			sourceTree = "<group>";
 		};
@@ -149,6 +152,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0B91FEEF30022FB40037D40F /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
