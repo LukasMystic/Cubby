@@ -23,6 +23,7 @@ final class DialogueViewModel {
     private(set) var currentBeat: DialogueBeat = .narrative(text: "")
     private(set) var miaEmotion: String = ""   // updated by context_emotion nodes; empty = default neutral
     private(set) var isEnded = false
+    private(set) var beatCounter: Int = 0      // increments on every new beat; drives typewriter + transition
 
     private var router: StoryRouter?
     private var currentScene: StoryScene?
@@ -90,6 +91,7 @@ final class DialogueViewModel {
 
             if let beat = beat(for: node) {
                 currentBeat = beat
+                beatCounter += 1
                 return
             }
             // some nodes (like player_identity) are skipped

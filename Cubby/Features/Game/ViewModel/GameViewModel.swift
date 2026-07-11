@@ -42,10 +42,6 @@ final class GameViewModel {
 
     var showDialogue = false
 
-    var isPaused = false {
-        didSet { gameScene.isPaused = isPaused }
-    }
-
     init() {
         joystickMonitor = JoystickMonitor()
         let s = GameScene()

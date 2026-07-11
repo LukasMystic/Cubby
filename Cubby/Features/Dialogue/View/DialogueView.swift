@@ -10,13 +10,22 @@ import UIKit
 
 struct DialogueView: View {
 
+    /// When set, this closure is used instead of the environment dismiss action.
+    /// Pass it when presenting the view inline (e.g. inside a ZStack) rather than via fullScreenCover.
+    var onDismiss: (() -> Void)? = nil
+
     @State private var viewModel = DialogueViewModel()
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.dismiss) private var envDismiss
     @State private var speakerOn = true
     @State private var lastSpeaker = ""
     // Tracks the rendered height of the speech bubble so the name box
     // can be positioned past the transparent tail area (35% from top).
     @State private var speechBoxHeight: CGFloat = 180
+
+    // Typewriter
+    @State private var displayedText = ""
+    @State private var isTyping = false
+    @State private var typewriterKey = 0
 
     private func isMia(_ speaker: String) -> Bool {
         speaker.lowercased().contains("mia")
@@ -54,6 +63,25 @@ struct DialogueView: View {
         }
     }
 
+    private var currentBeatText: String {
+        switch viewModel.currentBeat {
+        case .narrative(let text): return text
+        case .speech(_, let text): return text
+        default: return ""
+        }
+    }
+
+    private func dismissSelf() {
+        if let onDismiss { onDismiss() } else { envDismiss() }
+    }
+
+    private func handleAdvance() {
+        guard !isTyping else { return }
+        withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
+            viewModel.advance()
+        }
+    }
+
     // MARK: - Body
 
     var body: some View {
@@ -72,9 +100,29 @@ struct DialogueView: View {
                     .padding(.horizontal, 24)
                     .padding(.top,    panelAlignment == .top    ? 140 : 0)
                     .padding(.bottom, panelAlignment == .bottom ? 28 : 0)
+                    .id(viewModel.beatCounter)
+                    .transition(.asymmetric(
+                        insertion: .move(edge: .bottom).combined(with: .opacity),
+                        removal: .opacity
+                    ))
+            }
+            .task(id: typewriterKey) {
+                let fullText = currentBeatText
+                guard !fullText.isEmpty else { return }
+                displayedText = ""
+                isTyping = true
+                for char in fullText {
+                    if Task.isCancelled { break }
+                    displayedText.append(char)
+                    try? await Task.sleep(nanoseconds: 30_000_000) // 30 ms per character
+                }
+                isTyping = false
+            }
+            .onChange(of: viewModel.beatCounter) { _, _ in
+                typewriterKey += 1
             }
             .overlay(alignment: .topLeading) {
-                Button { dismiss() } label: {
+                Button { dismissSelf() } label: {
                     Image("Back_button")
                         .resizable()
                         .scaledToFit()
@@ -156,13 +204,13 @@ struct DialogueView: View {
     @ViewBuilder
     private func bottomPanel(geo: GeometryProxy) -> some View {
         switch viewModel.currentBeat {
-        case .narrative(let text):
-            narrativePanel(text: text, geo: geo)
-                .onTapGesture { viewModel.advance() }
+        case .narrative:
+            narrativePanel(text: displayedText, geo: geo)
+                .onTapGesture { handleAdvance() }
 
-        case .speech(let speaker, let text):
-            speechPanel(speaker: speaker, text: text, geo: geo)
-                .onTapGesture { viewModel.advance() }
+        case .speech(let speaker, _):
+            speechPanel(speaker: speaker, text: displayedText, geo: geo)
+                .onTapGesture { handleAdvance() }
                 .onAppear { lastSpeaker = speaker }
 
         case .choice(let options):
@@ -194,6 +242,8 @@ struct DialogueView: View {
                     .frame(width: 84)
                     .padding(6)
                     .offset(x: -58, y: 14)
+                    .opacity(isTyping ? 0.35 : 1.0)
+                    .animation(.easeInOut(duration: 0.2), value: isTyping)
                     .allowsHitTesting(false)
             }
     }
@@ -237,6 +287,8 @@ struct DialogueView: View {
                     .frame(width: 100)
                     .padding(.trailing, 4)
                     .offset(y: 22)
+                    .opacity(isTyping ? 0.35 : 1.0)
+                    .animation(.easeInOut(duration: 0.2), value: isTyping)
                     .allowsHitTesting(false)
             }
     }
@@ -249,7 +301,9 @@ struct DialogueView: View {
             ForEach(options) { route in
                 Button {
                     captureScreen(for: route)
-                    viewModel.choose(route)
+                    withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
+                        viewModel.choose(route)
+                    }
                 } label: {
                     Image(mia ? "Mia_option_button" : "Joey_option_button")
                         .resizable()
@@ -281,7 +335,7 @@ struct DialogueView: View {
                 .font(.custom("Playpen Sans", size: 22))
                 .foregroundStyle(.black.opacity(0.7))
 
-            Button("Done") { dismiss() }
+            Button("Done") { dismissSelf() }
                 .font(.custom("FredokaOne-Regular", size: 22))
                 .foregroundStyle(.white)
                 .padding(.horizontal, 28)

@@ -9,10 +9,51 @@ import SwiftUI
 import SpriteKit
 import SwiftUIJoystick
 
+// MARK: - Iris-wipe transition
+
+/// A circle that grows from 0 to fully covering the screen, driven by `progress`.
+private struct IrisWipeShape: Shape {
+    var progress: CGFloat
+
+    var animatableData: CGFloat {
+        get { progress }
+        set { progress = newValue }
+    }
+
+    func path(in rect: CGRect) -> Path {
+        let center = CGPoint(x: rect.midX, y: rect.midY)
+        // Radius large enough to always cover the full rect at progress == 1.
+        let maxRadius = hypot(rect.width, rect.height) / 2 * 1.05
+        let r = maxRadius * progress
+        var p = Path()
+        p.addEllipse(in: CGRect(x: center.x - r, y: center.y - r,
+                                width: r * 2, height: r * 2))
+        return p
+    }
+}
+
+private struct IrisRevealModifier: ViewModifier {
+    let progress: CGFloat
+    func body(content: Content) -> some View {
+        content.clipShape(IrisWipeShape(progress: progress))
+    }
+}
+
+extension AnyTransition {
+    /// Circle expands from centre on insertion, contracts to centre on removal.
+    static var irisReveal: AnyTransition {
+        .modifier(
+            active:   IrisRevealModifier(progress: 0),
+            identity: IrisRevealModifier(progress: 1)
+        )
+    }
+}
+
+// MARK: - GameView
+
 struct GameView: View {
 
     @State private var viewModel = GameViewModel()
-    @State private var showSavedBadge = false
 
     var body: some View {
         ZStack {
@@ -21,25 +62,23 @@ struct GameView: View {
 
             hud
 
-            if viewModel.isPaused {
-                pauseOverlay
+            if viewModel.showDialogue {
+                DialogueView(onDismiss: {
+                    withAnimation(.easeInOut(duration: 0.55)) {
+                        viewModel.showDialogue = false
+                    }
+                })
+                .transition(.irisReveal)
+                .zIndex(1)
             }
         }
-        .fullScreenCover(isPresented: Bindable(viewModel).showDialogue) {
-            DialogueView()
-        }
+        .animation(.easeInOut(duration: 0.55), value: viewModel.showDialogue)
     }
 
-    // hud
+    // MARK: - HUD
+
     private var hud: some View {
         VStack {
-            HStack {
-                Spacer()
-                pauseButton
-            }
-            .padding(.top, 16)
-            .padding(.trailing, 20)
-
             Spacer()
 
             HStack(alignment: .bottom) {
@@ -50,92 +89,7 @@ struct GameView: View {
         }
     }
 
-    private var pauseButton: some View {
-        Button { viewModel.isPaused = true } label: {
-            Image(systemName: "pause.fill")
-                .font(.system(size: 22, weight: .semibold))
-                .foregroundStyle(.white.opacity(0.85))
-                .padding(14)
-                .background(.ultraThinMaterial, in: Circle())
-                .overlay(Circle().stroke(Color.white.opacity(0.35), lineWidth: 1.5))
-        }
-    }
-
-    private var pauseOverlay: some View {
-        ZStack {
-            Color.black.opacity(0.6).ignoresSafeArea()
-
-            VStack(spacing: 24) {
-
-                // Title
-                VStack(spacing: 6) {
-                    Text("PAUSED")
-                        .font(.system(size: 34, weight: .black, design: .rounded))
-                        .foregroundStyle(.white)
-                    Rectangle()
-                        .frame(height: 2)
-                        .foregroundStyle(.white.opacity(0.25))
-                }
-
-                // Menu buttons
-                VStack(spacing: 12) {
-                    pauseMenuButton(icon: "play.fill", label: "Resume", tint: .green) {
-                        viewModel.isPaused = false
-                    }
-
-                    pauseMenuButton(
-                        icon: showSavedBadge ? "checkmark.circle.fill" : "square.and.arrow.down.fill",
-                        label: showSavedBadge ? "Saved!" : "Save",
-                        tint: showSavedBadge ? .green : .blue
-                    ) {
-                        // auto-saved on decisions, this just shows the feedback badge
-                        showSavedBadge = true
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                            showSavedBadge = false
-                        }
-                    }
-
-                    Divider().overlay(.white.opacity(0.15))
-
-                    pauseMenuButton(icon: "house.fill", label: "Main Menu", tint: .orange) {
-                        // TODO: Replace with navigation to MainMenuView
-                        // e.g. path.removeLast() if using NavigationStack,
-                        // or set a @State var showMainMenu = true and present it.
-                        viewModel.isPaused = false
-                    }
-                }
-            }
-            .padding(28)
-            .frame(width: 340)
-            .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 28, style: .continuous))
-            .shadow(color: .black.opacity(0.4), radius: 30, x: 0, y: 10)
-        }
-    }
-
-    private func pauseMenuButton(icon: String, label: String, tint: Color, action: @escaping () -> Void) -> some View {
-        Button(action: action) {
-            HStack(spacing: 14) {
-                Image(systemName: icon)
-                    .font(.system(size: 18, weight: .semibold))
-                    .foregroundStyle(tint)
-                    .frame(width: 28)
-
-                Text(label)
-                    .font(.headline)
-                    .foregroundStyle(.primary)
-
-                Spacer()
-
-                Image(systemName: "chevron.right")
-                    .font(.system(size: 13, weight: .semibold))
-                    .foregroundStyle(.secondary)
-            }
-            .padding(.horizontal, 16)
-            .padding(.vertical, 13)
-            .background(.white.opacity(0.08), in: RoundedRectangle(cornerRadius: 14))
-        }
-        .animation(.easeInOut(duration: 0.2), value: showSavedBadge)
-    }
+    // MARK: - Joystick
 
     private var joystick: some View {
         JoystickBuilder(
@@ -143,14 +97,18 @@ struct GameView: View {
             width: viewModel.joystickSize,
             shape: .circle,
             background: {
-                Circle()
-                    .fill(.ultraThinMaterial)
-                    .overlay(Circle().stroke(Color.white.opacity(0.45), lineWidth: 2.5))
+                Image("joystick_button_base")
+                    .resizable()
+                    .scaledToFit()
             },
             foreground: {
-                Circle()
-                    .fill(Color.white.opacity(0.75))
-                    .shadow(color: .black.opacity(0.35), radius: 5, x: 0, y: 3)
+                // JoystickBuilder constrains the thumb to width/4 for layout,
+                // but a fixed frame overflows that without clipping, making it visually larger.
+                Image("joystick_button_point")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: viewModel.joystickSize * 0.42,
+                           height: viewModel.joystickSize * 0.42)
             },
             locksInPlace: false
         )
@@ -158,18 +116,21 @@ struct GameView: View {
         .padding(.bottom, 28)
     }
 
+    // MARK: - Interact button
+
     private var interactButton: some View {
         Button { viewModel.interact() } label: {
             ZStack {
-                Circle()
-                    .fill(.ultraThinMaterial)
-                    .overlay(Circle().stroke(Color.white.opacity(0.45), lineWidth: 2.5))
-                    .frame(width: viewModel.joystickSize, height: viewModel.joystickSize)
-
-                Image(systemName: "hand.raised.fill")
-                    .font(.system(size: 44, weight: .medium))
-                    .foregroundStyle(.white.opacity(0.85))
+                Image("interact_button_base")
+                    .resizable()
+                    .scaledToFit()
+                Image("interact_button_hand")
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: viewModel.joystickSize * 0.52,
+                           height: viewModel.joystickSize * 0.52)
             }
+            .frame(width: viewModel.joystickSize, height: viewModel.joystickSize)
         }
         .padding(.trailing, 32)
         .padding(.bottom, 28)
