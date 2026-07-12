@@ -120,14 +120,15 @@ struct CutsceneView: View {
             Image("Joey_option_button")
                 .resizable()
                 .aspectRatio(899.0 / 248.0, contentMode: .fit)
-                .frame(width: geo.size.width * 0.12)
+                .frame(width: geo.size.width * 0.15)
                 .overlay {
                     Text("Skip")
-                        .font(.custom("FredokaOne-Regular", size: geo.size.height * 0.026))
+                        .font(.custom("FredokaOne-Regular", size: geo.size.height * 0.032))
                         .foregroundStyle(.white)
                 }
         }
         .padding(24)
+        .offset(x: -16, y: 24)
     }
 }
 
