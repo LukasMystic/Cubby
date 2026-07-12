@@ -13,39 +13,46 @@ struct ClosingView: View {
     var onTryAgain: () -> Void = {}
 
     var body: some View {
-        ZStack {
-            Image("GPBackground")
-                .resizable()
-                .scaledToFill()
-                .ignoresSafeArea()
+        GeometryReader { geo in
+            ZStack {
+                Image("Cubby_Gameplay_NoCharacter 1")
+                    .resizable()
+                    .scaledToFill()
+                    .blur(radius: 8, opaque: true)
+                    .ignoresSafeArea()
 
-            VStack(spacing: 80) {
-                Text("Well done! You finished!")
-                    .font(.system(size: 72, weight: .bold, design: .rounded))
-                    .foregroundStyle(Color(red: 0.11, green: 0.25, blue: 0.09))
-                    .multilineTextAlignment(.center)
+                VStack(spacing: geo.size.height * 0.08) {
+                    Text("Well done! You finished!")
+                        .font(.custom("FredokaOne-Regular", size: geo.size.height * 0.06))
+                        .foregroundStyle(Color(red: 0.11, green: 0.25, blue: 0.09))
+                        .multilineTextAlignment(.center)
 
-                HStack(spacing: 40) {
-                    closingButton("Back to\nplayground", action: onBackToPlayground)
-                    closingButton("Try again", action: onTryAgain)
+                    HStack(spacing: geo.size.width * 0.04) {
+                        closingButton("Back to\nplayground", geo: geo, action: onBackToPlayground)
+                        closingButton("Try again", geo: geo, action: onTryAgain)
+                    }
                 }
+                .padding(.horizontal, 60)
             }
-            .padding(.horizontal, 60)
         }
+        .ignoresSafeArea()
     }
 
-    private func closingButton(_ title: String, action: @escaping () -> Void) -> some View {
+    private func closingButton(_ title: String, geo: GeometryProxy, action: @escaping () -> Void) -> some View {
         Button(action: action) {
-            Text(title)
-                .font(.system(size: 30, weight: .bold, design: .rounded))
-                .foregroundStyle(Color(red: 0.82, green: 0.42, blue: 0.11))
-                .multilineTextAlignment(.center)
-                .padding(.horizontal, 40)
-                .padding(.vertical, 40)
-                .frame(minWidth: 320, minHeight: 150)
-                .background(
-                    Image("option_conversation_box").resizable()
-                )
+            Image("Joey_option_button")
+                .resizable()
+                .aspectRatio(899.0 / 248.0, contentMode: .fit)
+                .frame(maxWidth: geo.size.width * 0.36)
+                .overlay {
+                    Text(title)
+                        .font(.custom("FredokaOne-Regular", size: geo.size.height * 0.032))
+                        .foregroundStyle(.white)
+                        .multilineTextAlignment(.center)
+                        .minimumScaleFactor(0.6)
+                        .padding(.horizontal, 40)
+                }
+                .clipped()
         }
     }
 }

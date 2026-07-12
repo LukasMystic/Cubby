@@ -29,11 +29,13 @@ struct CharacterExpression: Codable {
     let expressionKey: String
     let speechState: String
     let assetFile: String
+    let position: String?
 
     enum CodingKeys: String, CodingKey {
         case expressionKey = "expression_key"
         case speechState = "speech_state"
         case assetFile = "asset_file"
+        case position
     }
 }
 

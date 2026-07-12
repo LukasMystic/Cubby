@@ -14,7 +14,7 @@ final class SpeechService {
 
     func play(nodeId: String) {
         stop()
-            guard let url = Bundle.main.url(forResource: nodeId, withExtension: "mp3") else {
+        guard let url = Bundle.main.url(forResource: nodeId, withExtension: "mp3") else {
             print("[Speech] Missing audio: \(nodeId).mp3")
             return
         }

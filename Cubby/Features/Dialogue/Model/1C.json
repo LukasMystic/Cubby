@@ -23,12 +23,14 @@
         "joey": {
           "expression_key": "Shocked",
           "speech_state": "Idle",
-          "asset_file": "EX_Joey_007_Shocked.png"
+          "asset_file": "EX_Joey_007_Shocked.png",
+          "position": "close"
         },
         "mia": {
           "expression_key": "Annoyed",
           "speech_state": "Talking",
-          "asset_file": "EX_Mia_006_Annoyed.png"
+          "asset_file": "EX_Mia_006_Annoyed.png",
+          "position": "far"
         }
       }
     },
@@ -40,12 +42,14 @@
         "joey": {
           "expression_key": "Regretful",
           "speech_state": "Idle",
-          "asset_file": "EX_Joey_006_Regretful.png"
+          "asset_file": "EX_Joey_006_Regretful.png",
+          "position": "close"
         },
         "mia": {
           "expression_key": "Crying",
           "speech_state": "Idle",
-          "asset_file": "EX_Mia_008_Crying.png"
+          "asset_file": "EX_Mia_008_Crying.png",
+          "position": "far"
         }
       }
     },
@@ -58,12 +62,14 @@
         "joey": {
           "expression_key": "Regretful",
           "speech_state": "Idle",
-          "asset_file": "EX_Joey_006_Regretful.png"
+          "asset_file": "EX_Joey_006_Regretful.png",
+          "position": "close"
         },
         "mia": {
           "expression_key": "Crying",
           "speech_state": "Idle",
-          "asset_file": "EX_Mia_008_Crying.png"
+          "asset_file": "EX_Mia_008_Crying.png",
+          "position": "far"
         }
       }
     }

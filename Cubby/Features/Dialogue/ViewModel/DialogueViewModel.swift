@@ -17,12 +17,19 @@ enum DialogueBeat {
     case ending(emotion: String)
 }
 
+// horizontal placement of a character; closer to center = closer together
+enum CharacterPosition: String {
+    case far, mid, close
+}
+
 @Observable
 final class DialogueViewModel {
 
     private(set) var currentBeat: DialogueBeat = .narrative(text: "")
     private(set) var miaExpressionKey: String = ""
     private(set) var joeyExpressionKey: String = ""
+    private(set) var miaPosition: CharacterPosition = .far
+    private(set) var joeyPosition: CharacterPosition = .far
     private(set) var isEnded = false
     private(set) var beatCounter: Int = 0
 
@@ -63,8 +70,11 @@ final class DialogueViewModel {
     private var nodeIndex = 0
     private var currentDecisionId: String?
     private var prevMiaExpressionKey: String = ""
+    private var hasStarted = false
 
-    init() {
+    func start() {
+        guard !hasStarted else { return }
+        hasStarted = true
         loadStory()
     }
 
@@ -136,8 +146,12 @@ final class DialogueViewModel {
                 prevMiaExpressionKey = mia.expressionKey
             }
             miaExpressionKey = mia.expressionKey
+            if let p = mia.position, let pos = CharacterPosition(rawValue: p) { miaPosition = pos }
         }
-        if let joey = exprs.joey { joeyExpressionKey = joey.expressionKey }
+        if let joey = exprs.joey {
+            joeyExpressionKey = joey.expressionKey
+            if let p = joey.position, let pos = CharacterPosition(rawValue: p) { joeyPosition = pos }
+        }
     }
 
     // save or load progress
@@ -194,13 +208,16 @@ final class DialogueViewModel {
             return nil
 
         case .backgroundSetting, .situationNarrator:
+            SpeechService.shared.play(nodeId: node.nodeId)
             return .narrative(text: node.text ?? "")
 
         case .dialogue:
+            SpeechService.shared.play(nodeId: node.nodeId)
             audioManager.onDialogueBoxAppear()
             return .speech(speaker: node.speaker ?? "", text: node.text ?? "")
 
         case .contextEmotion:
+            SpeechService.shared.play(nodeId: node.nodeId)
             if let inline = node.dialogue {
                 audioManager.onDialogueBoxAppear()
                 return .speech(speaker: inline.speaker, text: inline.text)
@@ -208,6 +225,7 @@ final class DialogueViewModel {
             return .narrative(text: node.text ?? "")
 
         case .decisionPoint:
+            SpeechService.shared.stop()
             audioManager.onChoicePanelAppear()
             currentDecisionId = node.nodeId
             let choices = router?.decisions
@@ -216,6 +234,7 @@ final class DialogueViewModel {
             return .choice(options: choices)
 
         case .ending:
+            SpeechService.shared.stop()
             isEnded = true
             return .ending(emotion: node.finalEmotion ?? "")
         }

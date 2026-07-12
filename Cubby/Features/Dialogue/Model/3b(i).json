@@ -23,12 +23,14 @@
         "joey": {
           "expression_key": "Concerned",
           "speech_state": "Idle",
-          "asset_file": "EX_Joey_004_Concerned.png"
+          "asset_file": "EX_Joey_004_Concerned.png",
+          "position": "mid"
         },
         "mia": {
           "expression_key": "Relieved",
           "speech_state": "Talking",
-          "asset_file": "EX_Mia_002_Relieved.png"
+          "asset_file": "EX_Mia_002_Relieved.png",
+          "position": "far"
         }
       }
     },
@@ -40,12 +42,14 @@
         "joey": {
           "expression_key": "Happy",
           "speech_state": "Idle",
-          "asset_file": "EX_Joey_005_Happy.png"
+          "asset_file": "EX_Joey_005_Happy.png",
+          "position": "mid"
         },
         "mia": {
           "expression_key": "Relieved",
           "speech_state": "Idle",
-          "asset_file": "EX_Mia_002_Relieved.png"
+          "asset_file": "EX_Mia_002_Relieved.png",
+          "position": "mid"
         }
       }
     },
@@ -58,12 +62,14 @@
         "joey": {
           "expression_key": "Happy",
           "speech_state": "Idle",
-          "asset_file": "EX_Joey_005_Happy.png"
+          "asset_file": "EX_Joey_005_Happy.png",
+          "position": "mid"
         },
         "mia": {
           "expression_key": "Relieved",
           "speech_state": "Idle",
-          "asset_file": "EX_Mia_002_Relieved.png"
+          "asset_file": "EX_Mia_002_Relieved.png",
+          "position": "mid"
         }
       }
     }
