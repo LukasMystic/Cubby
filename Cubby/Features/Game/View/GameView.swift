@@ -11,58 +11,46 @@ import SwiftUIJoystick
 import TipKit
 
 struct GameView: View {
-    private let joystickTip = JoystickTip()
-    private let interactTip = InteractTip()
-    private let startTip = StartGameTip()
 
     @State private var viewModel = GameViewModel()
-
-    // Separate from viewModel.showDialogue so we can coordinate the white-flash timing.
     @State private var dialoguePresented = false
     @State private var screenFlash: Double = 0
 
-    // TipKit — each tip is shown exactly once, ever.
-    private let joystickTip  = JoystickTip()
-    private let interactTip  = InteractTip()
+    // TipKit
+    private let joystickTip = JoystickTip()
+    private let interactTip = InteractTip()
     private let startGameTip = StartGameTip()
-
-    // Prevent re-donating the joystick event on every walk frame.
     @State private var joystickEventDonated = false
+    @State private var showStartBanner = false
 
     var body: some View {
         ZStack {
             SpriteView(scene: viewModel.scene)
                 .ignoresSafeArea()
-
             hud
-
-            // StartGameTip shown as a banner near the top once both events are donated.
-            VStack {
-                TipView(startGameTip, arrowEdge: .top)
-                    .padding(.horizontal, 40)
-                    .padding(.top, 60)
-                Spacer()
+            if showStartBanner {
+                VStack {
+                    startBanner
+                    Spacer()
+                        .allowsHitTesting(false)
+                }
+                .transition(.move(edge: .top).combined(with: .opacity))
             }
-            .allowsHitTesting(false) // tips themselves handle their own taps
 
             if dialoguePresented {
                 DialogueView(onDismiss: { closeDialogue() })
                     .zIndex(1)
             }
-
-            // White overlay sits on top of everything — animated separately from the view swap.
             Color.white
                 .opacity(screenFlash)
                 .ignoresSafeArea()
                 .allowsHitTesting(false)
                 .zIndex(2)
         }
-        // When the game requests dialogue, run the flash-through-white transition.
         .onChange(of: viewModel.showDialogue) { _, newValue in
             guard newValue else { return }
             openDialogue()
         }
-        // Donate the joystick event the first time the character starts walking.
         .onChange(of: viewModel.characterAnim) { _, anim in
             guard anim == .walking, !joystickEventDonated else { return }
             joystickEventDonated = true
@@ -70,8 +58,41 @@ struct GameView: View {
         }
     }
 
-    // MARK: - Transition helpers
+    // Start banner
 
+    private var startBanner: some View {
+        HStack(spacing: 12) {
+            Image(systemName: "play.circle.fill")
+                .foregroundStyle(.blue)
+                .font(.title2)
+
+            VStack(alignment: .leading, spacing: 2) {
+                Text("Start the Game!")
+                    .font(.custom("FredokaOne-Regular", size: 16))
+                    .foregroundStyle(.primary)
+                Text("You're all set. Go explore!")
+                    .font(.custom("Playpen Sans", size: 14))
+                    .foregroundStyle(.secondary)
+            }
+
+            Spacer()
+
+            Button {
+                withAnimation(.easeOut(duration: 0.25)) { showStartBanner = false }
+                startGameTip.invalidate(reason: .actionPerformed)
+            } label: {
+                Image(systemName: "xmark")
+                    .foregroundStyle(.secondary)
+                    .font(.caption)
+            }
+        }
+        .padding(16)
+        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 14))
+        .padding(.horizontal, 40)
+        .padding(.top, 60)
+    }
+
+    // Transition
     private func openDialogue() {
         Task {
             withAnimation(.easeIn(duration: 0.18)) { screenFlash = 1 }
@@ -91,8 +112,7 @@ struct GameView: View {
         }
     }
 
-    // MARK: - HUD
-
+    //HUD
     private var hud: some View {
         VStack {
             Spacer()
@@ -105,8 +125,7 @@ struct GameView: View {
         }
     }
 
-    // MARK: - Joystick
-
+    // Joystick
     private var joystick: some View {
         JoystickBuilder(
             monitor: viewModel.joystickMonitor,
@@ -118,8 +137,6 @@ struct GameView: View {
                     .scaledToFit()
             },
             foreground: {
-                // JoystickBuilder constrains the thumb to width/4 for layout,
-                // but a fixed frame overflows that without clipping, making it visually larger.
                 Image("joystick_button_point")
                     .resizable()
                     .scaledToFit()
@@ -133,12 +150,18 @@ struct GameView: View {
         .popoverTip(joystickTip, arrowEdge: .bottom)
     }
 
-    // MARK: - Interact button
-
+    // Interact button
     private var interactButton: some View {
         Button {
-            // Donate interact event for TipKit sequencing, then attempt interaction.
-            Task { await InteractTip.useInteract.donate() }
+            Task {
+                await InteractTip.useInteract.donate()
+                interactTip.invalidate(reason: .actionPerformed)
+                try? await Task.sleep(nanoseconds: 400_000_000) // wait for popover dismiss animation
+                guard startGameTip.shouldDisplay else { return }
+                withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
+                    showStartBanner = true
+                }
+            }
             viewModel.interact()
         } label: {
             ZStack {

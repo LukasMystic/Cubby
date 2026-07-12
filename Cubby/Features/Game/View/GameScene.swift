@@ -48,11 +48,10 @@ class GameScene: SKScene {
         setupCamera()
     }
 
-    // All new Gameplay assets are 2752×2064 full-canvas composites.
     private let canvasW: CGFloat = 2752
     private let canvasH: CGFloat = 2064
 
-    // Canvas pixel (origin top-left) → SpriteKit world coordinate (origin bottom-left).
+    //  SpriteKit world coordinate (origin bottom-left).
     private func cw(_ cx: CGFloat, _ cy: CGFloat) -> CGPoint {
         CGPoint(x: cx * bgScale, y: (canvasH - cy) * bgScale)
     }
@@ -152,7 +151,7 @@ class GameScene: SKScene {
         )
     }
 
-    // MARK: - NPC setup
+    // NPC setup
 
     private func setupPlaygroundCharacters() {
         let charH: CGFloat = 420
@@ -165,7 +164,7 @@ class GameScene: SKScene {
             return (node, textures)
         }
 
-        // ── Jennie on swing ───────────────────────────────────────────────────
+        //Jennie on swing
         let (jennie, jennieTextures) = makeNPC(["NPC_Jennie_001", "NPC_Jennie_002"])
         jennie.position  = cw(720, 870)
         jennie.zPosition = -3.9
@@ -173,7 +172,7 @@ class GameScene: SKScene {
         runCrossFade(on: jennie, tex0: jennieTextures[0], tex1: jennieTextures[1],
                      holdDuration: 0.30, blendDuration: 0.40)
 
-        // ── Melanie on slide ──────────────────────────────────────────────────
+        //Melanie on slide
         let (melanie, melanieTextures) = makeNPC(["NPC_Melanie_001", "NPC_Melanie_002"])
         let slideTop    = cw(2050, 680)
         let slideBottom = cw(1430, 1020)
@@ -186,7 +185,7 @@ class GameScene: SKScene {
         runCrossFade(on: melanie, tex0: melanieTextures[0], tex1: melanieTextures[1],
                      holdDuration: 0.25, blendDuration: 0.35)
 
-        // ── Ihsan playing ball ────────────────────────────────────────────────
+        //Ihsan playing ball
         let (ihsan, ihsanTextures) = makeNPC(["NPC_Ihsan_001", "NPC_Ihsan_002"], height: 450)
         ihsan.position  = cw(2200, 1340)
         ihsan.zPosition = -0.5
@@ -194,7 +193,7 @@ class GameScene: SKScene {
         runCrossFade(on: ihsan, tex0: ihsanTextures[0], tex1: ihsanTextures[1],
                      holdDuration: 0.28, blendDuration: 0.30)
 
-        // ── Mia in sandbox ────────────────────────────────────────────────────
+        // Mia in sandbox
         let (mia, miaTextures) = makeNPC(["NPC_Mia_001", "NPC_Mia_002"])
         mia.position  = cw(1180, 1220)
         mia.zPosition = -0.9
@@ -204,12 +203,10 @@ class GameScene: SKScene {
         miaNode = mia
     }
 
-    // Joey's sprite sheet frame is 1300×2480 pts — much larger than the old Seer sprites.
-    // Recalibrated so MC appears ~270 pts tall at front, ~150 pts at back.
-    private let depthScaleFront: CGFloat = 0.11
-    private let depthScaleBack: CGFloat  = 0.060
-
-    // returns the node scale for a given world-Y position
+  
+    private var depthScaleFront: CGFloat = 0.11
+    private var depthScaleBack: CGFloat  = 0.060
+ // returns the node scale for a given world-Y position
     private func depthScale(for y: CGFloat) -> CGFloat {
         guard let vm = viewModel, vm.groundMax > vm.groundMin else { return depthScaleFront }
         let t = (y - vm.groundMin) / (vm.groundMax - vm.groundMin) // 0 = front, 1 = back
@@ -218,8 +215,14 @@ class GameScene: SKScene {
 
     private func setupCharacter() {
         seerNode = SKSpriteNode(texture: idleFrames[0])
+
+        // Scale Joey
+        let npcHeight: CGFloat = 520
+        depthScaleFront = (npcHeight * bgScale) / seerNode.size.height
+        depthScaleBack  = depthScaleFront * 0.545
+
         groundY = size.height * 0.40
-        let startPos = CGPoint(x: worldSize.width * 0.35, y: groundY)
+        let startPos = CGPoint(x: worldSize.width * 0.70, y: groundY)
         seerNode.position = startPos
         seerNode.zPosition = 0
         addChild(seerNode)

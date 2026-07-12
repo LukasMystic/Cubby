@@ -1,11 +1,11 @@
 {
   "file_name": "3b(i).json",
   "branch_id": "option_3b_i_notice_and_move_away",
-  "branch_label": "Opsi A",
-  "branch_title": "Menyadari dan Menjauh Sedikit",
+  "branch_label": "Option A",
+  "branch_title": "Joey Notices and Moves Away",
   "connects_from": "decision_005_after_option_3B",
   "selected_option": {
-    "choice_text": "Menyadari dan menjauh sedikit.",
+    "choice_text": "Notice and move away a little bit",
     "choice_quality": "repair"
   },
   "sequence": [
@@ -14,22 +14,58 @@
       "type": "context_emotion",
       "target": "Mia",
       "emotion": "Relieved",
-      "text": "Mia merasa lega.",
+      "text": "Mia felt relieved.",
       "dialogue": {
         "speaker": "Mia",
-        "text": "Terima kasih sudah agak menjauh."
+        "text": "Thanks for giving me a little more space."
+      },
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Concerned",
+          "speech_state": "Idle",
+          "asset_file": "EX_Joey_004_Concerned.png"
+        },
+        "mia": {
+          "expression_key": "Relieved",
+          "speech_state": "Talking",
+          "asset_file": "EX_Mia_002_Relieved.png"
+        }
       }
     },
     {
       "node_id": "3b_i_002_situation",
       "type": "situation_narrator",
-      "text": "Kamu melihat Mia menjauh lalu memberi ruang. Sekarang Mia merasa lebih nyaman."
+      "text": "You noticed Mia leaning away and gave her more space. Mia felt comfortable again.",
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Happy",
+          "speech_state": "Idle",
+          "asset_file": "EX_Joey_005_Happy.png"
+        },
+        "mia": {
+          "expression_key": "Relieved",
+          "speech_state": "Idle",
+          "asset_file": "EX_Mia_002_Relieved.png"
+        }
+      }
     },
     {
       "node_id": "ending_3b_i_relieved",
       "type": "ending",
       "final_emotion_target": "Mia",
-      "final_emotion": "Relieved"
+      "final_emotion": "Relieved",
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Happy",
+          "speech_state": "Idle",
+          "asset_file": "EX_Joey_005_Happy.png"
+        },
+        "mia": {
+          "expression_key": "Relieved",
+          "speech_state": "Idle",
+          "asset_file": "EX_Mia_002_Relieved.png"
+        }
+      }
     }
   ],
   "ending_id": "ending_3b_i_relieved",
@@ -38,26 +74,26 @@
     "player_chose": "3B(i)",
     "source_file": "3b(i).json",
     "page_type": "ending_recap",
-    "title": "Kamu Memilih 3B(i)",
+    "title": "Player Chose 3B(i)",
     "sections": [
       {
-        "heading": "Bagaimana situasinya?",
-        "body": "Mia diam-diam menjauh setelah kamu mendekat tanpa meminta izin."
+        "heading": "What Happened Before?",
+        "body": "Mia had quietly leaned away after you got too close without asking."
       },
       {
-        "heading": "Apa yang kamu lakukan?",
-        "body": "Menyadari dan menjauh sedikit."
+        "heading": "What Did You Pick?",
+        "body": "Notice and move away a little bit"
       },
       {
-        "heading": "Apa yang terjadi?",
-        "body": "Mia merasa lega dan kalian kembali bermain bersama."
+        "heading": "What Happened After?",
+        "body": "Mia felt relieved, and you both continued building the tower happily."
       },
       {
-        "heading": "Yuk, kita ngobrol",
+        "heading": "Let's Talk",
         "questions": [
-          "Kenapa kamu membuat situasi membaik?",
-          "Kenapa cepat sadar dan memperbaiki kesalahan membantu keadaan jadi lebih baik?",
-          "Bagaimana kamu membuat keadaan jadi lebih baik setelah melakukan kesalahan?"
+          "What did you do that helped make things better after your mistake?",
+          "Why did it help that you noticed and fixed it right away?",
+          "Have you ever made a mistake with a friend and then made it better? What did you do?"
         ]
       }
     ]

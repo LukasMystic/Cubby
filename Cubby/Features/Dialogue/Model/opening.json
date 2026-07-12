@@ -2,7 +2,7 @@
   "file_name": "opening.json",
   "section_id": "opening_setup_001",
   "section_type": "opening_context",
-  "title": "Joey Ingin Duduk Dekat Mia",
+  "title": "Joey Wants to Sit Near Mia",
   "player": {
     "name": "Joey",
     "role": "player_character"
@@ -15,31 +15,91 @@
     {
       "node_id": "opening_001_player_identity",
       "type": "player_identity",
-      "text": "Kamu bermain sebagai Joey."
+      "text": "Player is Joey",
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Neutral",
+          "speech_state": "Idle",
+          "asset_file": "EX_Joey_001_Neutral.png"
+        },
+        "mia": {
+          "expression_key": "Neutral",
+          "speech_state": "Idle",
+          "asset_file": "EX_Mia_001_Neutral.png"
+        }
+      }
     },
     {
       "node_id": "opening_002_background_setting",
       "type": "background_setting",
-      "title": "AWAL CERITA",
-      "text": "Mia menemukan spot yang nyaman untuk mulai membangun menara lego. Kamu menghampirinya dengan semangat agar bisa duduk dengan Mia."
+      "title": "BACKGROUND SETTING",
+      "text": "Mia found a comfy spot and started building a tower with the pieces. You came running over, excited to sit with her.",
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Excited",
+          "speech_state": "Idle",
+          "asset_file": "EX_Joey_002_Excited.png"
+        },
+        "mia": {
+          "expression_key": "Neutral",
+          "speech_state": "Idle",
+          "asset_file": "EX_Mia_001_Neutral.png"
+        }
+      }
     },
     {
       "node_id": "opening_003_joey_dialogue",
       "type": "dialogue",
       "speaker": "Joey",
-      "text": "Menara kamu bagus banget, bisa minggir dikit dulu ga? Aku mau duduk dekat kamu."
+      "text": "Whoa, cool tower! Scoot over, I wanna sit right next to you!",
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Excited",
+          "speech_state": "Talking",
+          "asset_file": "EX_Joey_002_Excited.png"
+        },
+        "mia": {
+          "expression_key": "Neutral",
+          "speech_state": "Idle",
+          "asset_file": "EX_Mia_001_Neutral.png"
+        }
+      }
     },
     {
       "node_id": "opening_004_mia_dialogue",
       "type": "dialogue",
       "speaker": "Mia",
-      "text": "Hmmm, aku ngerasa terhimpit sih kalau kamu duduk di sini juga."
+      "text": "Hmm, I feel a little bit squished if you sit here too.",
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Neutral",
+          "speech_state": "Idle",
+          "asset_file": "EX_Joey_001_Neutral.png"
+        },
+        "mia": {
+          "expression_key": "Uncomfortable",
+          "speech_state": "Talking",
+          "asset_file": "EX_Mia_004_Uncomfortable.png"
+        }
+      }
     },
     {
       "node_id": "decision_001_initial_space_response",
       "type": "decision_point",
-      "title": "Pilihanmu",
-      "decision_prompt": "Mia bilang dia merasa terhimpit. Kamu mau apa?"
+      "title": "Joey's Decision",
+      "decision_prompt": "What should Joey do after Mia says she feels squished?",
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Neutral",
+          "speech_state": "Idle",
+          "asset_file": "EX_Joey_001_Neutral.png"
+        },
+        "mia": {
+          "expression_key": "Uncomfortable",
+          "speech_state": "Idle",
+          "asset_file": "EX_Mia_004_Uncomfortable.png"
+        }
+      }
     }
   ],
   "connects_to": "decision_001_initial_space_response"

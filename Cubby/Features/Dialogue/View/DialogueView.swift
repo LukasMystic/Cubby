@@ -9,17 +9,12 @@ import SwiftUI
 import UIKit
 
 struct DialogueView: View {
-
-    /// When set, this closure is used instead of the environment dismiss action.
-    /// Pass it when presenting the view inline (e.g. inside a ZStack) rather than via fullScreenCover.
     var onDismiss: (() -> Void)? = nil
 
     @State private var viewModel = DialogueViewModel()
     @Environment(\.dismiss) private var envDismiss
     @State private var speakerOn = true
     @State private var lastSpeaker = ""
-    // Tracks the rendered height of the speech bubble so the name box
-    // can be positioned past the transparent tail area (35% from top).
     @State private var speechBoxHeight: CGFloat = 180
 
     // Typewriter
@@ -34,16 +29,16 @@ struct DialogueView: View {
     private var activeSpeaker: String? {
         switch viewModel.currentBeat {
         case .speech(let speaker, _): return speaker
-        case .choice:                 return lastSpeaker.isEmpty ? nil : lastSpeaker
-        default:                      return nil
+        case .choice: return "Joey"
+        default: return nil
         }
     }
 
     private var panelAlignment: Alignment {
         switch viewModel.currentBeat {
         case .narrative: return .top
-        case .choice:    return .center
-        default:         return .bottom
+        case .choice:return .center
+        default:return .bottom
         }
     }
 
@@ -66,8 +61,7 @@ struct DialogueView: View {
         }
     }
 
-    // MARK: - Body
-
+    // Body
     var body: some View {
         GeometryReader { geo in
             ZStack {
@@ -127,64 +121,51 @@ struct DialogueView: View {
         .ignoresSafeArea()
     }
 
-    // MARK: - Characters
-
+    // Characters
     private func characters(geo: GeometryProxy) -> some View {
-        let active   = activeSpeaker
-        // Mia artwork fills 75% of her frame; Joey fills 94.5% of his.
-        // Scale Joey's frame down by 0.794 so both characters appear the same visual height.
-        let miaH    = geo.size.height * 0.70
-        let joeyH   = geo.size.height * 0.56
+        let active  = activeSpeaker
+        // height
+        let charH   = geo.size.height * 0.70
         let miaDim  = active.map { isMia($0) ?  0.0 : -0.35 } ?? 0
         let joeyDim = active.map { isMia($0) ? -0.35 :  0.0 } ?? 0
+        let hasMiaExpr  = !viewModel.miaExpressionKey.isEmpty
+        let hasJoeyExpr = !viewModel.joeyExpressionKey.isEmpty
 
-        // Align both characters so their feet sit on the same ground line.
-        // Mia's image has 9.75% bottom padding; Joey's has only 2.64%.
-        // With bottom-alignment, Joey's feet are lower — lift him up by the difference.
-        // Expression assets (EX_Mia_*) fill ~98% of their canvas vs 75% for mia_1 2.
-        // Scale their frame down so the visible character height matches: 0.75 / 0.98 ≈ 0.76.
-        // Add equivalent bottom padding so the foot-to-frame-bottom distance stays the same,
-        // keeping joeyLift correct without any other changes.
-        let isExprAsset = !viewModel.miaEmotion.isEmpty
-        let miaFrameH   = miaH * (isExprAsset ? 0.76 : 1.0)
-        let miaExtraPad: CGFloat = isExprAsset ? miaH * 0.0975 : 0
-        // Expression assets are narrower (portrait ~1:2 vs mia_1 2's ~3:4), so their
-        // rendered image starts further left. Shift right to match the original's position.
-        let miaLeadPad: CGFloat = isExprAsset ? 20 + miaH * 0.20 : 20
+        let charFrameH: CGFloat  = charH * 0.76
+        let charExtraPad: CGFloat = charH * 0.0975
 
-        let miaFootPad  = miaH  * 0.0975
-        let joeyFootPad = joeyH * 0.0264
-        let joeyLift    = miaFootPad - joeyFootPad
+        let miaLeadPad: CGFloat   = hasMiaExpr  ? 20 + charH * 0.20 : 20
+        let joeyTrailPad: CGFloat = hasJoeyExpr ? 20 + charH * 0.20 : 60
 
         return HStack(alignment: .bottom, spacing: 0) {
-            Image(viewModel.miaImageAssetName)
+            Image(hasMiaExpr ? viewModel.miaAssetName : "mia_1 2")
                 .resizable()
                 .scaledToFit()
                 .scaleEffect(x: -1, y: 1)
-                .frame(height: miaFrameH)
-                .padding(.bottom, miaExtraPad)
+                .frame(height: hasMiaExpr ? charFrameH : charH)
+                .padding(.bottom, hasMiaExpr ? charExtraPad : 0)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.leading, miaLeadPad)
                 .brightness(miaDim)
                 .animation(.easeInOut(duration: 0.3), value: miaDim)
-                .animation(.easeInOut(duration: 0.4), value: viewModel.miaEmotion)
+                .animation(.easeInOut(duration: 0.4), value: viewModel.miaAssetName)
 
-            Image("joey 3")
+            Image(hasJoeyExpr ? viewModel.joeyAssetName : "joey 3")
                 .resizable()
                 .scaledToFit()
                 .scaleEffect(x: -1, y: 1)
-                .frame(height: joeyH)
+                .frame(height: hasJoeyExpr ? charFrameH : charH)
+                .padding(.bottom, hasJoeyExpr ? charExtraPad : 0)
                 .frame(maxWidth: .infinity, alignment: .trailing)
-                .padding(.trailing, 60)
+                .padding(.trailing, joeyTrailPad)
                 .brightness(joeyDim)
                 .animation(.easeInOut(duration: 0.3), value: joeyDim)
-                .padding(.bottom, joeyLift)
+                .animation(.easeInOut(duration: 0.4), value: viewModel.joeyAssetName)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
     }
 
-    // MARK: - Panels
-
+    // Panels
     @ViewBuilder
     private func bottomPanel(geo: GeometryProxy) -> some View {
         switch viewModel.currentBeat {
@@ -205,17 +186,16 @@ struct DialogueView: View {
         }
     }
 
-    // MARK: - Narrative (top)
-
+    // Narrative (top)
     private func narrativePanel(text: String, geo: GeometryProxy) -> some View {
         Image("Narration_box")
             .resizable()
             .aspectRatio(1711.0 / 410.0, contentMode: .fit)
             .frame(maxWidth: geo.size.width * 0.75)
             .overlay {
-                dialogueText(text, size: 24)
-                    .minimumScaleFactor(0.7)
-                    .lineLimit(2)
+                dialogueText(text, size: geo.size.height * 0.030)
+                    .minimumScaleFactor(0.6)
+                    .lineLimit(3)
                     .padding(.horizontal, 52)
                     .padding(.vertical, 10)
             }
@@ -223,17 +203,16 @@ struct DialogueView: View {
                 Image("Next_button")
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 84)
+                    .frame(width: geo.size.width * 0.073)
                     .padding(6)
-                    .offset(x: -58, y: 14)
+                    .offset(x: -geo.size.width * 0.049, y: geo.size.height * 0.016)
                     .opacity(isTyping ? 0.35 : 1.0)
                     .animation(.easeInOut(duration: 0.2), value: isTyping)
                     .allowsHitTesting(false)
             }
     }
 
-    // MARK: - Speech (bottom)
-
+    // Speech (bottom)
     private func speechPanel(speaker: String, text: String, geo: GeometryProxy) -> some View {
         let mia = isMia(speaker)
         let nameBoxY = speechBoxHeight * 0.30
@@ -250,8 +229,8 @@ struct DialogueView: View {
                 }
             )
             .overlay {
-                dialogueText(text, size: 26)
-                    .minimumScaleFactor(0.8)
+                dialogueText(text, size: geo.size.height * 0.032)
+                    .minimumScaleFactor(0.7)
                     .lineLimit(4)
                     .frame(maxWidth: .infinity)
                     .padding(.horizontal, 44)
@@ -260,7 +239,7 @@ struct DialogueView: View {
             }
             .clipped()
             .overlay(alignment: mia ? .topTrailing : .topLeading) {
-                nameBox(speaker, isMia: mia)
+                nameBox(speaker, isMia: mia, geo: geo)
                     .padding(mia ? .trailing : .leading, 20)
                     .offset(x: mia ? -40 : 40, y: nameBoxY)
             }
@@ -268,19 +247,17 @@ struct DialogueView: View {
                 Image(mia ? "Mia_next_button" : "Joey_next_button")
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 100)
+                    .frame(width: geo.size.width * 0.085)
                     .padding(.trailing, 4)
-                    .offset(y: 22)
+                    .offset(y: geo.size.height * 0.026)
                     .opacity(isTyping ? 0.35 : 1.0)
                     .animation(.easeInOut(duration: 0.2), value: isTyping)
                     .allowsHitTesting(false)
             }
     }
 
-    // MARK: - Choices (bottom) — bare option buttons, no surrounding box
-
+    // Choices (bottom)
     private func choicePanel(options: [DecisionRoute], geo: GeometryProxy) -> some View {
-        let mia = isMia(lastSpeaker)
         return VStack(spacing: 12) {
             ForEach(options) { route in
                 Button {
@@ -289,13 +266,13 @@ struct DialogueView: View {
                         viewModel.choose(route)
                     }
                 } label: {
-                    Image(mia ? "Mia_option_button" : "Joey_option_button")
+                    Image("Joey_option_button")
                         .resizable()
                         .aspectRatio(899.0 / 248.0, contentMode: .fit)
                         .frame(maxWidth: geo.size.width * 0.42)
                         .overlay {
-                            dialogueText(route.choiceText, size: 24, color: .white)
-                                .minimumScaleFactor(0.7)
+                            dialogueText(route.choiceText, size: geo.size.height * 0.028, color: .white)
+                                .minimumScaleFactor(0.6)
                                 .lineLimit(2)
                                 .frame(maxWidth: .infinity)
                                 .padding(.horizontal, 24)
@@ -307,8 +284,7 @@ struct DialogueView: View {
         .padding(.horizontal, 32)
     }
 
-    // MARK: - Ending (bottom)
-
+    // Ending (bottom)
     private func endingPanel(emotion: String) -> some View {
         VStack(spacing: 14) {
             Text("— The End —")
@@ -333,8 +309,7 @@ struct DialogueView: View {
         .background(Image("Joey_dialogue_box").resizable())
     }
 
-    // MARK: - Shared helpers
-
+    // Shared helpers
     private func dialogueText(_ text: String, size: CGFloat, color: Color = .black.opacity(0.85)) -> some View {
         Text(text)
             .font(.custom("Playpen Sans", size: size))
@@ -342,21 +317,20 @@ struct DialogueView: View {
             .multilineTextAlignment(.center)
     }
 
-    private func nameBox(_ speaker: String, isMia: Bool) -> some View {
+    private func nameBox(_ speaker: String, isMia: Bool, geo: GeometryProxy) -> some View {
         ZStack {
             Image(isMia ? "Mia_name_box" : "Joey_name_box")
                 .resizable()
                 .aspectRatio(520.0 / 150.0, contentMode: .fit)
-                .frame(width: 200)
+                .frame(width: geo.size.width * 0.168)
 
             Text(speaker.uppercased())
-                .font(.custom("FredokaOne-Regular", size: 26))
+                .font(.custom("FredokaOne-Regular", size: geo.size.height * 0.032))
                 .foregroundStyle(.white)
         }
     }
 
-    // MARK: - Screenshot capture
-
+    // Screenshot capture
     private func captureScreen(for route: DecisionRoute) {
         guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
               let window = windowScene.windows.first(where: { $0.isKeyWindow }) else { return }
@@ -366,6 +340,6 @@ struct DialogueView: View {
     }
 }
 
-#Preview {
+#Preview(traits: .landscapeLeft) {
     DialogueView()
 }

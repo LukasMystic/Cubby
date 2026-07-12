@@ -1,11 +1,11 @@
 {
   "file_name": "1C.json",
   "branch_id": "option_a_followup_take_piece_without_asking",
-  "branch_label": "Opsi C",
-  "branch_title": "Mengambil Potongan Lego Tanpa Izin",
+  "branch_label": "Option C",
+  "branch_title": "Joey Takes a Piece Without Asking",
   "connects_from": "decision_002_after_option_a",
   "selected_option": {
-    "choice_text": "Langsung mengambil potongan lego tersebut tanpa izin.",
+    "choice_text": "Reach over and take a piece from Mia's pile without asking",
     "choice_quality": "worst"
   },
   "sequence": [
@@ -14,22 +14,58 @@
       "type": "context_emotion",
       "target": "Mia",
       "emotion": "Cry",
-      "text": "Mia sedih karena kamu terlalu dekat dan mengambil potongan lego tanpa izin.",
+      "text": "Mia felt sad because you were too close and took a block without asking.",
       "dialogue": {
         "speaker": "Mia",
-        "text": "Joey, kan aku sudah bilang, aku masih butuh sedikit ruang, aku juga lagi pakai potongan itu."
+        "text": "Joey, I already told you I still need a little space. I was using that piece too."
+      },
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Shocked",
+          "speech_state": "Idle",
+          "asset_file": "EX_Joey_007_Shocked.png"
+        },
+        "mia": {
+          "expression_key": "Annoyed",
+          "speech_state": "Talking",
+          "asset_file": "EX_Mia_006_Annoyed.png"
+        }
       }
     },
     {
       "node_id": "1C_002_situation",
       "type": "situation_narrator",
-      "text": "Kamu tidak sadar Mia masih butuh ruang. Mia jadi sedih dan berhenti bermain."
+      "text": "You didn't notice that Mia still needed more space. Mia felt sad, cried, and stopped playing.",
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Regretful",
+          "speech_state": "Idle",
+          "asset_file": "EX_Joey_006_Regretful.png"
+        },
+        "mia": {
+          "expression_key": "Crying",
+          "speech_state": "Idle",
+          "asset_file": "EX_Mia_008_Crying.png"
+        }
+      }
     },
     {
       "node_id": "ending_1C_cry",
       "type": "ending",
       "final_emotion_target": "Mia",
-      "final_emotion": "Cry"
+      "final_emotion": "Cry",
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Regretful",
+          "speech_state": "Idle",
+          "asset_file": "EX_Joey_006_Regretful.png"
+        },
+        "mia": {
+          "expression_key": "Crying",
+          "speech_state": "Idle",
+          "asset_file": "EX_Mia_008_Crying.png"
+        }
+      }
     }
   ],
   "ending_id": "ending_1C_cry",
@@ -38,26 +74,26 @@
     "player_chose": "1C",
     "source_file": "1C.json",
     "page_type": "ending_recap",
-    "title": "Kamu Memilih 1C",
+    "title": "Player Chose 1C",
     "sections": [
       {
-        "heading": "Bagaimana situasinya?",
-        "body": "Mia menjauh secara diam-diam. Dia terlihat sedih tetapi tetap lanjut bermain. Setelahnya, kamu melihat potongan lego yang cocok di menara kamu di kumpulan lego Mia."
+        "heading": "What Happened Before?",
+        "body": "Mia had quietly moved a little farther away. She looked a little sad, but she kept building on her own. Then you noticed a perfect piece for your tower in Mia's building area."
       },
       {
-        "heading": "Apa yang kamu lakukan?",
-        "body": "Langsung mengambil potongan lego tersebut tanpa izin."
+        "heading": "What Did You Pick?",
+        "body": "Reached over and took a piece from Mia’s pile without asking"
       },
       {
-        "heading": "Apa yang terjadi?",
-        "body": "Mia menangis dan berhenti bermain."
+        "heading": "What Happened After?",
+        "body": "Mia cried and stopped playing."
       },
       {
-        "heading": "Yuk, kita ngobrol",
+        "heading": "Let's Talk",
         "questions": [
-          "Kenapa Mia menangis?",
-          "Apa yang seharusnya kamu lakukan?",
-          "Apa yang kamu bisa bilang jika menyakiti perasaan teman?"
+          "Why did Mia cry?",
+          "What could you have done instead?",
+          "What can you say or do if you hurt a friend's feelings?"
         ]
       }
     ]

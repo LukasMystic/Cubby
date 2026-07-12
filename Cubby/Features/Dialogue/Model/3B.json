@@ -1,11 +1,11 @@
 {
   "file_name": "3B.json",
   "branch_id": "option_c_followup_lean_in_close",
-  "branch_label": "Opsi B",
-  "branch_title": "Lebih Mendekat",
+  "branch_label": "Option B",
+  "branch_title": "Joey Leans In Close",
   "connects_from": "decision_004_after_option_c",
   "selected_option": {
-    "choice_text": "Lebih mendekat.",
+    "choice_text": "Lean in close",
     "choice_quality": "needs_repair"
   },
   "sequence": [
@@ -14,22 +14,58 @@
       "type": "context_emotion",
       "target": "Mia",
       "emotion": "Confused",
-      "text": "Mia merasa tidak yakin dan bingung.",
+      "text": "Mia felt unsure and confused.",
       "dialogue": {
         "speaker": "Mia",
-        "text": "Oh.. um... oke..."
+        "text": "Uh... um, okay."
+      },
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Unaware",
+          "speech_state": "Idle",
+          "asset_file": "EX_Joey_003_Unaware.png"
+        },
+        "mia": {
+          "expression_key": "SilentDiscomfort",
+          "speech_state": "Talking",
+          "asset_file": "EX_Mia_005_SilentDiscomfort.png"
+        }
       }
     },
     {
       "node_id": "3B_002_situation",
       "type": "situation_narrator",
-      "text": "Mia mulai menjauh."
+      "text": "Mia leaned away.",
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Unaware",
+          "speech_state": "Idle",
+          "asset_file": "EX_Joey_003_Unaware.png"
+        },
+        "mia": {
+          "expression_key": "SilentDiscomfort",
+          "speech_state": "Idle",
+          "asset_file": "EX_Mia_005_SilentDiscomfort.png"
+        }
+      }
     },
     {
       "node_id": "decision_005_after_option_3B",
       "type": "decision_point",
-      "title": "Pilihanmu",
-      "decision_prompt": "Mia mulai menjauh. Kamu mau apa?"
+      "title": "Joey's Decision",
+      "decision_prompt": "Mia leans away after Joey gets too close. What should Joey do?",
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Unaware",
+          "speech_state": "Idle",
+          "asset_file": "EX_Joey_003_Unaware.png"
+        },
+        "mia": {
+          "expression_key": "SilentDiscomfort",
+          "speech_state": "Idle",
+          "asset_file": "EX_Mia_005_SilentDiscomfort.png"
+        }
+      }
     }
   ],
   "connects_to": "decision_005_after_option_3B",
@@ -38,26 +74,26 @@
     "player_chose": "3B",
     "source_file": "3B.json",
     "page_type": "choice_recap",
-    "title": "Kamu Memilih 3B",
+    "title": "Player Chose 3B",
     "sections": [
       {
-        "heading": "Bagaimana situasinya?",
-        "body": "Kamu melihat potongan lego di area bermain Mia. Potongan lego tersebut sangat cocok dengan menara kamu."
+        "heading": "What Happened Before?",
+        "body": "A few minutes later, you spotted the perfect block in Mia's building area. It would fit perfectly on your tower."
       },
       {
-        "heading": "Apa yang kamu lakukan?",
-        "body": "Lebih mendekat."
+        "heading": "What Did You Pick?",
+        "body": "Leaned in close"
       },
       {
-        "heading": "Apa yang terjadi?",
-        "body": "Mia merasa tidak yakin dan bingung, lalu menjauh secara diam-diam."
+        "heading": "What Happened After?",
+        "body": "Mia felt unsure and confused, then quietly leaned away."
       },
       {
-        "heading": "Yuk, kita ngobrol",
+        "heading": "Let's Talk",
         "questions": [
-          "Kenapa kamu lupa untuk bertanya kali ini?",
-          "Apa yang bisa kamu lakukan setelah melakukan kesalahan?",
-          "Bagaimana kamu bisa membantu Mia untuk nyaman kembali?"
+          "Why did you forget to ask this time?",
+          "What can you do after you make a mistake?",
+          "How can you help Mia feel comfortable again?"
         ]
       }
     ]
