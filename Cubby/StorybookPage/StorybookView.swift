@@ -49,12 +49,15 @@ struct StorybookView: View {
             }
             .overlay(alignment: .bottomTrailing) {
                 if !viewModel.pages.isEmpty && viewModel.isLastPage {
-                    Text("Finish")
-                        .font(.custom("FredokaOne-Regular", size: 20))
-                        .foregroundColor(.white)
-                        .padding(.horizontal, 24)
-                        .padding(.vertical, 10)
-                        .background(Capsule().fill(Color.orange))
+                    Image("Joey_option_button")
+                        .resizable()
+                        .aspectRatio(899.0 / 248.0, contentMode: .fit)
+                        .frame(width: geo.size.width * 0.15)
+                        .overlay {
+                            Text("Finish")
+                                .font(.custom("FredokaOne-Regular", size: geo.size.height * 0.032))
+                                .foregroundStyle(.white)
+                        }
                         .onTapGesture {
                             viewModel.clearScreenshots()
                             viewModel.clearUserProgress()
