@@ -17,12 +17,14 @@
         "joey": {
           "expression_key": "Unaware",
           "speech_state": "Idle",
-          "asset_file": "EX_Joey_003_Unaware.png"
+          "asset_file": "EX_Joey_003_Unaware.png",
+          "position": "close"
         },
         "mia": {
           "expression_key": "Annoyed",
           "speech_state": "Idle",
-          "asset_file": "EX_Mia_006_Annoyed.png"
+          "asset_file": "EX_Mia_006_Annoyed.png",
+          "position": "far"
         }
       }
     },
@@ -35,12 +37,14 @@
         "joey": {
           "expression_key": "Unaware",
           "speech_state": "Idle",
-          "asset_file": "EX_Joey_003_Unaware.png"
+          "asset_file": "EX_Joey_003_Unaware.png",
+          "position": "close"
         },
         "mia": {
           "expression_key": "Annoyed",
           "speech_state": "Idle",
-          "asset_file": "EX_Mia_006_Annoyed.png"
+          "asset_file": "EX_Mia_006_Annoyed.png",
+          "position": "far"
         }
       }
     }
