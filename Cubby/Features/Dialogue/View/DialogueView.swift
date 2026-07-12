@@ -139,8 +139,17 @@ struct DialogueView: View {
         let charFrameH: CGFloat  = charH * 0.76
         let charExtraPad: CGFloat = charH * 0.0975
 
-        let miaLeadPad: CGFloat   = hasMiaExpr  ? 20 + charH * 0.20 : 20
-        let joeyTrailPad: CGFloat = hasJoeyExpr ? 20 + charH * 0.20 : 60
+        let miaLeadPad: CGFloat   = hasMiaExpr  ? 20 + charH * 0.08 : 20
+        let joeyTrailPad: CGFloat = hasJoeyExpr ? 20 + charH * 0.08 : 60
+
+        // during a choice, pull both characters out to the edges so the option boxes have room
+        let isChoice: Bool
+        if case .choice = viewModel.currentBeat { isChoice = true } else { isChoice = false }
+        let miaPos: CharacterPosition  = isChoice ? .far : viewModel.miaPosition
+        let joeyPos: CharacterPosition = isChoice ? .far : viewModel.joeyPosition
+
+        let miaShift  = positionShift(miaPos, width: geo.size.width)
+        let joeyShift = positionShift(joeyPos, width: geo.size.width)
 
         return HStack(alignment: .bottom, spacing: 0) {
             Image(hasMiaExpr ? viewModel.miaAssetName : "mia_1 2")
@@ -151,9 +160,11 @@ struct DialogueView: View {
                 .padding(.bottom, hasMiaExpr ? charExtraPad : 0)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.leading, miaLeadPad)
+                .offset(x: miaShift)
                 .brightness(miaDim)
                 .animation(.easeInOut(duration: 0.3), value: miaDim)
                 .animation(.easeInOut(duration: 0.4), value: viewModel.miaAssetName)
+                .animation(.easeInOut(duration: 0.6), value: miaPos)
 
             Image(hasJoeyExpr ? viewModel.joeyAssetName : "joey 3")
                 .resizable()
@@ -163,11 +174,23 @@ struct DialogueView: View {
                 .padding(.bottom, hasJoeyExpr ? charExtraPad : 0)
                 .frame(maxWidth: .infinity, alignment: .trailing)
                 .padding(.trailing, joeyTrailPad)
+                .offset(x: -joeyShift)
                 .brightness(joeyDim)
                 .animation(.easeInOut(duration: 0.3), value: joeyDim)
                 .animation(.easeInOut(duration: 0.4), value: viewModel.joeyAssetName)
+                .animation(.easeInOut(duration: 0.6), value: joeyPos)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .bottom)
+        .offset(y: panelAlignment == .bottom ? -geo.size.height * 0.08 : 0)
+    }
+
+    // how far toward center a character slides for a given position
+    private func positionShift(_ pos: CharacterPosition, width: CGFloat) -> CGFloat {
+        switch pos {
+        case .far:   return 0
+        case .mid:   return width * 0.12
+        case .close: return width * 0.24
+        }
     }
 
     // Panels

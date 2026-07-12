@@ -17,12 +17,19 @@ enum DialogueBeat {
     case ending(emotion: String)
 }
 
+// horizontal placement of a character; closer to center = closer together
+enum CharacterPosition: String {
+    case far, mid, close
+}
+
 @Observable
 final class DialogueViewModel {
 
     private(set) var currentBeat: DialogueBeat = .narrative(text: "")
     private(set) var miaExpressionKey: String = ""
     private(set) var joeyExpressionKey: String = ""
+    private(set) var miaPosition: CharacterPosition = .far
+    private(set) var joeyPosition: CharacterPosition = .far
     private(set) var isEnded = false
     private(set) var beatCounter: Int = 0
 
@@ -136,8 +143,12 @@ final class DialogueViewModel {
                 prevMiaExpressionKey = mia.expressionKey
             }
             miaExpressionKey = mia.expressionKey
+            if let p = mia.position, let pos = CharacterPosition(rawValue: p) { miaPosition = pos }
         }
-        if let joey = exprs.joey { joeyExpressionKey = joey.expressionKey }
+        if let joey = exprs.joey {
+            joeyExpressionKey = joey.expressionKey
+            if let p = joey.position, let pos = CharacterPosition(rawValue: p) { joeyPosition = pos }
+        }
     }
 
     // save or load progress
