@@ -14,6 +14,8 @@ struct DialogueView: View {
     @Environment(\.dismiss) private var dismiss
     @State private var speakerOn = true
     @State private var lastSpeaker = ""
+    var onExit: () -> Void = {}
+    @State private var showStorybook = false
 
     private func isMia(_ speaker: String) -> Bool {
         speaker.lowercased().contains("mia")
@@ -71,6 +73,9 @@ struct DialogueView: View {
             }
         }
         .ignoresSafeArea()
+        .navigationDestination(isPresented: $showStorybook) {
+            StorybookView(viewModel: StorybookViewModel.fromUserProgress(), onExit: onExit)
+        }
     }
 
     // MARK: - Characters
@@ -198,8 +203,7 @@ struct DialogueView: View {
                 .font(.custom("Playpen Sans", size: 22))
                 .foregroundStyle(.black.opacity(0.7))
 
-            Button("Done") { dismiss() }
-                .font(.custom("Fredoka", size: 22))
+            Button("Done") { showStorybook = true }                .font(.custom("Fredoka", size: 22))
                 .foregroundStyle(.white)
                 .padding(.horizontal, 28)
                 .padding(.vertical, 11)
@@ -245,6 +249,7 @@ struct DialogueView: View {
     }
 
 }
+
 
 #Preview {
     DialogueView()

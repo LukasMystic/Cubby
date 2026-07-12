@@ -32,7 +32,9 @@ struct GameView: View {
                 .padding(.horizontal, 40)
         }
         .fullScreenCover(isPresented: Bindable(viewModel).showDialogue) {
-            DialogueView()
+            NavigationStack {
+                DialogueView(onExit: { viewModel.showDialogue = false })
+            }
         }
     }
 

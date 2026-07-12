@@ -21,9 +21,12 @@ struct StorybookPageCurlView: UIViewControllerRepresentable {
         let pageIndex = index / 2
         guard viewModel.pages.indices.contains(pageIndex) else { return nil }
         let page = viewModel.pages[pageIndex]
-        return index % 2 == 0
-        ? AnyView(SituationPageView(page: page))
-        : AnyView(OutcomePageView(page: page))
+        if index % 2 == 0 {
+            let screenshot = viewModel.screenshot(for: page)
+            return AnyView(SituationPageView(page: page, screenshot: screenshot))
+        } else {
+            return AnyView(OutcomePageView(page: page))
+        }
     }
     
     func makeUIViewController(context: Context) -> UIPageViewController {
