@@ -150,6 +150,7 @@ final class DialogueViewModel {
         progress.decisions[decisionId] = chosenOption
         guard let data = try? JSONEncoder().encode(progress) else { return }
         try? data.write(to: progressFileURL, options: .atomic)
+        print("progress saved at: \(progressFileURL.path)")
     }
 
     func saveDecisionScreenshot(_ image: UIImage, targetFile: String) {
