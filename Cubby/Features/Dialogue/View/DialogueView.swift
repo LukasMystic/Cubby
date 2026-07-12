@@ -58,6 +58,7 @@ struct DialogueView: View {
     }
 
     private func dismissSelf() {
+        SpeechService.shared.stop()
         viewModel.audioManager.onBack()
         if let onDismiss { onDismiss() } else { envDismiss() }
     }
@@ -121,9 +122,12 @@ struct DialogueView: View {
                         .frame(width: 96)
                 }
                 .padding(24)
+                .offset(x: 18, y: 18)
             }
         }
         .ignoresSafeArea()
+        .onAppear { viewModel.start() }
+        .onDisappear { SpeechService.shared.stop() }
     }
 
     // Characters
