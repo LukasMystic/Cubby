@@ -92,7 +92,7 @@ struct DialogueView: View {
                 bottomPanel(geo: geo)
                     .padding(.horizontal, 24)
                     .padding(.top,    panelAlignment == .top    ? 140 : 0)
-                    .padding(.bottom, panelAlignment == .bottom ? 28 : 0)
+                    .padding(.bottom, panelAlignment == .bottom ? 90 : 0)
                     .id(viewModel.beatCounter)
                     .transition(.asymmetric(
                         insertion: .move(edge: .bottom).combined(with: .opacity),
@@ -214,7 +214,7 @@ struct DialogueView: View {
             choicePanel(options: options, geo: geo)
 
         case .ending(let emotion):
-            endingPanel(emotion: emotion)
+            endingPanel(emotion: emotion, geo: geo)
         }
     }
 
@@ -237,7 +237,7 @@ struct DialogueView: View {
                     .scaledToFit()
                     .frame(width: geo.size.width * 0.073)
                     .padding(6)
-                    .offset(x: -geo.size.width * 0.049, y: geo.size.height * 0.016)
+                    .offset(x: -geo.size.width * 0.030, y: geo.size.height * 0.030)
                     .opacity(isTyping ? 0.35 : 1.0)
                     .animation(.easeInOut(duration: 0.2), value: isTyping)
                     .allowsHitTesting(false)
@@ -266,7 +266,7 @@ struct DialogueView: View {
                     .lineLimit(4)
                     .frame(maxWidth: .infinity)
                     .padding(.horizontal, 44)
-                    .padding(.top, 58)
+                    .padding(.top, 110)
                     .padding(.bottom, 10)
             }
             .clipped()
@@ -279,9 +279,9 @@ struct DialogueView: View {
                 Image(mia ? "Mia_next_button" : "Joey_next_button")
                     .resizable()
                     .scaledToFit()
-                    .frame(width: geo.size.width * 0.085)
+                    .frame(width: geo.size.width * 0.073)
                     .padding(.trailing, 4)
-                    .offset(y: geo.size.height * 0.026)
+                    .offset(x: -geo.size.width * 0.030, y: geo.size.height * 0.026)
                     .opacity(isTyping ? 0.35 : 1.0)
                     .animation(.easeInOut(duration: 0.2), value: isTyping)
                     .allowsHitTesting(false)
@@ -318,30 +318,33 @@ struct DialogueView: View {
     }
 
     // Ending (bottom)
-    private func endingPanel(emotion: String) -> some View {
-        VStack(spacing: 14) {
-            Text("— The End —")
-                .font(.custom("FredokaOne-Regular", size: 30))
-                .foregroundStyle(.black)
+    private func endingPanel(emotion: String, geo: GeometryProxy) -> some View {
+        Image("Narration_box")
+            .resizable()
+            .aspectRatio(1711.0 / 410.0, contentMode: .fit)
+            .frame(maxWidth: geo.size.width * 0.75)
+            .overlay {
+                VStack(spacing: 10) {
+                    Text("— The End —")
+                        .font(.custom("FredokaOne-Regular", size: geo.size.height * 0.034))
+                        .foregroundStyle(.black)
 
-            Text("Mia feels: \(emotion)")
-                .font(.custom("Playpen Sans", size: 22))
-                .foregroundStyle(.black.opacity(0.7))
+                    Text("Mia feels: \(emotion)")
+                        .font(.custom("Playpen Sans", size: geo.size.height * 0.026))
+                        .foregroundStyle(.black.opacity(0.7))
 
-            Button("Done") {
-                if let onStoryEnd { onStoryEnd() } else { dismissSelf() }
+                    Button("Done") {
+                        if let onStoryEnd { onStoryEnd() } else { dismissSelf() }
+                    }
+                        .font(.custom("FredokaOne-Regular", size: geo.size.height * 0.026))
+                        .foregroundStyle(.white)
+                        .padding(.horizontal, 28)
+                        .padding(.vertical, 11)
+                        .background(Color.orange)
+                        .clipShape(Capsule())
+                }
+                .padding(.horizontal, 44)
             }
-                .font(.custom("FredokaOne-Regular", size: 22))
-                .foregroundStyle(.white)
-                .padding(.horizontal, 28)
-                .padding(.vertical, 11)
-                .background(Color.orange)
-                .clipShape(Capsule())
-        }
-        .padding(.horizontal, 44)
-        .padding(.vertical, 30)
-        .frame(maxWidth: .infinity)
-        .background(Image("Joey_dialogue_box").resizable())
     }
 
     // Shared helpers
