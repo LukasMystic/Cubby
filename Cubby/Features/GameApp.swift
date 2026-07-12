@@ -7,11 +7,15 @@
 
 import SwiftUI
 import TipKit
+import AVFoundation
 
 @main
 struct GameApp: App {
 
     init() {
+        try? AVAudioSession.sharedInstance().setCategory(.playback)
+        try? AVAudioSession.sharedInstance().setActive(true)
+
         // In DEBUG builds, wipe the TipKit datastore on every launch so tips
         // always appear during development and testing.
         #if DEBUG
