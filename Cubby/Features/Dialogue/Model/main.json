@@ -1,14 +1,14 @@
 {
   "file_name": "main.json",
   "project_id": "joey_mia_personal_space_story",
-  "project_title": "Joey & Mia: Cerita Interaktif tentang Ruang Teman",
+  "project_title": "Joey & Mia: Personal Space Interactive Story",
   "version": "2.2.0-storybook-page-update",
   "main_type": "router_index",
-  "main_description": "main.json adalah peta utama. File ini bukan scene cerita. Isinya menunjukkan file mana yang dibuka setelah pemain memilih.",
+  "main_description": "main.json is the master map. It is not a scene. It shows which file opens after each player choice.",
   "character_names": {
     "player": "Joey",
     "friend": "Mia",
-    "normalization_note": "Gunakan nama Mia secara konsisten. Jika ada referensi lama Lily, ganti menjadi Mia."
+    "normalization_note": "Use Mia consistently. Replace any old Lily reference with Mia."
   },
   "file_order": [
     "main.json",
@@ -36,21 +36,21 @@
     {
       "decision_id": "decision_001_initial_space_response",
       "source_file": "opening.json",
-      "prompt": "Mia bilang dia merasa terhimpit. Kamu mau apa?",
+      "prompt": "What should Joey do after Mia says she feels squished?",
       "routes": [
         {
           "option": "A",
-          "choice_text": "Tetap duduk tepat di samping Mia.",
+          "choice_text": "Sit down right next to Mia anyway",
           "target_file": "1.json"
         },
         {
           "option": "B",
-          "choice_text": "Meminta sekali lagi.",
+          "choice_text": "Insist and ask again",
           "target_file": "2.json"
         },
         {
           "option": "C",
-          "choice_text": "Menerima jawaban Mia lalu bertanya dengan sopan.",
+          "choice_text": "Accept it and ask",
           "target_file": "3.json"
         }
       ]
@@ -58,21 +58,21 @@
     {
       "decision_id": "decision_002_after_option_a",
       "source_file": "1.json",
-      "prompt": "Mia menjauh secara diam-diam. Kamu mau apa?",
+      "prompt": "Mia moved a little farther away. What should Joey do now?",
       "routes": [
         {
           "option": "A",
-          "choice_text": "Menyadari Mia menjauh dan bertanya.",
+          "choice_text": "Notice Mia moved away and ask",
           "target_file": "1A.json"
         },
         {
           "option": "B",
-          "choice_text": "Mendekat untuk melihat potongan lego tersebut.",
+          "choice_text": "Move closer to see the piece",
           "target_file": "1B.json"
         },
         {
           "option": "C",
-          "choice_text": "Langsung mengambil potongan lego tersebut tanpa izin.",
+          "choice_text": "Reach over and take a piece from Mia's pile without asking",
           "target_file": "1C.json"
         }
       ]
@@ -80,21 +80,21 @@
     {
       "decision_id": "decision_003_after_option_b",
       "source_file": "2.json",
-      "prompt": "Mia masih terlihat tidak nyaman. Kamu mau apa?",
+      "prompt": "Mia still seems tense. What should Joey do now?",
       "routes": [
         {
           "option": "A",
-          "choice_text": "Menyadari Mia tidak nyaman dan bertanya.",
+          "choice_text": "Notice Mia seems tense and ask",
           "target_file": "2A.json"
         },
         {
           "option": "B",
-          "choice_text": "Tetap duduk di samping Mia.",
+          "choice_text": "Keep sitting close",
           "target_file": "2B.json"
         },
         {
           "option": "C",
-          "choice_text": "Lebih mendekat untuk mengambil potongan lego lebih banyak.",
+          "choice_text": "Lean in even closer to grab more blocks",
           "target_file": "2C.json"
         }
       ]
@@ -102,21 +102,21 @@
     {
       "decision_id": "decision_004_after_option_c",
       "source_file": "3.json",
-      "prompt": "Kamu melihat potongan lego yang cocok di dekat Mia. Kamu mau apa?",
+      "prompt": "Joey sees a perfect piece in Mia's area. What should he do?",
       "routes": [
         {
           "option": "A",
-          "choice_text": "Berhenti sebentar lalu bertanya.",
+          "choice_text": "Pause and ask first",
           "target_file": "3A.json"
         },
         {
           "option": "B",
-          "choice_text": "Lebih mendekat.",
+          "choice_text": "Lean in close",
           "target_file": "3B.json"
         },
         {
           "option": "C",
-          "choice_text": "Mengambil potongan lego yang digunakan Mia.",
+          "choice_text": "Reach over and take the piece Mia was using",
           "target_file": "3C.json"
         }
       ]
@@ -124,16 +124,16 @@
     {
       "decision_id": "decision_005_after_option_3B",
       "source_file": "3B.json",
-      "prompt": "Mia mulai menjauh. Kamu mau apa?",
+      "prompt": "Mia leans away after Joey gets too close. What should Joey do?",
       "routes": [
         {
           "option": "i",
-          "choice_text": "Menyadari dan menjauh sedikit.",
+          "choice_text": "Notice and move away a little bit",
           "target_file": "3b(i).json"
         },
         {
           "option": "ii",
-          "choice_text": "Membiarkan saja.",
+          "choice_text": "Ignore it",
           "target_file": "3b(ii).json"
         }
       ]
@@ -192,17 +192,17 @@
     }
   ],
   "continuity_rules": [
-    "Joey selalu menjadi karakter pemain.",
-    "Mia selalu menjadi karakter teman.",
-    "opening.json selalu menjadi awal cerita.",
-    "3B.json bukan file ending; alurnya lanjut ke 3b(i).json atau 3b(ii).json.",
-    "Setiap file cabang harus punya connects_from.",
-    "Setiap file cabang yang belum ending harus punya connects_to.",
-    "Setiap file cabang ending harus punya ending_id."
+    "Joey is always the player.",
+    "Mia is always the friend character.",
+    "opening.json always starts the story.",
+    "3B.json is not an ending file; it continues to 3b(i).json or 3b(ii).json.",
+    "Each branch file must have connects_from.",
+    "Each non-ending branch file must have connects_to.",
+    "Each ending branch file must have ending_id."
   ],
   "storybook_config": {
     "field_name": "storybook_page",
-    "rendering_rule": "Tampilkan halaman storybook dari setiap file cabang yang dipilih pemain. Contoh: path 1B menampilkan 1.json + 1B.json. Path 3B(i) menampilkan 3.json + 3B.json + 3b(i).json.",
+    "rendering_rule": "Render storybook pages from each selected branch file in the player path. For example, path 1B renders 1.json + 1B.json. Path 3B(i) renders 3.json + 3B.json + 3b(i).json.",
     "files_with_storybook_page": [
       "1.json",
       "1A.json",
@@ -218,6 +218,112 @@
       "3b(i).json",
       "3b(ii).json",
       "3C.json"
+    ]
+  },
+  "character_expression_assets": {
+    "mia": [
+      {
+        "expression_key": "Neutral",
+        "asset_file": "EX_Mia_001_Neutral.png",
+        "usage_rule": "Use only when expression is Neutral and Mia is Idle."
+      },
+      {
+        "expression_key": "Relieved",
+        "asset_file": "EX_Mia_002_Relieved.png",
+        "usage_rule": "Use for both Idle and Talking when this emotion is active."
+      },
+      {
+        "expression_key": "Happy",
+        "asset_file": "EX_Mia_003_Happy.png",
+        "usage_rule": "Use for both Idle and Talking when this emotion is active."
+      },
+      {
+        "expression_key": "Uncomfortable",
+        "asset_file": "EX_Mia_004_Uncomfortable.png",
+        "usage_rule": "Use for both Idle and Talking when this emotion is active."
+      },
+      {
+        "expression_key": "SilentDiscomfort",
+        "asset_file": "EX_Mia_005_SilentDiscomfort.png",
+        "usage_rule": "Use for both Idle and Talking when this emotion is active."
+      },
+      {
+        "expression_key": "Annoyed",
+        "asset_file": "EX_Mia_006_Annoyed.png",
+        "usage_rule": "Use for both Idle and Talking when this emotion is active."
+      },
+      {
+        "expression_key": "Angry",
+        "asset_file": "EX_Mia_007_Angry.png",
+        "usage_rule": "Use for both Idle and Talking when this emotion is active."
+      },
+      {
+        "expression_key": "Crying",
+        "asset_file": "EX_Mia_008_Crying.png",
+        "usage_rule": "Use for both Idle and Talking when this emotion is active."
+      },
+      {
+        "expression_key": "Sobbing",
+        "asset_file": "EX_Mia_009_Sobbing.png",
+        "usage_rule": "Use for both Idle and Talking when this emotion is active."
+      },
+      {
+        "expression_key": "NeutralTalk",
+        "asset_file": "EX_Mia_010_NeutralTalk.png",
+        "usage_rule": "Use only when expression is Neutral and Mia is Talking."
+      }
+    ],
+    "joey": [
+      {
+        "expression_key": "Neutral",
+        "asset_file": "EX_Joey_001_Neutral.png",
+        "usage_rule": "Use only when expression is Neutral and Joey is Idle."
+      },
+      {
+        "expression_key": "Excited",
+        "asset_file": "EX_Joey_002_Excited.png",
+        "usage_rule": "Use for both Idle and Talking when this emotion is active."
+      },
+      {
+        "expression_key": "Unaware",
+        "asset_file": "EX_Joey_003_Unaware.png",
+        "usage_rule": "Use for both Idle and Talking when this emotion is active."
+      },
+      {
+        "expression_key": "Concerned",
+        "asset_file": "EX_Joey_004_Concerned.png",
+        "usage_rule": "Use for both Idle and Talking when this emotion is active."
+      },
+      {
+        "expression_key": "Happy",
+        "asset_file": "EX_Joey_005_Happy.png",
+        "usage_rule": "Use for both Idle and Talking when this emotion is active."
+      },
+      {
+        "expression_key": "Regretful",
+        "asset_file": "EX_Joey_006_Regretful.png",
+        "usage_rule": "Use for both Idle and Talking when this emotion is active."
+      },
+      {
+        "expression_key": "Shocked",
+        "asset_file": "EX_Joey_007_Shocked.png",
+        "usage_rule": "Use for both Idle and Talking when this emotion is active."
+      },
+      {
+        "expression_key": "NeutralTalk",
+        "asset_file": "EX_Joey_008_NeutralTalk.png",
+        "usage_rule": "Use only when expression is Neutral and Joey is Talking."
+      }
+    ]
+  },
+  "character_asset_selection_rule": {
+    "description": "NeutralTalk is only a talking variant of Neutral, not a separate emotion.",
+    "rules": [
+      "The active speaker has speech_state Talking; every other character has speech_state Idle.",
+      "Neutral + Talking uses NeutralTalk.",
+      "Neutral + Idle uses Neutral.",
+      "Any non-Neutral emotion uses its emotion asset for both Talking and Idle.",
+      "Narrator, decision, and ending nodes keep both characters Idle."
     ]
   }
 }

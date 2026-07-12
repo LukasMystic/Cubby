@@ -21,8 +21,40 @@ enum DialogueBeat {
 final class DialogueViewModel {
 
     private(set) var currentBeat: DialogueBeat = .narrative(text: "")
+    private(set) var miaExpressionKey: String = ""
+    private(set) var joeyExpressionKey: String = ""
     private(set) var isEnded = false
-    private(set) var playerName = "Joey"
+    private(set) var beatCounter: Int = 0
+
+    var miaAssetName: String { miaAsset(for: miaExpressionKey) }
+    var joeyAssetName: String { joeyAsset(for: joeyExpressionKey) }
+
+    private func miaAsset(for key: String) -> String {
+        switch key.lowercased() {
+        case "neutral":return "EX_Mia_001_Neutral"
+        case "relieved": return "EX_Mia_002_Relieved"
+        case "happy":return "EX_Mia_003_Happy"
+        case "uncomfortable": return "EX_Mia_004_Uncomfortable"
+        case "silentdiscomfort": return "EX_Mia_005_SilentDiscomfort"
+        case "annoyed": return "EX_Mia_006_Annoyed"
+        case "angry": return "EX_Mia_007_Angry"
+        case "crying":return "EX_Mia_008_Crying"
+        case "sobbing":return "EX_Mia_009_Sobbing"
+        default:return "EX_Mia_001_Neutral"
+        }
+    }
+
+    private func joeyAsset(for key: String) -> String {
+        switch key.lowercased() {
+        case "neutral": return "EX_Joey_001_Neutral"
+        case "talk", "neutraltalk":return "EX_Joey_002_Talk"
+        case "excited": return "EX_Joey_003_Excited"
+        case "unaware":return "EX_Joey_004_Unaware"
+        case "happy": return "EX_Joey_005_Happy"
+        case "happyeyesclosed":return "EX_Joey_006_HappyEyesClosed"
+        default: return "EX_Joey_001_Neutral"
+        }
+    }
 
     private var router: StoryRouter?
     private var currentScene: StoryScene?
@@ -30,14 +62,12 @@ final class DialogueViewModel {
     private var currentDecisionId: String?
 
     init() {
-        print("save folder:", progressFileURL.deletingLastPathComponent().path)
         loadStory()
     }
 
     // load story
     private func loadStory() {
         router = loadJSON("main")
-        if let name = router?.characterNames?.player { playerName = name }
         let entryFile = router?.entryPoint.file ?? "opening.json"
         let sceneName = entryFile.replacingOccurrences(of: ".json", with: "")
         loadScene(named: sceneName)
@@ -63,20 +93,9 @@ final class DialogueViewModel {
     }
 
     // Navigation
-    func restart() {
-        isEnded = false
-        nodeIndex = 0
-        loadStory()
-    }
-
-    // MARK: - Navigation
-
     func advance() {
-        // if it's a choice panel, do nothing 
-        guard case .choice = currentBeat else {
-            showNextBeat()
-            return
-        }
+        if case .choice = currentBeat { return } // choices are handled by choose(_:), not advance
+        showNextBeat()
     }
 
     func choose(_ route: DecisionRoute) {
@@ -96,12 +115,20 @@ final class DialogueViewModel {
             let node = scene.sequence[nodeIndex]
             nodeIndex += 1
 
+            updateExpressions(from: node)
+
             if let beat = beat(for: node) {
                 currentBeat = beat
+                beatCounter += 1
                 return
             }
-            // some nodes (like player_identity) are skipped
         }
+    }
+
+    private func updateExpressions(from node: StoryNode) {
+        guard let exprs = node.characterExpressions else { return }
+        if let mia = exprs.mia { miaExpressionKey = mia.expressionKey }
+        if let joey = exprs.joey { joeyExpressionKey = joey.expressionKey }
     }
 
     // save or load progress
@@ -123,15 +150,33 @@ final class DialogueViewModel {
         progress.decisions[decisionId] = chosenOption
         guard let data = try? JSONEncoder().encode(progress) else { return }
         try? data.write(to: progressFileURL, options: .atomic)
+        print("progress saved at: \(progressFileURL.path)")
     }
 
-    // called from the view right before choose() while the decision screen is still visible
-    // targetFile is route.targetFile e.g. "1A.json" → saved as "1A.png"
     func saveDecisionScreenshot(_ image: UIImage, targetFile: String) {
         guard let data = image.pngData() else { return }
         let filename = targetFile.replacingOccurrences(of: ".json", with: "") + ".png"
         let url = progressFileURL.deletingLastPathComponent().appendingPathComponent(filename)
         try? data.write(to: url, options: .atomic)
+    }
+    
+    private func resetProgress() {
+        let empty = UserProgress()
+        if let data = try? JSONEncoder().encode(empty) {
+            try? data.write(to: progressFileURL, options: .atomic)
+        }
+        clearOldScreenshots()
+    }
+
+    private func clearOldScreenshots() {
+        let docsDir = progressFileURL.deletingLastPathComponent()
+        guard let urls = try? FileManager.default.contentsOfDirectory(
+            at: docsDir, includingPropertiesForKeys: nil
+        ) else { return }
+
+        for url in urls where url.pathExtension == "png" {
+            try? FileManager.default.removeItem(at: url)
+        }
     }
 
     private func beat(for node: StoryNode) -> DialogueBeat? {
@@ -148,7 +193,6 @@ final class DialogueViewModel {
             return .speech(speaker: node.speaker ?? "", text: node.text ?? "")
 
         case .contextEmotion:
-            SpeechService.shared.play(nodeId: node.nodeId)
             if let inline = node.dialogue {
                 return .speech(speaker: inline.speaker, text: inline.text)
             }
@@ -166,7 +210,6 @@ final class DialogueViewModel {
             SpeechService.shared.stop()
             isEnded = true
             return .ending(emotion: node.finalEmotion ?? "")
-            
         }
     }
 }

@@ -1,24 +1,48 @@
 {
   "file_name": "2B.json",
   "branch_id": "option_b_followup_keep_sitting_close",
-  "branch_label": "Opsi B",
-  "branch_title": "Tetap Duduk di Samping Mia",
+  "branch_label": "Option B",
+  "branch_title": "Joey Keeps Sitting Close",
   "connects_from": "decision_003_after_option_b",
   "selected_option": {
-    "choice_text": "Tetap duduk di samping Mia.",
+    "choice_text": "Keep sitting close",
     "choice_quality": "poor"
   },
   "sequence": [
     {
       "node_id": "2B_001_situation",
       "type": "situation_narrator",
-      "text": "Mia diam tetapi kesal. Kamu melanjutkan bangun menaramu dan tidak sadar Mia butuh ruang."
+      "text": "Mia stayed quiet. You kept building, not knowing Mia still needed a little more space.",
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Unaware",
+          "speech_state": "Idle",
+          "asset_file": "EX_Joey_003_Unaware.png"
+        },
+        "mia": {
+          "expression_key": "Annoyed",
+          "speech_state": "Idle",
+          "asset_file": "EX_Mia_006_Annoyed.png"
+        }
+      }
     },
     {
       "node_id": "ending_2B_annoyed",
       "type": "ending",
       "final_emotion_target": "Mia",
-      "final_emotion": "Annoyed"
+      "final_emotion": "Annoyed",
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Unaware",
+          "speech_state": "Idle",
+          "asset_file": "EX_Joey_003_Unaware.png"
+        },
+        "mia": {
+          "expression_key": "Annoyed",
+          "speech_state": "Idle",
+          "asset_file": "EX_Mia_006_Annoyed.png"
+        }
+      }
     }
   ],
   "ending_id": "ending_2B_annoyed",
@@ -27,26 +51,26 @@
     "player_chose": "2B",
     "source_file": "2B.json",
     "page_type": "ending_recap",
-    "title": "Kamu Memilih 2B",
+    "title": "Player Chose 2B",
     "sections": [
       {
-        "heading": "Bagaimana situasinya?",
-        "body": "Kamu mengambil potongan lego di area bermain Mia. Kamu tetap duduk sangat dekat dengan Mia."
+        "heading": "What Happened Before?",
+        "body": "A few minutes later, you reached for a block to build your tower. You were sitting just as close as before."
       },
       {
-        "heading": "Apa yang kamu lakukan?",
-        "body": "Tetap duduk di samping Mia."
+        "heading": "What Did You Pick?",
+        "body": "Kept sitting close, not realizing Mia still felt uncomfortable"
       },
       {
-        "heading": "Apa yang terjadi?",
-        "body": "Mia jadi kesal dan tidak ingin bermain lagi."
+        "heading": "What Happened After?",
+        "body": "Mia felt annoyed and wasn’t having fun at all."
       },
       {
-        "heading": "Yuk, kita ngobrol",
+        "heading": "Let's Talk",
         "questions": [
-          "Kenapa Mia tetap diam?",
-          "Bagaimana cara kamu mengetahui jika teman membutuhkan sesuatu?",
-          "Apakah ada petunjuk kalau Mia tidak merasa baik-baik saja?"
+          "Why did Mia stay quiet?",
+          "How can you tell if a friend needs more space?",
+          "What clues showed that Mia wasn’t feeling okay?"
         ]
       }
     ]

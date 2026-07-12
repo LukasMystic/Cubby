@@ -4,14 +4,11 @@
 //
 //  Created by Stanley Pratama Teguh on 02/07/26.
 //
-// YES I USE AI FOR MOST OF THIS
 
 import SpriteKit
 import SwiftUIJoystick
 import Observation
-import TipKit
 
-// idle or walking - GameScene needs this too
 enum CharacterAnim: Equatable { case idle, walking }
 
 @Observable
@@ -27,28 +24,20 @@ final class GameViewModel {
     var isFacingRight: Bool = true
     var characterAnim: CharacterAnim = .idle
 
-    // these get set by GameScene once the scene loads
     var sceneSize: CGSize = .zero
     var charHalfW: CGFloat = 40
     var charHalfH: CGFloat = 60
     var groundY: CGFloat = 0
-    var groundMin: CGFloat = 0     // lowest Y the player can reach (foreground edge)
-    var groundMax: CGFloat = 0     // highest Y the player can reach (back of playground)
+    var groundMin: CGFloat = 0
+    var groundMax: CGFloat = 0
 
     var npcPosition: CGPoint = .zero
     var isNPCInRange: Bool = false
 
     private let moveSpeed: CGFloat = 220
-    private let deadzone: CGFloat = 10 // ignore tiny joystick movements
+    private let deadzone: CGFloat = 10
 
     var showDialogue = false
-
-    var isPaused = false {
-        didSet { gameScene.isPaused = isPaused }
-    }
-
-    // tick() runs at 60fps, so the joystick event must only be donated once
-    private var hasDonatedJoystick = false
 
     init() {
         joystickMonitor = JoystickMonitor()
@@ -58,12 +47,10 @@ final class GameViewModel {
         s.viewModel = self
     }
 
-    // called every frame from GameScene
     func tick(deltaTime dt: CGFloat) {
-        // need to check distance before the deadzone guard or it never updates while standing
         let npcdx = characterPosition.x - npcPosition.x
         let npcdy = characterPosition.y - npcPosition.y
-        isNPCInRange = sqrt(npcdx * npcdx + npcdy * npcdy) < 150 // 150 pts feels about right
+        isNPCInRange = sqrt(npcdx * npcdx + npcdy * npcdy) < 150
 
         let dx = joystickMonitor.xyPoint.x
         let dy = joystickMonitor.xyPoint.y
@@ -73,17 +60,9 @@ final class GameViewModel {
             return
         }
 
-        if !hasDonatedJoystick {
-            hasDonatedJoystick = true
-            JoystickTip().invalidate(reason: .actionPerformed)
-            Task { await InteractTip.useJoystick.donate() }
-        }
-
-        // Scale the raw joystick output to a –1 … 1 range
         let normX = dx / joystickSize
         let normY = dy / joystickSize
 
-        // X scrolls freely; Y moves at 40% speed to feel like depth, clamped to playground bounds
         let newX = min(max(characterPosition.x + normX * moveSpeed * dt, charHalfW), sceneSize.width - charHalfW)
         let newY = min(max(characterPosition.y - normY * moveSpeed * dt * 0.4, groundMin), groundMax)
         characterPosition = CGPoint(x: newX, y: newY)
@@ -99,8 +78,6 @@ final class GameViewModel {
             print("not close enough to NPC")
             return
         }
-        InteractTip().invalidate(reason: .actionPerformed)
-        Task { await InteractTip.useInteract.donate() }
         showDialogue = true
     }
 }

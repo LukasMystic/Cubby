@@ -1,11 +1,11 @@
 {
   "file_name": "2A.json",
   "branch_id": "option_b_followup_notice_tense_and_ask",
-  "branch_label": "Opsi A",
-  "branch_title": "Menyadari Mia Tidak Nyaman dan Bertanya",
+  "branch_label": "Option A",
+  "branch_title": "Joey Notices Mia Seems Tense",
   "connects_from": "decision_003_after_option_b",
   "selected_option": {
-    "choice_text": "Menyadari Mia tidak nyaman dan bertanya.",
+    "choice_text": "Notice Mia seems tense and ask",
     "choice_quality": "repair"
   },
   "sequence": [
@@ -13,29 +13,77 @@
       "node_id": "2A_001_dialogue",
       "type": "dialogue",
       "speaker": "Joey",
-      "text": "Apakah kamu baik-baik saja? Apakah aku duduk terlalu dekat?"
+      "text": "Are you okay? Am I too close?",
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Concerned",
+          "speech_state": "Talking",
+          "asset_file": "EX_Joey_004_Concerned.png"
+        },
+        "mia": {
+          "expression_key": "SilentDiscomfort",
+          "speech_state": "Idle",
+          "asset_file": "EX_Mia_005_SilentDiscomfort.png"
+        }
+      }
     },
     {
       "node_id": "2A_002_context_emotion",
       "type": "context_emotion",
       "target": "Mia",
       "emotion": "Relieved",
-      "text": "Mia merasa lega.",
+      "text": "Mia felt relieved.",
       "dialogue": {
         "speaker": "Mia",
-        "text": "Iya, sedikit. Makasih sudah menyadarinya ya."
+        "text": "A little. Thank you for asking."
+      },
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Concerned",
+          "speech_state": "Idle",
+          "asset_file": "EX_Joey_004_Concerned.png"
+        },
+        "mia": {
+          "expression_key": "Relieved",
+          "speech_state": "Talking",
+          "asset_file": "EX_Mia_002_Relieved.png"
+        }
       }
     },
     {
       "node_id": "2A_003_situation",
       "type": "situation_narrator",
-      "text": "Kamu sadar Mia sedang sedih dan menanyakan perasaannya. Mia merasa menjadi diperhatikan."
+      "text": "You noticed Mia's feelings and checked in. Asking how a friend feels is a kind way to help.",
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Happy",
+          "speech_state": "Idle",
+          "asset_file": "EX_Joey_005_Happy.png"
+        },
+        "mia": {
+          "expression_key": "Relieved",
+          "speech_state": "Idle",
+          "asset_file": "EX_Mia_002_Relieved.png"
+        }
+      }
     },
     {
       "node_id": "ending_2A_relieved",
       "type": "ending",
       "final_emotion_target": "Mia",
-      "final_emotion": "Relieved"
+      "final_emotion": "Relieved",
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Happy",
+          "speech_state": "Idle",
+          "asset_file": "EX_Joey_005_Happy.png"
+        },
+        "mia": {
+          "expression_key": "Relieved",
+          "speech_state": "Idle",
+          "asset_file": "EX_Mia_002_Relieved.png"
+        }
+      }
     }
   ],
   "ending_id": "ending_2A_relieved",
@@ -44,26 +92,26 @@
     "player_chose": "2A",
     "source_file": "2A.json",
     "page_type": "ending_recap",
-    "title": "Kamu Memilih 2A",
+    "title": "Player Chose 2A",
     "sections": [
       {
-        "heading": "Bagaimana situasinya?",
-        "body": "Kamu mengambil potongan lego di area bermain Mia. Kamu tetap duduk sangat dekat dengan Mia."
+        "heading": "What Happened Before?",
+        "body": "A few minutes later, you reached for a block to build your tower. You were sitting just as close as before."
       },
       {
-        "heading": "Apa yang kamu lakukan?",
-        "body": "Menyadari Mia tidak nyaman dan bertanya."
+        "heading": "What Did You Pick?",
+        "body": "Notice Mia seems tense and ask"
       },
       {
-        "heading": "Apa yang terjadi?",
-        "body": "Mia merasa lega karena kamu bertanya perasaan dia. Kalian kembali bermain bersama."
+        "heading": "What Happened After?",
+        "body": "Mia felt grateful and had fun building the tower again."
       },
       {
-        "heading": "Yuk, kita ngobrol",
+        "heading": "Let's Talk",
         "questions": [
-          "Kenapa kamu bertanya ke Mia kalau dia baik-baik saja?",
-          "Apakah kamu pernah bilang “okay” meskipun kamu merasa tidak baik-baik saja?",
-          "Kenapa mengecek perasaan teman adalah hal yang baik?"
+          "Why did you ask Mia if she was okay?",
+          "Have you ever said \"okay\" even when you didn’t feel okay?",
+          "Why is it good to check on a friend later?"
         ]
       }
     ]

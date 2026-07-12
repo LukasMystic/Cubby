@@ -8,7 +8,7 @@ import SwiftUI
 struct StorybookView: View {
     var viewModel: StorybookViewModel
     var onExit: () -> Void = {}
-    @State private var showClosing = false
+    var onFinish: () -> Void = {}
 
     var body: some View {
         GeometryReader { geo in
@@ -55,17 +55,15 @@ struct StorybookView: View {
                         .padding(.horizontal, 24)
                         .padding(.vertical, 10)
                         .background(Capsule().fill(Color.orange))
-                        .onTapGesture { showClosing = true }
+                        .onTapGesture {
+                            viewModel.clearScreenshots()
+                            viewModel.clearUserProgress()
+                            onFinish()
+                        }
                         .padding(.trailing, 32)
                         .padding(.bottom, 32)
                 }
             }
-        }
-        .navigationDestination(isPresented: $showClosing) {
-            ClosingView(
-                onBackToPlayground: onExit,
-                onTryAgain: onExit
-            )
         }
     }
 }
