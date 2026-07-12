@@ -13,30 +13,21 @@ import TipKit
 struct GameView: View {
 
     @State private var viewModel = GameViewModel()
-
-    // Separate from viewModel.showDialogue so we can coordinate the white-flash timing.
     @State private var dialoguePresented = false
     @State private var screenFlash: Double = 0
 
-    // TipKit — popover tips for joystick and interact button.
+    // TipKit
     private let joystickTip = JoystickTip()
     private let interactTip = InteractTip()
     private let startGameTip = StartGameTip()
-
-    // Prevent re-donating the joystick event on every walk frame.
     @State private var joystickEventDonated = false
-
-    // Controls the custom glass "Start the Game!" banner.
     @State private var showStartBanner = false
 
     var body: some View {
         ZStack {
             SpriteView(scene: viewModel.scene)
                 .ignoresSafeArea()
-
             hud
-
-            // Glass "Start the Game!" banner — shown after the interact tip closes.
             if showStartBanner {
                 VStack {
                     startBanner
@@ -50,20 +41,16 @@ struct GameView: View {
                 DialogueView(onDismiss: { closeDialogue() })
                     .zIndex(1)
             }
-
-            // White overlay sits on top of everything — animated separately from the view swap.
             Color.white
                 .opacity(screenFlash)
                 .ignoresSafeArea()
                 .allowsHitTesting(false)
                 .zIndex(2)
         }
-        // When the game requests dialogue, run the flash-through-white transition.
         .onChange(of: viewModel.showDialogue) { _, newValue in
             guard newValue else { return }
             openDialogue()
         }
-        // Donate the joystick event the first time the character starts walking.
         .onChange(of: viewModel.characterAnim) { _, anim in
             guard anim == .walking, !joystickEventDonated else { return }
             joystickEventDonated = true
@@ -71,7 +58,7 @@ struct GameView: View {
         }
     }
 
-    // MARK: - Start banner
+    // Start banner
 
     private var startBanner: some View {
         HStack(spacing: 12) {
@@ -105,8 +92,7 @@ struct GameView: View {
         .padding(.top, 60)
     }
 
-    // MARK: - Transition helpers
-
+    // Transition
     private func openDialogue() {
         Task {
             withAnimation(.easeIn(duration: 0.18)) { screenFlash = 1 }
@@ -126,8 +112,7 @@ struct GameView: View {
         }
     }
 
-    // MARK: - HUD
-
+    //HUD
     private var hud: some View {
         VStack {
             Spacer()
@@ -140,8 +125,7 @@ struct GameView: View {
         }
     }
 
-    // MARK: - Joystick
-
+    // Joystick
     private var joystick: some View {
         JoystickBuilder(
             monitor: viewModel.joystickMonitor,
@@ -153,8 +137,6 @@ struct GameView: View {
                     .scaledToFit()
             },
             foreground: {
-                // JoystickBuilder constrains the thumb to width/4 for layout,
-                // but a fixed frame overflows that without clipping, making it visually larger.
                 Image("joystick_button_point")
                     .resizable()
                     .scaledToFit()
@@ -168,14 +150,13 @@ struct GameView: View {
         .popoverTip(joystickTip, arrowEdge: .bottom)
     }
 
-    // MARK: - Interact button
-
+    // Interact button
     private var interactButton: some View {
         Button {
             Task {
                 await InteractTip.useInteract.donate()
-                // Wait for the interact popover to finish closing before showing the start banner.
-                try? await Task.sleep(nanoseconds: 1_500_000_000)
+                interactTip.invalidate(reason: .actionPerformed)
+                try? await Task.sleep(nanoseconds: 400_000_000) // wait for popover dismiss animation
                 guard startGameTip.shouldDisplay else { return }
                 withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
                     showStartBanner = true

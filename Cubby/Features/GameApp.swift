@@ -12,6 +12,12 @@ import TipKit
 struct GameApp: App {
 
     init() {
+        // In DEBUG builds, wipe the TipKit datastore on every launch so tips
+        // always appear during development and testing.
+        #if DEBUG
+        try? Tips.resetDatastore()
+        #endif
+
         // Configure TipKit once at launch.
         // .immediate means tips are not throttled — they appear as soon as rules are met,
         // making the tutorial flow sequentially within the first session.
@@ -23,7 +29,7 @@ struct GameApp: App {
 
     var body: some Scene {
         WindowGroup {
-            GameView()
+            CutsceneView()
         }
     }
 }

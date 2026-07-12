@@ -14,23 +14,88 @@
       "type": "context_emotion",
       "target": "Mia",
       "emotion": "Cry",
-      "text": "Mia was caught by surprise.",
+      "text": "Mia felt sad because you were too close and took a block without asking.",
       "dialogue": {
         "speaker": "Mia",
-        "text": "Joey, you took my toy, huh. I still need a little more space. And those are the blocks I was using too."
+        "text": "Joey, I already told you I still need a little space. I was using that piece too."
+      },
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Shocked",
+          "speech_state": "Idle",
+          "asset_file": "EX_Joey_007_Shocked.png"
+        },
+        "mia": {
+          "expression_key": "Annoyed",
+          "speech_state": "Talking",
+          "asset_file": "EX_Mia_006_Annoyed.png"
+        }
       }
     },
     {
       "node_id": "1C_002_situation",
       "type": "situation_narrator",
-      "text": "Joey didn't notice Mia needed more space. Mia cried, and playing wasn't as fun anymore."
+      "text": "You didn't notice that Mia still needed more space. Mia felt sad, cried, and stopped playing.",
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Regretful",
+          "speech_state": "Idle",
+          "asset_file": "EX_Joey_006_Regretful.png"
+        },
+        "mia": {
+          "expression_key": "Crying",
+          "speech_state": "Idle",
+          "asset_file": "EX_Mia_008_Crying.png"
+        }
+      }
     },
     {
       "node_id": "ending_1C_cry",
       "type": "ending",
       "final_emotion_target": "Mia",
-      "final_emotion": "Cry"
+      "final_emotion": "Cry",
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Regretful",
+          "speech_state": "Idle",
+          "asset_file": "EX_Joey_006_Regretful.png"
+        },
+        "mia": {
+          "expression_key": "Crying",
+          "speech_state": "Idle",
+          "asset_file": "EX_Mia_008_Crying.png"
+        }
+      }
     }
   ],
-  "ending_id": "ending_1C_cry"
+  "ending_id": "ending_1C_cry",
+  "storybook_page": {
+    "page_id": "storybook_1C",
+    "player_chose": "1C",
+    "source_file": "1C.json",
+    "page_type": "ending_recap",
+    "title": "Player Chose 1C",
+    "sections": [
+      {
+        "heading": "What Happened Before?",
+        "body": "Mia had quietly moved a little farther away. She looked a little sad, but she kept building on her own. Then you noticed a perfect piece for your tower in Mia's building area."
+      },
+      {
+        "heading": "What Did You Pick?",
+        "body": "Reached over and took a piece from Mia’s pile without asking"
+      },
+      {
+        "heading": "What Happened After?",
+        "body": "Mia cried and stopped playing."
+      },
+      {
+        "heading": "Let's Talk",
+        "questions": [
+          "Why did Mia cry?",
+          "What could you have done instead?",
+          "What can you say or do if you hurt a friend's feelings?"
+        ]
+      }
+    ]
+  }
 }

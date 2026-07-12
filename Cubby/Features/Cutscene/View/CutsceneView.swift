@@ -16,7 +16,6 @@ struct CutsceneView: View {
             ZStack {
                 sceneLayer(geo: geo)
 
-                // White flash sits above all scene content (narration box, skip button, characters)
                 Color.white
                     .opacity(viewModel.screenFlash)
                     .ignoresSafeArea()
@@ -33,8 +32,6 @@ struct CutsceneView: View {
         .ignoresSafeArea()
         .onAppear { viewModel.startSequence() }
     }
-
-    // MARK: - Scene
 
     private func sceneLayer(geo: GeometryProxy) -> some View {
         ZStack {
@@ -58,13 +55,11 @@ struct CutsceneView: View {
         }
     }
 
-    // MARK: - Characters
-
     private func characters(geo: GeometryProxy) -> some View {
-        let charH      = geo.size.height * 0.70
+        let charH = geo.size.height * 0.70
         let charFrameH = charH * 0.76
-        let charPad    = charH * 0.0975
-        let sidePad    = 20 + charH * 0.20
+        let charPad = charH * 0.0975
+        let sidePad = 20 + charH * 0.20
 
         return HStack(alignment: .bottom, spacing: 0) {
             characterSlot(
@@ -87,9 +82,7 @@ struct CutsceneView: View {
     }
 
     @ViewBuilder
-    private func characterSlot(asset: String?,
-                                frameH: CGFloat, bottomPad: CGFloat,
-                                visible: Bool, slideOffset: CGFloat) -> some View {
+    private func characterSlot(asset: String?, frameH: CGFloat, bottomPad: CGFloat, visible: Bool, slideOffset: CGFloat) -> some View {
         if let asset {
             Image(asset)
                 .resizable()
@@ -104,8 +97,6 @@ struct CutsceneView: View {
             Color.clear.frame(height: frameH)
         }
     }
-
-    // MARK: - Narration box
 
     private func narrationBox(geo: GeometryProxy) -> some View {
         Image("Narration_box")
@@ -123,9 +114,7 @@ struct CutsceneView: View {
                     .padding(.vertical, 10)
             }
     }
-
-    // MARK: - Skip button
-
+    
     private func skipButton(geo: GeometryProxy) -> some View {
         Button { viewModel.skip() } label: {
             Image("Joey_option_button")

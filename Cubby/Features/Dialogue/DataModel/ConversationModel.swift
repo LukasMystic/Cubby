@@ -11,9 +11,9 @@ import Foundation
 enum StoryNodeType: String, Codable {
     case dialogue
     case situationNarrator = "situation_narrator"
-    case contextEmotion    = "context_emotion"
-    case decisionPoint     = "decision_point"
-    case playerIdentity    = "player_identity"
+    case contextEmotion = "context_emotion"
+    case decisionPoint = "decision_point"
+    case playerIdentity = "player_identity"
     case backgroundSetting = "background_setting"
     case ending
 }
@@ -22,6 +22,25 @@ enum StoryNodeType: String, Codable {
 struct InlineDialogue: Codable {
     let speaker: String
     let text: String
+}
+
+// joey and mia expression
+struct CharacterExpression: Codable {
+    let expressionKey: String
+    let speechState: String
+    let assetFile: String
+
+    enum CodingKeys: String, CodingKey {
+        case expressionKey = "expression_key"
+        case speechState = "speech_state"
+        case assetFile = "asset_file"
+    }
+}
+
+// Both characters' expressions at a single node
+struct NodeExpressions: Codable {
+    let joey: CharacterExpression?
+    let mia: CharacterExpression?
 }
 
 // one story
@@ -43,20 +62,24 @@ struct StoryNode: Codable {
     // ending nodes
     let finalEmotion: String?
 
+    // character portrait expressions shown during this node
+    let characterExpressions: NodeExpressions?
+
     enum CodingKeys: String, CodingKey {
-        case nodeId        = "node_id"
+        case nodeId = "node_id"
         case type, speaker, text, emotion, dialogue
         case decisionPrompt = "decision_prompt"
-        case finalEmotion   = "final_emotion"
+        case finalEmotion = "final_emotion"
+        case characterExpressions = "character_expressions"
     }
 }
 
-// Decoded from any scene file: opening.json, 1.json, 1A.json, etc.
+// decoder
 struct StoryScene: Codable {
     let sequence: [StoryNode]
 }
 
-// option the player can pick at a decision point
+// decision point
 struct DecisionRoute: Codable, Identifiable {
     var id: String { option }
     let option: String
@@ -65,8 +88,8 @@ struct DecisionRoute: Codable, Identifiable {
 
     enum CodingKeys: String, CodingKey {
         case option
-        case choiceText  = "choice_text"
-        case targetFile  = "target_file"
+        case choiceText = "choice_text"
+        case targetFile = "target_file"
     }
 }
 

@@ -14,40 +14,141 @@
       "node_id": "3_001_dialogue",
       "type": "dialogue",
       "speaker": "Joey",
-      "text": "Oh, okay! How about I sit a little farther away? We can still build together?"
+      "text": "Oh, okay. If I sit a little farther away, can we still build together?",
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Neutral",
+          "speech_state": "Talking",
+          "asset_file": "EX_Joey_008_NeutralTalk.png"
+        },
+        "mia": {
+          "expression_key": "Uncomfortable",
+          "speech_state": "Idle",
+          "asset_file": "EX_Mia_004_Uncomfortable.png"
+        }
+      }
     },
     {
       "node_id": "3_002_context_emotion",
       "type": "context_emotion",
       "target": "Mia",
       "emotion": "Relaxed",
-      "text": "Mia relaxes.",
+      "text": "Mia felt more comfortable.",
       "dialogue": {
         "speaker": "Mia",
-        "text": "Yeah! That's much better, thank you."
+        "text": "Yeah, this feels much better. Thank you."
+      },
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Neutral",
+          "speech_state": "Idle",
+          "asset_file": "EX_Joey_001_Neutral.png"
+        },
+        "mia": {
+          "expression_key": "Relieved",
+          "speech_state": "Talking",
+          "asset_file": "EX_Mia_002_Relieved.png"
+        }
       }
     },
     {
       "node_id": "3_003_situation",
       "type": "situation_narrator",
-      "text": "Joey listened the first time. That's what a good friend does."
+      "text": "You listened when Mia said she needed more space. Mia felt happy because you understood.",
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Happy",
+          "speech_state": "Idle",
+          "asset_file": "EX_Joey_005_Happy.png"
+        },
+        "mia": {
+          "expression_key": "Happy",
+          "speech_state": "Idle",
+          "asset_file": "EX_Mia_003_Happy.png"
+        }
+      }
     },
     {
       "node_id": "3_004_situation",
       "type": "situation_narrator",
-      "text": "Joey sees a perfect piece for his castle in Mia's pieces."
+      "text": "Then you noticed a perfect piece for your tower among Mia's blocks.",
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Excited",
+          "speech_state": "Idle",
+          "asset_file": "EX_Joey_002_Excited.png"
+        },
+        "mia": {
+          "expression_key": "Happy",
+          "speech_state": "Idle",
+          "asset_file": "EX_Mia_003_Happy.png"
+        }
+      }
     },
     {
       "node_id": "3_005_situation",
       "type": "situation_narrator",
-      "text": "Joey got excited and started leaning in to grab the piece."
+      "text": "You got excited and started leaning in to grab the piece.",
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Excited",
+          "speech_state": "Idle",
+          "asset_file": "EX_Joey_002_Excited.png"
+        },
+        "mia": {
+          "expression_key": "Happy",
+          "speech_state": "Idle",
+          "asset_file": "EX_Mia_003_Happy.png"
+        }
+      }
     },
     {
       "node_id": "decision_004_after_option_c",
       "type": "decision_point",
       "title": "Joey's Decision",
-      "decision_prompt": "Joey sees a perfect piece in Mia's area. What should he do?"
+      "decision_prompt": "Joey sees a perfect piece in Mia's area. What should he do?",
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Excited",
+          "speech_state": "Idle",
+          "asset_file": "EX_Joey_002_Excited.png"
+        },
+        "mia": {
+          "expression_key": "Happy",
+          "speech_state": "Idle",
+          "asset_file": "EX_Mia_003_Happy.png"
+        }
+      }
     }
   ],
-  "connects_to": "decision_004_after_option_c"
+  "connects_to": "decision_004_after_option_c",
+  "storybook_page": {
+    "page_id": "storybook_option_3",
+    "player_chose": "Option 3",
+    "source_file": "3.json",
+    "page_type": "choice_recap",
+    "title": "Player Chose Option 3",
+    "sections": [
+      {
+        "heading": "Situation",
+        "body": "Mia was building a tower. You ran over and wanted to sit right next to her. Mia said, \"Hmm, I feel a little bit squished if you sit here too.\""
+      },
+      {
+        "heading": "What Did You Pick?",
+        "body": "Accept it and ask"
+      },
+      {
+        "heading": "What Happened After?",
+        "body": "You listened when Mia asked for more space, and Mia felt happy because you understood."
+      },
+      {
+        "heading": "Let's Talk",
+        "questions": [
+          "Why did Mia feel happy?",
+          "What did you do to help Mia feel safe?",
+          "Why is it good to listen when a friend needs space?"
+        ]
+      }
+    ]
+  }
 }

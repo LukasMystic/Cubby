@@ -2,7 +2,7 @@
   "file_name": "main.json",
   "project_id": "joey_mia_personal_space_story",
   "project_title": "Joey & Mia: Personal Space Interactive Story",
-  "version": "2.0.0-final",
+  "version": "2.2.0-storybook-page-update",
   "main_type": "router_index",
   "main_description": "main.json is the master map. It is not a scene. It shows which file opens after each player choice.",
   "character_names": {
@@ -67,7 +67,7 @@
         },
         {
           "option": "B",
-          "choice_text": "Move closer to see the tower",
+          "choice_text": "Move closer to see the piece",
           "target_file": "1B.json"
         },
         {
@@ -89,7 +89,7 @@
         },
         {
           "option": "B",
-          "choice_text": "Joey kept sitting close",
+          "choice_text": "Keep sitting close",
           "target_file": "2B.json"
         },
         {
@@ -116,7 +116,7 @@
         },
         {
           "option": "C",
-          "choice_text": "Reach over and took the piece Mia was using",
+          "choice_text": "Reach over and take the piece Mia was using",
           "target_file": "3C.json"
         }
       ]
@@ -188,7 +188,7 @@
     {
       "file": "3C.json",
       "ending_id": "ending_3C_upset_angry",
-      "mia_final_emotion": "Upset/Angry"
+      "mia_final_emotion": "Angry/Upset"
     }
   ],
   "continuity_rules": [
@@ -199,5 +199,131 @@
     "Each branch file must have connects_from.",
     "Each non-ending branch file must have connects_to.",
     "Each ending branch file must have ending_id."
-  ]
+  ],
+  "storybook_config": {
+    "field_name": "storybook_page",
+    "rendering_rule": "Render storybook pages from each selected branch file in the player path. For example, path 1B renders 1.json + 1B.json. Path 3B(i) renders 3.json + 3B.json + 3b(i).json.",
+    "files_with_storybook_page": [
+      "1.json",
+      "1A.json",
+      "1B.json",
+      "1C.json",
+      "2.json",
+      "2A.json",
+      "2B.json",
+      "2C.json",
+      "3.json",
+      "3A.json",
+      "3B.json",
+      "3b(i).json",
+      "3b(ii).json",
+      "3C.json"
+    ]
+  },
+  "character_expression_assets": {
+    "mia": [
+      {
+        "expression_key": "Neutral",
+        "asset_file": "EX_Mia_001_Neutral.png",
+        "usage_rule": "Use only when expression is Neutral and Mia is Idle."
+      },
+      {
+        "expression_key": "Relieved",
+        "asset_file": "EX_Mia_002_Relieved.png",
+        "usage_rule": "Use for both Idle and Talking when this emotion is active."
+      },
+      {
+        "expression_key": "Happy",
+        "asset_file": "EX_Mia_003_Happy.png",
+        "usage_rule": "Use for both Idle and Talking when this emotion is active."
+      },
+      {
+        "expression_key": "Uncomfortable",
+        "asset_file": "EX_Mia_004_Uncomfortable.png",
+        "usage_rule": "Use for both Idle and Talking when this emotion is active."
+      },
+      {
+        "expression_key": "SilentDiscomfort",
+        "asset_file": "EX_Mia_005_SilentDiscomfort.png",
+        "usage_rule": "Use for both Idle and Talking when this emotion is active."
+      },
+      {
+        "expression_key": "Annoyed",
+        "asset_file": "EX_Mia_006_Annoyed.png",
+        "usage_rule": "Use for both Idle and Talking when this emotion is active."
+      },
+      {
+        "expression_key": "Angry",
+        "asset_file": "EX_Mia_007_Angry.png",
+        "usage_rule": "Use for both Idle and Talking when this emotion is active."
+      },
+      {
+        "expression_key": "Crying",
+        "asset_file": "EX_Mia_008_Crying.png",
+        "usage_rule": "Use for both Idle and Talking when this emotion is active."
+      },
+      {
+        "expression_key": "Sobbing",
+        "asset_file": "EX_Mia_009_Sobbing.png",
+        "usage_rule": "Use for both Idle and Talking when this emotion is active."
+      },
+      {
+        "expression_key": "NeutralTalk",
+        "asset_file": "EX_Mia_010_NeutralTalk.png",
+        "usage_rule": "Use only when expression is Neutral and Mia is Talking."
+      }
+    ],
+    "joey": [
+      {
+        "expression_key": "Neutral",
+        "asset_file": "EX_Joey_001_Neutral.png",
+        "usage_rule": "Use only when expression is Neutral and Joey is Idle."
+      },
+      {
+        "expression_key": "Excited",
+        "asset_file": "EX_Joey_002_Excited.png",
+        "usage_rule": "Use for both Idle and Talking when this emotion is active."
+      },
+      {
+        "expression_key": "Unaware",
+        "asset_file": "EX_Joey_003_Unaware.png",
+        "usage_rule": "Use for both Idle and Talking when this emotion is active."
+      },
+      {
+        "expression_key": "Concerned",
+        "asset_file": "EX_Joey_004_Concerned.png",
+        "usage_rule": "Use for both Idle and Talking when this emotion is active."
+      },
+      {
+        "expression_key": "Happy",
+        "asset_file": "EX_Joey_005_Happy.png",
+        "usage_rule": "Use for both Idle and Talking when this emotion is active."
+      },
+      {
+        "expression_key": "Regretful",
+        "asset_file": "EX_Joey_006_Regretful.png",
+        "usage_rule": "Use for both Idle and Talking when this emotion is active."
+      },
+      {
+        "expression_key": "Shocked",
+        "asset_file": "EX_Joey_007_Shocked.png",
+        "usage_rule": "Use for both Idle and Talking when this emotion is active."
+      },
+      {
+        "expression_key": "NeutralTalk",
+        "asset_file": "EX_Joey_008_NeutralTalk.png",
+        "usage_rule": "Use only when expression is Neutral and Joey is Talking."
+      }
+    ]
+  },
+  "character_asset_selection_rule": {
+    "description": "NeutralTalk is only a talking variant of Neutral, not a separate emotion.",
+    "rules": [
+      "The active speaker has speech_state Talking; every other character has speech_state Idle.",
+      "Neutral + Talking uses NeutralTalk.",
+      "Neutral + Idle uses Neutral.",
+      "Any non-Neutral emotion uses its emotion asset for both Talking and Idle.",
+      "Narrator, decision, and ending nodes keep both characters Idle."
+    ]
+  }
 }

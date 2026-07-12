@@ -13,30 +13,107 @@
       "node_id": "3A_001_dialogue",
       "type": "dialogue",
       "speaker": "Joey",
-      "text": "Can I reach for the block, or can you pass it to me?"
+      "text": "Can I take that piece, or could you pass it to me?",
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Neutral",
+          "speech_state": "Talking",
+          "asset_file": "EX_Joey_008_NeutralTalk.png"
+        },
+        "mia": {
+          "expression_key": "Happy",
+          "speech_state": "Idle",
+          "asset_file": "EX_Mia_003_Happy.png"
+        }
+      }
     },
     {
       "node_id": "3A_002_context_emotion",
       "type": "context_emotion",
       "target": "Mia",
       "emotion": "Happy",
-      "text": "Mia feels happy.",
+      "text": "Mia felt happy and comfortable.",
       "dialogue": {
         "speaker": "Mia",
-        "text": "Yep! Go ahead. Thanks for asking."
+        "text": "Yes, go ahead. Thanks for asking!"
+      },
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Happy",
+          "speech_state": "Idle",
+          "asset_file": "EX_Joey_005_Happy.png"
+        },
+        "mia": {
+          "expression_key": "Happy",
+          "speech_state": "Talking",
+          "asset_file": "EX_Mia_003_Happy.png"
+        }
       }
     },
     {
       "node_id": "3A_003_situation",
       "type": "situation_narrator",
-      "text": "Joey asked before getting closer. Mia felt safe, and they kept having fun together."
+      "text": "You asked before getting closer. Mia felt safe, and you both kept having fun together.",
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Happy",
+          "speech_state": "Idle",
+          "asset_file": "EX_Joey_005_Happy.png"
+        },
+        "mia": {
+          "expression_key": "Happy",
+          "speech_state": "Idle",
+          "asset_file": "EX_Mia_003_Happy.png"
+        }
+      }
     },
     {
       "node_id": "ending_3A_happy",
       "type": "ending",
       "final_emotion_target": "Mia",
-      "final_emotion": "Happy"
+      "final_emotion": "Happy",
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Happy",
+          "speech_state": "Idle",
+          "asset_file": "EX_Joey_005_Happy.png"
+        },
+        "mia": {
+          "expression_key": "Happy",
+          "speech_state": "Idle",
+          "asset_file": "EX_Mia_003_Happy.png"
+        }
+      }
     }
   ],
-  "ending_id": "ending_3A_happy"
+  "ending_id": "ending_3A_happy",
+  "storybook_page": {
+    "page_id": "storybook_3A",
+    "player_chose": "3A",
+    "source_file": "3A.json",
+    "page_type": "ending_recap",
+    "title": "Player Chose 3A",
+    "sections": [
+      {
+        "heading": "What Happened Before?",
+        "body": "A few minutes later, you spotted the perfect block in Mia's building area. It would fit perfectly on your tower."
+      },
+      {
+        "heading": "What Did You Pick?",
+        "body": "Paused and asked first"
+      },
+      {
+        "heading": "What Happened After?",
+        "body": "You asked before moving closer. Mia felt safe and comfortable, and you both kept having fun together."
+      },
+      {
+        "heading": "Let's Talk",
+        "questions": [
+          "Why did you ask Mia before reaching for the piece?",
+          "How did Mia feel when you asked first?",
+          "Why is asking first a kind choice?"
+        ]
+      }
+    ]
+  }
 }
