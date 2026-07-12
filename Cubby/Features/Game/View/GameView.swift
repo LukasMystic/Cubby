@@ -47,6 +47,8 @@ struct GameView: View {
                 .allowsHitTesting(false)
                 .zIndex(2)
         }
+        .onAppear { viewModel.audioManager.startLoop() }
+        .onDisappear { viewModel.audioManager.stopLoop() }
         .onChange(of: viewModel.showDialogue) { _, newValue in
             guard newValue else { return }
             openDialogue()
@@ -95,6 +97,7 @@ struct GameView: View {
     // Transition
     private func openDialogue() {
         Task {
+            viewModel.audioManager.fadeOut(duration: 0.2)
             withAnimation(.easeIn(duration: 0.18)) { screenFlash = 1 }
             try? await Task.sleep(nanoseconds: 200_000_000)
             dialoguePresented = true
@@ -109,6 +112,7 @@ struct GameView: View {
             dialoguePresented = false
             viewModel.showDialogue = false
             withAnimation(.easeOut(duration: 0.30)) { screenFlash = 0 }
+            viewModel.audioManager.fadeIn(duration: 0.5)
         }
     }
 
@@ -153,6 +157,7 @@ struct GameView: View {
     // Interact button
     private var interactButton: some View {
         Button {
+            viewModel.audioManager.playInteract()
             Task {
                 await InteractTip.useInteract.donate()
                 interactTip.invalidate(reason: .actionPerformed)

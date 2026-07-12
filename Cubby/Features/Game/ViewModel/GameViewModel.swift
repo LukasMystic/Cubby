@@ -36,7 +36,9 @@ final class GameViewModel {
 
     private let moveSpeed: CGFloat = 220
     private let deadzone: CGFloat = 10
+    private var prevAnim: CharacterAnim = .idle
 
+    let audioManager = AudioManager()
     var showDialogue = false
 
     init() {
@@ -57,6 +59,8 @@ final class GameViewModel {
 
         guard sqrt(dx * dx + dy * dy) > deadzone else {
             characterAnim = .idle
+            audioManager.tick(dt: Double(dt), anim: .idle, isNPCInRange: isNPCInRange)
+            prevAnim = .idle
             return
         }
 
@@ -70,7 +74,10 @@ final class GameViewModel {
         if normX < -0.1 { isFacingRight = false }
         else if normX > 0.1 { isFacingRight = true }
 
+        if prevAnim == .idle { audioManager.playJoystickStart() }
         characterAnim = .walking
+        audioManager.tick(dt: Double(dt), anim: .walking, isNPCInRange: isNPCInRange)
+        prevAnim = .walking
     }
 
     func interact() {
