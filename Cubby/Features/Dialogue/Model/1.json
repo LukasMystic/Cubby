@@ -1,8 +1,8 @@
 {
   "file_name": "1.json",
   "branch_id": "option_a_sit_down_anyway",
-  "branch_label": "Opsi A",
-  "branch_title": "Tetap Duduk Tepat di Samping Mia",
+  "branch_label": "Option A",
+  "branch_title": "Joey Sits Too Close Anyway",
   "connects_from": "decision_001_initial_space_response",
   "selected_option": {
     "choice_id": "option_a",

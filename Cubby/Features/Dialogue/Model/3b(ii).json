@@ -1,11 +1,11 @@
 {
   "file_name": "3b(ii).json",
   "branch_id": "option_3b_ii_ignore_it",
-  "branch_label": "Opsi B",
-  "branch_title": "Membiarkan Saja",
+  "branch_label": "Option B",
+  "branch_title": "Joey Ignores It",
   "connects_from": "decision_005_after_option_3B",
   "selected_option": {
-    "choice_text": "Membiarkan saja.",
+    "choice_text": "Ignore it",
     "choice_quality": "poor"
   },
   "sequence": [

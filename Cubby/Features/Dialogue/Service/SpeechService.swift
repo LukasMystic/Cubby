@@ -18,8 +18,6 @@ final class SpeechService {
             print("[Speech] Missing audio: \(nodeId).mp3")
             return
         }
-        try? AVAudioSession.sharedInstance().setCategory(.playback)
-        try? AVAudioSession.sharedInstance().setActive(true)
         player = try? AVAudioPlayer(contentsOf: url)
         player?.play()
     }

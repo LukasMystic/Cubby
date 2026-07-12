@@ -14,7 +14,6 @@ struct DialogueView: View {
 
     @State private var viewModel = DialogueViewModel()
     @Environment(\.dismiss) private var envDismiss
-    @State private var speakerOn = true
     @State private var lastSpeaker = ""
     @State private var speechBoxHeight: CGFloat = 180
 
@@ -51,12 +50,21 @@ struct DialogueView: View {
         }
     }
 
+    private var backgroundDim: Double {
+        switch viewModel.currentBeat {
+        case .speech, .choice: return 0.7
+        default: return 0
+        }
+    }
+
     private func dismissSelf() {
+        viewModel.audioManager.onBack()
         if let onDismiss { onDismiss() } else { envDismiss() }
     }
 
     private func handleAdvance() {
         guard !isTyping else { return }
+        viewModel.audioManager.onNext()
         withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
             viewModel.advance()
         }
@@ -71,6 +79,11 @@ struct DialogueView: View {
                     .scaledToFill()
                     .blur(radius: 8, opaque: true)
                     .ignoresSafeArea()
+
+                Color.black
+                    .opacity(backgroundDim)
+                    .ignoresSafeArea()
+                    .animation(.easeInOut(duration: 0.3), value: backgroundDim)
 
                 characters(geo: geo)
             }
@@ -93,7 +106,7 @@ struct DialogueView: View {
                 for char in fullText {
                     if Task.isCancelled { break }
                     displayedText.append(char)
-                    try? await Task.sleep(nanoseconds: 30_000_000) // 30 ms per character
+                    try? await Task.sleep(nanoseconds: 30_000_000)
                 }
                 isTyping = false
             }
@@ -103,15 +116,6 @@ struct DialogueView: View {
             .overlay(alignment: .topLeading) {
                 Button { dismissSelf() } label: {
                     Image("Back_button")
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 96)
-                }
-                .padding(24)
-            }
-            .overlay(alignment: .topTrailing) {
-                Button { speakerOn.toggle() } label: {
-                    Image(speakerOn ? "Speaker_on_button" : "Speaker_off_button")
                         .resizable()
                         .scaledToFit()
                         .frame(width: 96)
@@ -262,6 +266,7 @@ struct DialogueView: View {
         return VStack(spacing: 12) {
             ForEach(options) { route in
                 Button {
+                    viewModel.audioManager.onChoiceTap()
                     captureScreen(for: route)
                     withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
                         viewModel.choose(route)
