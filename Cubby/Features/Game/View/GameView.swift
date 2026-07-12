@@ -1,10 +1,3 @@
-//
-//  GameView.swift
-//  Cubby
-//
-//  Created by Stanley Pratama Teguh on 02/07/26.
-//
-
 import SwiftUI
 import SpriteKit
 import SwiftUIJoystick
@@ -13,15 +6,18 @@ import TipKit
 struct GameView: View {
 
     @State private var viewModel = GameViewModel()
-    @State private var dialoguePresented = false
+    @Environment(AppRouter.self) private var router
     @State private var screenFlash: Double = 0
 
-    // TipKit
     private let joystickTip = JoystickTip()
     private let interactTip = InteractTip()
     private let startGameTip = StartGameTip()
     @State private var joystickEventDonated = false
     @State private var showStartBanner = false
+
+    private var dialoguePresented: Bool { router.current == .dialogue }
+    private var storybookPresented: Bool { router.current == .storybook }
+    private var closingPresented: Bool { router.current == .closing }
 
     var body: some View {
         ZStack {
@@ -38,9 +34,29 @@ struct GameView: View {
             }
 
             if dialoguePresented {
-                DialogueView(onDismiss: { closeDialogue() })
-                    .zIndex(1)
+                DialogueView(
+                    onDismiss: { closeToGameplay() },
+                    onStoryEnd: { openStorybook() }
+                )
+                .zIndex(1)
             }
+
+            if storybookPresented {
+                StorybookView(
+                    viewModel: StorybookViewModel.fromUserProgress(),
+                    onFinish: { openClosing() }
+                )
+                .zIndex(1)
+            }
+
+            if closingPresented {
+                ClosingView(
+                    onBackToPlayground: { closeToGameplay() },
+                    onTryAgain: { tryAgain() }
+                )
+                .zIndex(1)
+            }
+
             Color.white
                 .opacity(screenFlash)
                 .ignoresSafeArea()
@@ -60,7 +76,7 @@ struct GameView: View {
         }
     }
 
-    // Start banner
+    // MARK: - Start banner
 
     private var startBanner: some View {
         HStack(spacing: 12) {
@@ -94,33 +110,47 @@ struct GameView: View {
         .padding(.top, 60)
     }
 
-    // Transition
+    // MARK: - Transitions
+
+    private func flash(_ action: @escaping () -> Void) {
+        Task {
+            withAnimation(.easeIn(duration: 0.18)) { screenFlash = 1 }
+            try? await Task.sleep(nanoseconds: 200_000_000)
+            action()
+            withAnimation(.easeOut(duration: 0.30)) { screenFlash = 0 }
+        }
+    }
+
     private func openDialogue() {
-        Task {
-            viewModel.audioManager.fadeOut(duration: 0.2)
-            withAnimation(.easeIn(duration: 0.18)) { screenFlash = 1 }
-            try? await Task.sleep(nanoseconds: 200_000_000)
-            dialoguePresented = true
-            withAnimation(.easeOut(duration: 0.30)) { screenFlash = 0 }
-        }
+        viewModel.audioManager.fadeOut(duration: 0.2)
+        flash { router.current = .dialogue }
     }
 
-    private func closeDialogue() {
-        Task {
-            withAnimation(.easeIn(duration: 0.18)) { screenFlash = 1 }
-            try? await Task.sleep(nanoseconds: 200_000_000)
-            dialoguePresented = false
+    private func openStorybook() {
+        flash { router.current = .storybook }
+    }
+
+    private func openClosing() {
+        flash { router.current = .closing }
+    }
+
+    private func closeToGameplay() {
+        viewModel.audioManager.fadeIn(duration: 0.5)
+        flash {
+            router.current = .game
             viewModel.showDialogue = false
-            withAnimation(.easeOut(duration: 0.30)) { screenFlash = 0 }
-            viewModel.audioManager.fadeIn(duration: 0.5)
         }
     }
 
-    //HUD
+    private func tryAgain() {
+        flash { router.current = .dialogue }   // fresh DialogueView → fresh DialogueViewModel → new playthrough
+    }
+
+    // MARK: - HUD
+
     private var hud: some View {
         VStack {
             Spacer()
-
             HStack(alignment: .bottom) {
                 joystick
                 Spacer()
@@ -129,7 +159,6 @@ struct GameView: View {
         }
     }
 
-    // Joystick
     private var joystick: some View {
         JoystickBuilder(
             monitor: viewModel.joystickMonitor,
@@ -154,14 +183,13 @@ struct GameView: View {
         .popoverTip(joystickTip, arrowEdge: .bottom)
     }
 
-    // Interact button
     private var interactButton: some View {
         Button {
             viewModel.audioManager.playInteract()
             Task {
                 await InteractTip.useInteract.donate()
                 interactTip.invalidate(reason: .actionPerformed)
-                try? await Task.sleep(nanoseconds: 400_000_000) // wait for popover dismiss animation
+                try? await Task.sleep(nanoseconds: 400_000_000)
                 guard startGameTip.shouldDisplay else { return }
                 withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
                     showStartBanner = true
@@ -189,4 +217,5 @@ struct GameView: View {
 
 #Preview {
     GameView()
+        .environment(AppRouter())
 }

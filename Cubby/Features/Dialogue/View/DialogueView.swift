@@ -10,6 +10,7 @@ import UIKit
 
 struct DialogueView: View {
     var onDismiss: (() -> Void)? = nil
+    var onStoryEnd: (() -> Void)? = nil
 
     @State private var viewModel = DialogueViewModel()
     @Environment(\.dismiss) private var envDismiss
@@ -300,7 +301,9 @@ struct DialogueView: View {
                 .font(.custom("Playpen Sans", size: 22))
                 .foregroundStyle(.black.opacity(0.7))
 
-            Button("Done") { dismissSelf() }
+            Button("Done") {
+                if let onStoryEnd { onStoryEnd() } else { dismissSelf() }
+            }
                 .font(.custom("FredokaOne-Regular", size: 22))
                 .foregroundStyle(.white)
                 .padding(.horizontal, 28)

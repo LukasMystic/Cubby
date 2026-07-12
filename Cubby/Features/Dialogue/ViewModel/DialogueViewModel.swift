@@ -168,6 +168,25 @@ final class DialogueViewModel {
         let url = progressFileURL.deletingLastPathComponent().appendingPathComponent(filename)
         try? data.write(to: url, options: .atomic)
     }
+    
+    private func resetProgress() {
+        let empty = UserProgress()
+        if let data = try? JSONEncoder().encode(empty) {
+            try? data.write(to: progressFileURL, options: .atomic)
+        }
+        clearOldScreenshots()
+    }
+
+    private func clearOldScreenshots() {
+        let docsDir = progressFileURL.deletingLastPathComponent()
+        guard let urls = try? FileManager.default.contentsOfDirectory(
+            at: docsDir, includingPropertiesForKeys: nil
+        ) else { return }
+
+        for url in urls where url.pathExtension == "png" {
+            try? FileManager.default.removeItem(at: url)
+        }
+    }
 
     private func beat(for node: StoryNode) -> DialogueBeat? {
         switch node.type {

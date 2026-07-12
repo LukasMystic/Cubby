@@ -19,6 +19,7 @@
 		0BAC19282FF65D640018BE37 /* Exceptions for "Cubby" folder in "Cubby" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
+				Features/Tips.swift,
 				Info.plist,
 			);
 			target = D1F3B2752FF64284007BF617 /* Cubby */;
