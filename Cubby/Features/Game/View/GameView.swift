@@ -18,13 +18,16 @@ struct GameView: View {
     @State private var dialoguePresented = false
     @State private var screenFlash: Double = 0
 
-    // TipKit — each tip is shown exactly once, ever.
-    private let joystickTip  = JoystickTip()
-    private let interactTip  = InteractTip()
+    // TipKit — popover tips for joystick and interact button.
+    private let joystickTip = JoystickTip()
+    private let interactTip = InteractTip()
     private let startGameTip = StartGameTip()
 
     // Prevent re-donating the joystick event on every walk frame.
     @State private var joystickEventDonated = false
+
+    // Controls the custom glass "Start the Game!" banner.
+    @State private var showStartBanner = false
 
     var body: some View {
         ZStack {
@@ -33,14 +36,15 @@ struct GameView: View {
 
             hud
 
-            // StartGameTip shown as a banner near the top once both events are donated.
-            VStack {
-                TipView(startGameTip, arrowEdge: .top)
-                    .padding(.horizontal, 40)
-                    .padding(.top, 60)
-                Spacer()
+            // Glass "Start the Game!" banner — shown after the interact tip closes.
+            if showStartBanner {
+                VStack {
+                    startBanner
+                    Spacer()
+                        .allowsHitTesting(false)
+                }
+                .transition(.move(edge: .top).combined(with: .opacity))
             }
-            .allowsHitTesting(false) // tips themselves handle their own taps
 
             if dialoguePresented {
                 DialogueView(onDismiss: { closeDialogue() })
@@ -65,6 +69,40 @@ struct GameView: View {
             joystickEventDonated = true
             Task { await InteractTip.useJoystick.donate() }
         }
+    }
+
+    // MARK: - Start banner
+
+    private var startBanner: some View {
+        HStack(spacing: 12) {
+            Image(systemName: "play.circle.fill")
+                .foregroundStyle(.blue)
+                .font(.title2)
+
+            VStack(alignment: .leading, spacing: 2) {
+                Text("Start the Game!")
+                    .font(.custom("FredokaOne-Regular", size: 16))
+                    .foregroundStyle(.primary)
+                Text("You're all set. Go explore!")
+                    .font(.custom("Playpen Sans", size: 14))
+                    .foregroundStyle(.secondary)
+            }
+
+            Spacer()
+
+            Button {
+                withAnimation(.easeOut(duration: 0.25)) { showStartBanner = false }
+                startGameTip.invalidate(reason: .actionPerformed)
+            } label: {
+                Image(systemName: "xmark")
+                    .foregroundStyle(.secondary)
+                    .font(.caption)
+            }
+        }
+        .padding(16)
+        .background(.ultraThinMaterial, in: RoundedRectangle(cornerRadius: 14))
+        .padding(.horizontal, 40)
+        .padding(.top, 60)
     }
 
     // MARK: - Transition helpers
@@ -134,8 +172,15 @@ struct GameView: View {
 
     private var interactButton: some View {
         Button {
-            // Donate interact event for TipKit sequencing, then attempt interaction.
-            Task { await InteractTip.useInteract.donate() }
+            Task {
+                await InteractTip.useInteract.donate()
+                // Wait for the interact popover to finish closing before showing the start banner.
+                try? await Task.sleep(nanoseconds: 1_500_000_000)
+                guard startGameTip.shouldDisplay else { return }
+                withAnimation(.spring(response: 0.4, dampingFraction: 0.8)) {
+                    showStartBanner = true
+                }
+            }
             viewModel.interact()
         } label: {
             ZStack {
