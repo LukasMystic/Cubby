@@ -15,6 +15,10 @@ struct StorybookView: View {
             ZStack {
                 Color.black.opacity(0.05)
                     .ignoresSafeArea()
+                
+                Image("Cubby_Gameplay_NoCharacter 1")
+                    .resizable()
+                    .ignoresSafeArea()
 
                 if viewModel.pages.isEmpty {
                     Text("No pages yet").foregroundColor(.gray)
@@ -30,29 +34,30 @@ struct StorybookView: View {
                         }
                         .shadow(color: .black.opacity(0.25), radius: 20, x: 0, y: 10)
 
-                        HStack(spacing: 20) {
-                            Text("\(viewModel.currentPageIndex + 1) / \(viewModel.pages.count)")
-                                .font(.custom("FredokaOne-Regular", size: 20))
-                                .foregroundColor(.black.opacity(0.7))
-                                .padding(.horizontal, 20)
-                                .padding(.vertical, 10)
-                                .background(
-                                    Capsule()
-                                        .fill(Color(red: 253/255, green: 250/255, blue: 240/255))
-                                        .shadow(color: .black.opacity(0.15), radius: 6, x: 0, y: 3)
-                                )
-
-                            if viewModel.isLastPage {
-                                Text("Finish")
-                                    .font(.custom("FredokaOne-Regular", size: 20))
-                                    .foregroundColor(.white)
-                                    .padding(.horizontal, 24)
-                                    .padding(.vertical, 10)
-                                    .background(Capsule().fill(Color.orange))
-                                    .onTapGesture { showClosing = true }
-                            }
-                        }
+                        Text("\(viewModel.currentPageIndex + 1) / \(viewModel.pages.count)")
+                            .font(.custom("FredokaOne-Regular", size: 20))
+                            .foregroundColor(.black.opacity(0.7))
+                            .padding(.horizontal, 20)
+                            .padding(.vertical, 10)
+                            .background(
+                                Capsule()
+                                    .fill(Color(red: 253/255, green: 250/255, blue: 240/255))
+                                    .shadow(color: .black.opacity(0.15), radius: 6, x: 0, y: 3)
+                            )
                     }
+                }
+            }
+            .overlay(alignment: .bottomTrailing) {
+                if !viewModel.pages.isEmpty && viewModel.isLastPage {
+                    Text("Finish")
+                        .font(.custom("FredokaOne-Regular", size: 20))
+                        .foregroundColor(.white)
+                        .padding(.horizontal, 24)
+                        .padding(.vertical, 10)
+                        .background(Capsule().fill(Color.orange))
+                        .onTapGesture { showClosing = true }
+                        .padding(.trailing, 32)
+                        .padding(.bottom, 32)
                 }
             }
         }
@@ -176,16 +181,8 @@ struct OutcomePageView: View {
     
     private func talkBox(_ section: StorybookSection, geo: GeometryProxy) -> some View {
         VStack(spacing: 10) {
-            ZStack {
-                Text(section.heading)
-                    .font(.custom("FredokaOne-Regular", size: geo.size.width * 0.05))
-                HStack {
-                    Spacer()
-                    Image(systemName: "questionmark.circle.fill")
-                        .foregroundColor(.orange)
-                        .font(.system(size: geo.size.width * 0.08))
-                }
-            }
+            Text(section.heading)
+                .font(.custom("FredokaOne-Regular", size: geo.size.width * 0.05))
             
             VStack(alignment: .leading, spacing: 6) {
                 ForEach(section.questions ?? [], id: \.self) { q in
@@ -193,7 +190,9 @@ struct OutcomePageView: View {
                         .font(.custom("PlaypenSans-Regular", size: geo.size.width * 0.04))
                 }
             }
+            .frame(maxWidth: .infinity, alignment: .leading)
         }
+        .frame(maxWidth: .infinity)   // ← forces the box to span full available width, regardless of content
         .padding(geo.size.width * 0.03)
         .background(Color(red: 253/255, green: 235/255, blue: 200/255))
         .cornerRadius(16)
