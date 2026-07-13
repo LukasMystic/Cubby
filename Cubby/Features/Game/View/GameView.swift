@@ -63,6 +63,8 @@ struct GameView: View {
                 .allowsHitTesting(false)
                 .zIndex(2)
         }
+        .onAppear { viewModel.audioManager.startLoop() }
+        .onDisappear { viewModel.audioManager.stopLoop() }
         .onChange(of: viewModel.showDialogue) { _, newValue in
             guard newValue else { return }
             openDialogue()
@@ -120,6 +122,7 @@ struct GameView: View {
     }
 
     private func openDialogue() {
+        viewModel.audioManager.fadeOut(duration: 0.2)
         flash { router.current = .dialogue }
     }
 
@@ -132,6 +135,7 @@ struct GameView: View {
     }
 
     private func closeToGameplay() {
+        viewModel.audioManager.fadeIn(duration: 0.5)
         flash {
             router.current = .game
             viewModel.showDialogue = false
@@ -181,6 +185,7 @@ struct GameView: View {
 
     private var interactButton: some View {
         Button {
+            viewModel.audioManager.playInteract()
             Task {
                 await InteractTip.useInteract.donate()
                 interactTip.invalidate(reason: .actionPerformed)

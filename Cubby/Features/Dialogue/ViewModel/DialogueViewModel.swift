@@ -56,10 +56,13 @@ final class DialogueViewModel {
         }
     }
 
+    let audioManager = DialogueAudioManager()
+
     private var router: StoryRouter?
     private var currentScene: StoryScene?
     private var nodeIndex = 0
     private var currentDecisionId: String?
+    private var prevMiaExpressionKey: String = ""
 
     init() {
         loadStory()
@@ -127,7 +130,13 @@ final class DialogueViewModel {
 
     private func updateExpressions(from node: StoryNode) {
         guard let exprs = node.characterExpressions else { return }
-        if let mia = exprs.mia { miaExpressionKey = mia.expressionKey }
+        if let mia = exprs.mia {
+            if mia.expressionKey != prevMiaExpressionKey {
+                audioManager.onEmotionChange(mia.expressionKey)
+                prevMiaExpressionKey = mia.expressionKey
+            }
+            miaExpressionKey = mia.expressionKey
+        }
         if let joey = exprs.joey { joeyExpressionKey = joey.expressionKey }
     }
 
@@ -185,29 +194,28 @@ final class DialogueViewModel {
             return nil
 
         case .backgroundSetting, .situationNarrator:
-            SpeechService.shared.play(nodeId: node.nodeId)
             return .narrative(text: node.text ?? "")
 
         case .dialogue:
-            SpeechService.shared.play(nodeId: node.nodeId)
+            audioManager.onDialogueBoxAppear()
             return .speech(speaker: node.speaker ?? "", text: node.text ?? "")
 
         case .contextEmotion:
             if let inline = node.dialogue {
+                audioManager.onDialogueBoxAppear()
                 return .speech(speaker: inline.speaker, text: inline.text)
             }
             return .narrative(text: node.text ?? "")
 
         case .decisionPoint:
+            audioManager.onChoicePanelAppear()
             currentDecisionId = node.nodeId
-            SpeechService.shared.stop()
             let choices = router?.decisions
                 .first(where: { $0.decisionId == node.nodeId })?
                 .routes ?? []
             return .choice(options: choices)
 
         case .ending:
-            SpeechService.shared.stop()
             isEnded = true
             return .ending(emotion: node.finalEmotion ?? "")
         }
