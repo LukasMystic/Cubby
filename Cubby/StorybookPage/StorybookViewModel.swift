@@ -2,11 +2,13 @@
 
 import Foundation
 import UIKit
+import AVFoundation
 
 @Observable
 class StorybookViewModel {
     var pages: [StorybookPage]
     var currentPageIndex: Int = 0
+    private var audioPlayer: AVAudioPlayer?
 
     init(pages: [StorybookPage] = []) {
         self.pages = pages
@@ -86,4 +88,23 @@ class StorybookViewModel {
         guard !isFirstPage else { return }
         currentPageIndex -= 1
     }
+    
+    func playBackgroundMusic(named fileName: String = "raw_bgm_bgm_storybook_reflection_loop_1", fileExtension: String = "wav") {
+            guard let url = Bundle.main.url(forResource: fileName, withExtension: fileExtension) else {
+                print("couldn't find \(fileName).\(fileExtension)")
+                return
+            }
+            do {
+                audioPlayer = try AVAudioPlayer(contentsOf: url)
+                audioPlayer?.numberOfLoops = -1   // loop forever
+                audioPlayer?.volume = 0.4
+                audioPlayer?.play()
+            } catch {
+                print("couldn't play storybook music: \(error)")
+            }
+        }
+
+        func stopBackgroundMusic() {
+            audioPlayer?.stop()
+        }
 }

@@ -65,6 +65,8 @@ struct StorybookView: View {
                 }
             }
         }
+        .onAppear { viewModel.playBackgroundMusic(named: "raw_bgm_bgm_storybook_reflection_loop_1") }
+        .onDisappear { viewModel.stopBackgroundMusic() }
     }
 }
 // MARK: - Left page: situation recap + screenshot

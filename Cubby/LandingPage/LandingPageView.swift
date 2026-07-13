@@ -11,7 +11,7 @@ struct LandingPageView: View {
                 .ignoresSafeArea()
             VStack(spacing: 400) {
                 Image("Primary-Text-LandingPage-Image")
-                Button("Play") {
+                Button("Start Game") {
                     router.current = .characterSelection
                 }
                 .font(.custom("FredokaOne-Regular", size: 48))
@@ -19,7 +19,6 @@ struct LandingPageView: View {
                 .padding(.horizontal, 120)
                 .padding(.vertical, 24)
                 .background(.white.opacity(0.65), in: Capsule())
-                .accessibilityAddTraits(.isButton)
                 .accessibilityLabel("Play Button")
             }
         }
