@@ -1,30 +1,28 @@
-//
-//  CharacterBioModel.swift
-//  Cubby
-//
-//  Created by Vigo Alexander Sie on 05/07/26.
-//
+import Foundation
 
 struct Character {
     let id: String
     let name: String
     let bioText: String
-    let imageName: String
+    let polaroidName: String
+    let fullBodyName: String
 }
 
 extension Character {
     static let all: [String: Character] = [
-        "Primary-Joey-CharacterSelection-Image": Character(
-            id: "Primary-Joey-CharacterSelection-Image",
+        "joey": Character(
+            id: "joey",
             name: "Joey",
-            bioText: "Aku sangat suka kenal orang baru dan mencoba hal-hal baru juga. Aku suka berpelukan, saling tos, dan senyum sapa.",
-            imageName: "Primary-Joey-CharacterSelection-Image"
+            bioText: "I love to have new friends and trying new things. I love hugs, high-fives, and big smiles!",
+            polaroidName: "Joey_polaroid",
+            fullBodyName: "joey 3"
         ),
-        "Primary-Mia-CharacterSelection-Image": Character(
-            id: "Primary-Mia-CharacterSelection-Image",
+        "mia": Character(
+            id: "mia",
             name: "Mia",
-            bioText: "Aku anak yang pemalu, aku tidak suka berpelukan, cukup melambai saja sudah membuat aku senang!",
-            imageName: "Primary-Mia-CharacterSelection-Image"
+            bioText: "I'm a little shy, I don't like hugs, but a wave or a smile makes me happy!",
+            polaroidName: "Mia_polaroid",
+            fullBodyName: "mia_1 2"
         )
     ]
 }

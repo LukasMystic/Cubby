@@ -21,6 +21,7 @@ struct LandingPageView: View {
                 .background(.white.opacity(0.65), in: Capsule())
                 .accessibilityLabel("Play Button")
             }
+
         }
     }
 }
