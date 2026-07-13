@@ -336,7 +336,9 @@ struct DialogueView: View {
                     .padding(.vertical, geo.size.height * 0.028)
                     .background(Capsule().fill(.white))
             }
+            .frame(maxWidth: .infinity, alignment: .center)
         }
+        .frame(maxWidth: .infinity)
         .padding(.horizontal, geo.size.width * 0.08)
     }
 
