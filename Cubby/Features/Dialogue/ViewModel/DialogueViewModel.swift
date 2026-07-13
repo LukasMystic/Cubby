@@ -183,7 +183,7 @@ final class DialogueViewModel {
         try? data.write(to: url, options: .atomic)
     }
     
-    private func resetProgress() {
+    func resetProgress() {
         let empty = UserProgress()
         if let data = try? JSONEncoder().encode(empty) {
             try? data.write(to: progressFileURL, options: .atomic)

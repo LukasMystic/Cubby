@@ -115,7 +115,10 @@ struct DialogueView: View {
                 typewriterKey += 1
             }
             .overlay(alignment: .topLeading) {
-                Button { dismissSelf() } label: {
+                Button {
+                    viewModel.resetProgress()
+                    dismissSelf()
+                } label: {
                     Image("Back_button")
                         .resizable()
                         .scaledToFit()
