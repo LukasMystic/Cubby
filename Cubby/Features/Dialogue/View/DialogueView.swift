@@ -37,7 +37,7 @@ struct DialogueView: View {
     private var panelAlignment: Alignment {
         switch viewModel.currentBeat {
         case .narrative: return .top
-        case .choice:return .center
+        case .choice, .ending: return .center
         default:return .bottom
         }
     }
@@ -319,32 +319,25 @@ struct DialogueView: View {
 
     // Ending (bottom)
     private func endingPanel(emotion: String, geo: GeometryProxy) -> some View {
-        Image("Narration_box")
-            .resizable()
-            .aspectRatio(1711.0 / 410.0, contentMode: .fit)
-            .frame(maxWidth: geo.size.width * 0.75)
-            .overlay {
-                VStack(spacing: 10) {
-                    Text("— The End —")
-                        .font(.custom("FredokaOne-Regular", size: geo.size.height * 0.034))
-                        .foregroundStyle(.black)
+        VStack(spacing: geo.size.height * 0.04) {
+            Text("Yay, the story is finished!")
+                .font(.custom("FredokaOne-Regular", size: geo.size.height * 0.09))
+                .foregroundStyle(.white)
+                .multilineTextAlignment(.center)
+                .shadow(color: Color(red: 0.11, green: 0.25, blue: 0.09).opacity(0.9), radius: 1, x: 0, y: 3)
 
-                    Text("Mia feels: \(emotion)")
-                        .font(.custom("Playpen Sans", size: geo.size.height * 0.026))
-                        .foregroundStyle(.black.opacity(0.7))
-
-                    Button("Done") {
-                        if let onStoryEnd { onStoryEnd() } else { dismissSelf() }
-                    }
-                        .font(.custom("FredokaOne-Regular", size: geo.size.height * 0.026))
-                        .foregroundStyle(.white)
-                        .padding(.horizontal, 28)
-                        .padding(.vertical, 11)
-                        .background(Color.orange)
-                        .clipShape(Capsule())
-                }
-                .padding(.horizontal, 44)
+            Button {
+                if let onStoryEnd { onStoryEnd() } else { dismissSelf() }
+            } label: {
+                Text("Let's discuss together with your parents")
+                    .font(.custom("FredokaOne-Regular", size: geo.size.height * 0.04))
+                    .foregroundStyle(Color(red: 0.11, green: 0.25, blue: 0.09))
+                    .padding(.horizontal, geo.size.width * 0.05)
+                    .padding(.vertical, geo.size.height * 0.028)
+                    .background(Capsule().fill(.white))
             }
+        }
+        .padding(.horizontal, geo.size.width * 0.08)
     }
 
     // Shared helpers
