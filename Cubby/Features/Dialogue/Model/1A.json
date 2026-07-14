@@ -1,0 +1,127 @@
+{
+  "file_name": "1A.json",
+  "branch_id": "option_a_followup_notice_mia_moved_away",
+  "branch_label": "Option A",
+  "branch_title": "Joey Notices Mia Moved Away",
+  "connects_from": "decision_002_after_option_a",
+  "selected_option": {
+    "choice_text": "Notice Mia moved away and ask",
+    "choice_quality": "repair"
+  },
+  "sequence": [
+    {
+      "node_id": "1A_001_dialogue",
+      "type": "dialogue",
+      "speaker": "Joey",
+      "text": "Hey, did I sit too close earlier? Sorry, I can scoot back.",
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Concerned",
+          "speech_state": "Talking",
+          "asset_file": "EX_Joey_004_Concerned.png",
+          "position": "close"
+        },
+        "mia": {
+          "expression_key": "SilentDiscomfort",
+          "speech_state": "Idle",
+          "asset_file": "EX_Mia_005_SilentDiscomfort.png",
+          "position": "far"
+        }
+      }
+    },
+    {
+      "node_id": "1A_002_context_emotion",
+      "type": "context_emotion",
+      "target": "Mia",
+      "emotion": "Happy",
+      "text": "Mia smiled and looked relieved.",
+      "dialogue": {
+        "speaker": "Mia",
+        "text": "Yeah, thank you for noticing! I feel much better now."
+      },
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Concerned",
+          "speech_state": "Idle",
+          "asset_file": "EX_Joey_004_Concerned.png",
+          "position": "mid"
+        },
+        "mia": {
+          "expression_key": "Relieved",
+          "speech_state": "Talking",
+          "asset_file": "EX_Mia_002_Relieved.png",
+          "position": "far"
+        }
+      }
+    },
+    {
+      "node_id": "1A_003_situation",
+      "type": "situation_narrator",
+      "text": "You listened, said sorry, and gave Mia more space. You both had fun building together again.",
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Happy",
+          "speech_state": "Idle",
+          "asset_file": "EX_Joey_005_Happy.png",
+          "position": "mid"
+        },
+        "mia": {
+          "expression_key": "Happy",
+          "speech_state": "Idle",
+          "asset_file": "EX_Mia_003_Happy.png",
+          "position": "mid"
+        }
+      }
+    },
+    {
+      "node_id": "ending_1A_happy_repair",
+      "type": "ending",
+      "final_emotion_target": "Mia",
+      "final_emotion": "Happy",
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Happy",
+          "speech_state": "Idle",
+          "asset_file": "EX_Joey_005_Happy.png",
+          "position": "mid"
+        },
+        "mia": {
+          "expression_key": "Happy",
+          "speech_state": "Idle",
+          "asset_file": "EX_Mia_003_Happy.png",
+          "position": "mid"
+        }
+      }
+    }
+  ],
+  "ending_id": "ending_1A_happy_repair",
+  "storybook_page": {
+    "page_id": "storybook_1A",
+    "player_chose": "1A",
+    "source_file": "1A.json",
+    "page_type": "ending_recap",
+    "title": "Player Chose 1A",
+    "sections": [
+      {
+        "heading": "What Happened Before?",
+        "body": "Mia had quietly moved a little farther away. She looked a little sad, but she kept building on her own. Then you noticed a perfect piece for your tower in Mia's building area."
+      },
+      {
+        "heading": "What Did You Pick?",
+        "body": "Notice Mia moved away and ask"
+      },
+      {
+        "heading": "What Happened After?",
+        "body": "Mia smiled and said “Thank you”. You both had fun playing together."
+      },
+      {
+        "heading": "Let's Talk",
+        "questions": [
+          "How did you make Mia smile again?",
+          "Why is it good to notice how our friends feel?",
+          "Have you ever said, \"I'm sorry,\" to a friend? What happened next?"
+        ]
+      }
+    ]
+  }
+}

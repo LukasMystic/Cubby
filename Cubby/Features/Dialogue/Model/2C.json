@@ -1,0 +1,126 @@
+{
+  "file_name": "2C.json",
+  "branch_id": "option_b_followup_lean_even_closer",
+  "branch_label": "Option C",
+  "branch_title": "Joey Leans Even Closer",
+  "connects_from": "decision_003_after_option_b",
+  "selected_option": {
+    "choice_text": "Lean in even closer to grab more blocks",
+    "choice_quality": "worst"
+  },
+  "sequence": [
+    {
+      "node_id": "2C_001_situation",
+      "type": "situation_narrator",
+      "text": "Mia pushed your hand away to stop you from taking the piece.",
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Shocked",
+          "speech_state": "Idle",
+          "asset_file": "EX_Joey_007_Shocked.png",
+          "position": "close"
+        },
+        "mia": {
+          "expression_key": "Angry",
+          "speech_state": "Idle",
+          "asset_file": "EX_Mia_007_Angry.png",
+          "position": "far"
+        }
+      }
+    },
+    {
+      "node_id": "2C_002_context_emotion",
+      "type": "context_emotion",
+      "target": "Mia",
+      "emotion": "Upset/Angry",
+      "text": "Mia felt angry and upset.",
+      "dialogue": {
+        "speaker": "Mia",
+        "text": "Please stop. You're much too close, and I'm using that piece."
+      },
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Shocked",
+          "speech_state": "Idle",
+          "asset_file": "EX_Joey_007_Shocked.png",
+          "position": "close"
+        },
+        "mia": {
+          "expression_key": "Angry",
+          "speech_state": "Talking",
+          "asset_file": "EX_Mia_007_Angry.png",
+          "position": "far"
+        }
+      }
+    },
+    {
+      "node_id": "2C_003_situation",
+      "type": "situation_narrator",
+      "text": "You kept moving closer. Mia became angry because you were too close and tried to take the piece she was using.",
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Regretful",
+          "speech_state": "Idle",
+          "asset_file": "EX_Joey_006_Regretful.png",
+          "position": "close"
+        },
+        "mia": {
+          "expression_key": "Angry",
+          "speech_state": "Idle",
+          "asset_file": "EX_Mia_007_Angry.png",
+          "position": "far"
+        }
+      }
+    },
+    {
+      "node_id": "ending_2C_upset_angry",
+      "type": "ending",
+      "final_emotion_target": "Mia",
+      "final_emotion": "Upset/Angry",
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Regretful",
+          "speech_state": "Idle",
+          "asset_file": "EX_Joey_006_Regretful.png",
+          "position": "close"
+        },
+        "mia": {
+          "expression_key": "Angry",
+          "speech_state": "Idle",
+          "asset_file": "EX_Mia_007_Angry.png",
+          "position": "far"
+        }
+      }
+    }
+  ],
+  "ending_id": "ending_2C_upset_angry",
+  "storybook_page": {
+    "page_id": "storybook_2C",
+    "player_chose": "2C",
+    "source_file": "2C.json",
+    "page_type": "ending_recap",
+    "title": "Player Chose 2C",
+    "sections": [
+      {
+        "heading": "What Happened Before?",
+        "body": "A few minutes later, you reached for a block to build your tower. You were sitting just as close as before."
+      },
+      {
+        "heading": "What Did You Pick?",
+        "body": "Leaned in even closer to grab more blocks"
+      },
+      {
+        "heading": "What Happened After?",
+        "body": "Mia felt angry and upset. She pushed your hand away and stopped playing."
+      },
+      {
+        "heading": "Let's Talk",
+        "questions": [
+          "Why did Mia feel angry?",
+          "What could you say if a friend is too close?",
+          "What can you do if a friend needs more space?"
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,107 @@
+{
+  "file_name": "3C.json",
+  "branch_id": "option_c_followup_take_piece_mia_was_using",
+  "branch_label": "Option C",
+  "branch_title": "Joey Takes the Piece Mia Was Using",
+  "connects_from": "decision_004_after_option_c",
+  "selected_option": {
+    "choice_text": "Reach over and take the piece Mia was using",
+    "choice_quality": "worst"
+  },
+  "sequence": [
+    {
+      "node_id": "3C_001_context_emotion",
+      "type": "context_emotion",
+      "target": "Mia",
+      "emotion": "Angry/Upset",
+      "text": "Mia felt surprised and upset because you took the piece she was using.",
+      "dialogue": {
+        "speaker": "Mia",
+        "text": "If you want to move closer, you should ask first."
+      },
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Shocked",
+          "speech_state": "Idle",
+          "asset_file": "EX_Joey_007_Shocked.png",
+          "position": "close"
+        },
+        "mia": {
+          "expression_key": "Angry",
+          "speech_state": "Talking",
+          "asset_file": "EX_Mia_007_Angry.png",
+          "position": "mid"
+        }
+      }
+    },
+    {
+      "node_id": "3C_002_situation",
+      "type": "situation_narrator",
+      "text": "You forgot to ask, even though Mia was still using the piece.",
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Regretful",
+          "speech_state": "Idle",
+          "asset_file": "EX_Joey_006_Regretful.png",
+          "position": "close"
+        },
+        "mia": {
+          "expression_key": "Angry",
+          "speech_state": "Idle",
+          "asset_file": "EX_Mia_007_Angry.png",
+          "position": "far"
+        }
+      }
+    },
+    {
+      "node_id": "ending_3C_upset_angry",
+      "type": "ending",
+      "final_emotion_target": "Mia",
+      "final_emotion": "Angry/Upset",
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Regretful",
+          "speech_state": "Idle",
+          "asset_file": "EX_Joey_006_Regretful.png",
+          "position": "close"
+        },
+        "mia": {
+          "expression_key": "Angry",
+          "speech_state": "Idle",
+          "asset_file": "EX_Mia_007_Angry.png",
+          "position": "far"
+        }
+      }
+    }
+  ],
+  "ending_id": "ending_3C_upset_angry",
+  "storybook_page": {
+    "page_id": "storybook_3C",
+    "player_chose": "3C",
+    "source_file": "3C.json",
+    "page_type": "ending_recap",
+    "title": "Player Chose 3C",
+    "sections": [
+      {
+        "heading": "What Happened Before?",
+        "body": "A few minutes later, you spotted the perfect block in Mia's building area. It would fit perfectly on your tower."
+      },
+      {
+        "heading": "What Did You Pick?",
+        "body": "Reached over and took the piece Mia was using"
+      },
+      {
+        "heading": "What Happened After?",
+        "body": "Mia felt surprised and disappointed. She did not want to keep playing."
+      },
+      {
+        "heading": "Let's Talk",
+        "questions": [
+          "Why was Mia extra surprised this time?",
+          "Why should we ask before taking a friend's toy?",
+          "How do you think Mia felt when you took the block without asking?"
+        ]
+      }
+    ]
+  }
+}

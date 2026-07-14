@@ -1,0 +1,101 @@
+{
+  "file_name": "1B.json",
+  "branch_id": "option_a_followup_move_closer",
+  "branch_label": "Option B",
+  "branch_title": "Joey Moves Closer to See the Piece",
+  "connects_from": "decision_002_after_option_a",
+  "selected_option": {
+    "choice_text": "Move closer to see the piece",
+    "choice_quality": "poor"
+  },
+  "sequence": [
+    {
+      "node_id": "1B_001_dialogue",
+      "type": "dialogue",
+      "speaker": "Joey",
+      "text": "Yay! I'm so happy we can build the tower together!",
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Excited",
+          "speech_state": "Talking",
+          "asset_file": "EX_Joey_002_Excited.png",
+          "position": "close"
+        },
+        "mia": {
+          "expression_key": "SilentDiscomfort",
+          "speech_state": "Idle",
+          "asset_file": "EX_Mia_005_SilentDiscomfort.png",
+          "position": "far"
+        }
+      }
+    },
+    {
+      "node_id": "1B_002_situation",
+      "type": "situation_narrator",
+      "text": "You didn't notice that Mia still needed more space. You both kept playing, but Mia wished you had checked in.",
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Unaware",
+          "speech_state": "Idle",
+          "asset_file": "EX_Joey_003_Unaware.png",
+          "position": "close"
+        },
+        "mia": {
+          "expression_key": "SilentDiscomfort",
+          "speech_state": "Idle",
+          "asset_file": "EX_Mia_005_SilentDiscomfort.png",
+          "position": "far"
+        }
+      }
+    },
+    {
+      "node_id": "ending_1B_uncomfortable",
+      "type": "ending",
+      "final_emotion_target": "Mia",
+      "final_emotion": "Uncomfortable",
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Unaware",
+          "speech_state": "Idle",
+          "asset_file": "EX_Joey_003_Unaware.png",
+          "position": "close"
+        },
+        "mia": {
+          "expression_key": "SilentDiscomfort",
+          "speech_state": "Idle",
+          "asset_file": "EX_Mia_005_SilentDiscomfort.png",
+          "position": "far"
+        }
+      }
+    }
+  ],
+  "ending_id": "ending_1B_uncomfortable",
+  "storybook_page": {
+    "page_id": "storybook_1B",
+    "player_chose": "1B",
+    "source_file": "1B.json",
+    "page_type": "ending_recap",
+    "title": "Player Chose 1B",
+    "sections": [
+      {
+        "heading": "What Happened Before?",
+        "body": "Mia had quietly moved a little farther away. She looked a little sad, but she kept building on her own. Then you noticed a perfect piece for your tower in Mia's building area."
+      },
+      {
+        "heading": "What Did You Pick?",
+        "body": "Move closer to see the piece"
+      },
+      {
+        "heading": "What Happened After?",
+        "body": "Mia kept playing, but she did not feel happy or relaxed. She still felt uncomfortable."
+      },
+      {
+        "heading": "Let's Talk",
+        "questions": [
+          "What could you have done differently, even if Mia did not ask again?",
+          "How can we tell if a friend is uncomfortable, even when they do not say it out loud?"
+        ]
+      }
+    ]
+  }
+}

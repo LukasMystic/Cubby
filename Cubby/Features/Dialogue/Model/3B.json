@@ -1,0 +1,107 @@
+{
+  "file_name": "3B.json",
+  "branch_id": "option_c_followup_lean_in_close",
+  "branch_label": "Option B",
+  "branch_title": "Joey Leans In Close",
+  "connects_from": "decision_004_after_option_c",
+  "selected_option": {
+    "choice_text": "Lean in close",
+    "choice_quality": "needs_repair"
+  },
+  "sequence": [
+    {
+      "node_id": "3B_001_context_emotion",
+      "type": "context_emotion",
+      "target": "Mia",
+      "emotion": "Confused",
+      "text": "Mia felt unsure and confused.",
+      "dialogue": {
+        "speaker": "Mia",
+        "text": "Uh... um, okay."
+      },
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Unaware",
+          "speech_state": "Idle",
+          "asset_file": "EX_Joey_003_Unaware.png",
+          "position": "close"
+        },
+        "mia": {
+          "expression_key": "SilentDiscomfort",
+          "speech_state": "Talking",
+          "asset_file": "EX_Mia_005_SilentDiscomfort.png",
+          "position": "mid"
+        }
+      }
+    },
+    {
+      "node_id": "3B_002_situation",
+      "type": "situation_narrator",
+      "text": "Mia leaned away.",
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Unaware",
+          "speech_state": "Idle",
+          "asset_file": "EX_Joey_003_Unaware.png",
+          "position": "close"
+        },
+        "mia": {
+          "expression_key": "SilentDiscomfort",
+          "speech_state": "Idle",
+          "asset_file": "EX_Mia_005_SilentDiscomfort.png",
+          "position": "far"
+        }
+      }
+    },
+    {
+      "node_id": "decision_005_after_option_3B",
+      "type": "decision_point",
+      "title": "Joey's Decision",
+      "decision_prompt": "Mia leans away after Joey gets too close. What should Joey do?",
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Unaware",
+          "speech_state": "Idle",
+          "asset_file": "EX_Joey_003_Unaware.png",
+          "position": "close"
+        },
+        "mia": {
+          "expression_key": "SilentDiscomfort",
+          "speech_state": "Idle",
+          "asset_file": "EX_Mia_005_SilentDiscomfort.png",
+          "position": "far"
+        }
+      }
+    }
+  ],
+  "connects_to": "decision_005_after_option_3B",
+  "storybook_page": {
+    "page_id": "storybook_3B",
+    "player_chose": "3B",
+    "source_file": "3B.json",
+    "page_type": "choice_recap",
+    "title": "Player Chose 3B",
+    "sections": [
+      {
+        "heading": "What Happened Before?",
+        "body": "A few minutes later, you spotted the perfect block in Mia's building area. It would fit perfectly on your tower."
+      },
+      {
+        "heading": "What Did You Pick?",
+        "body": "Leaned in close"
+      },
+      {
+        "heading": "What Happened After?",
+        "body": "Mia felt unsure and confused, then quietly leaned away."
+      },
+      {
+        "heading": "Let's Talk",
+        "questions": [
+          "Why did you forget to ask this time?",
+          "What can you do after you make a mistake?",
+          "How can you help Mia feel comfortable again?"
+        ]
+      }
+    ]
+  }
+}

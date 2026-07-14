@@ -1,0 +1,82 @@
+{
+  "file_name": "2B.json",
+  "branch_id": "option_b_followup_keep_sitting_close",
+  "branch_label": "Option B",
+  "branch_title": "Joey Keeps Sitting Close",
+  "connects_from": "decision_003_after_option_b",
+  "selected_option": {
+    "choice_text": "Keep sitting close",
+    "choice_quality": "poor"
+  },
+  "sequence": [
+    {
+      "node_id": "2B_001_situation",
+      "type": "situation_narrator",
+      "text": "Mia stayed quiet. You kept building, not knowing Mia still needed a little more space.",
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Unaware",
+          "speech_state": "Idle",
+          "asset_file": "EX_Joey_003_Unaware.png",
+          "position": "close"
+        },
+        "mia": {
+          "expression_key": "Annoyed",
+          "speech_state": "Idle",
+          "asset_file": "EX_Mia_006_Annoyed.png",
+          "position": "far"
+        }
+      }
+    },
+    {
+      "node_id": "ending_2B_annoyed",
+      "type": "ending",
+      "final_emotion_target": "Mia",
+      "final_emotion": "Annoyed",
+      "character_expressions": {
+        "joey": {
+          "expression_key": "Unaware",
+          "speech_state": "Idle",
+          "asset_file": "EX_Joey_003_Unaware.png",
+          "position": "close"
+        },
+        "mia": {
+          "expression_key": "Annoyed",
+          "speech_state": "Idle",
+          "asset_file": "EX_Mia_006_Annoyed.png",
+          "position": "far"
+        }
+      }
+    }
+  ],
+  "ending_id": "ending_2B_annoyed",
+  "storybook_page": {
+    "page_id": "storybook_2B",
+    "player_chose": "2B",
+    "source_file": "2B.json",
+    "page_type": "ending_recap",
+    "title": "Player Chose 2B",
+    "sections": [
+      {
+        "heading": "What Happened Before?",
+        "body": "A few minutes later, you reached for a block to build your tower. You were sitting just as close as before."
+      },
+      {
+        "heading": "What Did You Pick?",
+        "body": "Kept sitting close, not realizing Mia still felt uncomfortable"
+      },
+      {
+        "heading": "What Happened After?",
+        "body": "Mia felt annoyed and wasn’t having fun at all."
+      },
+      {
+        "heading": "Let's Talk",
+        "questions": [
+          "Why did Mia stay quiet?",
+          "How can you tell if a friend needs more space?",
+          "What clues showed that Mia wasn’t feeling okay?"
+        ]
+      }
+    ]
+  }
+}
